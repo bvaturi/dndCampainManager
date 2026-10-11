@@ -206,7 +206,7 @@ export class FirebaseParty {
     const campaign = await getDoc(doc(this.db, "campaigns", id));
     if (
       !campaign.exists() ||
-      (!isPlatformAdmin(user) && !campaign.data().dmIds.includes(user.uid))
+      !campaign.data().dmIds.includes(user.uid)
     )
       throw Error("DM access required");
     const provider = new GoogleAuthProvider();
@@ -315,7 +315,7 @@ export class FirebaseParty {
     const c = await getDoc(doc(this.db, "campaigns", id));
     if (
       !c.exists() ||
-      (!isPlatformAdmin(user) && !c.data().dmIds.includes(user.uid))
+      !c.data().dmIds.includes(user.uid)
     )
       throw Error("DM access required");
     const provider = new GoogleAuthProvider();

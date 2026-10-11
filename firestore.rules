@@ -39,6 +39,7 @@ function emailList(v) { return v is list && v.size()<=50 && v.toSet()==v.join(',
   function boundContact(id,uid,v) { let m=get(/databases/$(database)/documents/campaigns/$(id)/members/$(uid)).data; return m.inviteId!='' && v.email==get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(m.inviteId)).data.email && v.name==m.name; }
   function contact(id,uid,v) { return keys(v,['email','name']) && text(v.email,254) && v.email==v.email.lower() && v.email.matches('[^@ ]+@[^@ ]+[.][^@ ]+') && text(v.name,100) && uid in get(campaignPath(id)).data.memberIds && ((uid==request.auth.uid && v.email==request.auth.token.email.lower() && v.name==request.auth.token.name) || (admin() && boundContact(id,uid,v))); }
   function validDraft(v,key) { return keys(v,['id','title','description','location','start','end','timeZone','attendees','organizerUid']) && key.matches('[a-f0-9]{32}') && v.id==key && text(v.title,150) && v.title.size()>0 && text(v.description,2000) && text(v.location,300) && text(v.start,16) && v.start.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && text(v.end,16) && v.end.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && v.end>v.start && text(v.timeZone,100) && v.timeZone.size()>0 && emailList(v.attendees) && v.attendees.size()>0 && v.attendees.toSet().size()==v.attendees.size() && v.organizerUid==request.auth.uid; }
+  function meetingDM(id) { return member(id) && request.auth.uid in get(campaignPath(id)).data.dmIds; }
   function sessionChange(id,key,old,v) {
     let c=get(/databases/$(database)/documents/campaigns/$(id)/sessionChanges/$(key)).data;
     let d=c.draft;
@@ -82,18 +83,18 @@ function emailList(v) { return v is list && v.size()<=50 && v.toSet()==v.join(',
    }
    match /sessionDrafts/{key} {
     allow read: if dm(id);
-    allow create: if dm(id) && validDraft(request.resource.data,key);
-    allow delete: if dm(id) && resource.data.organizerUid==request.auth.uid && existsAfter(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key));
+    allow create: if meetingDM(id) && validDraft(request.resource.data,key);
+    allow delete: if meetingDM(id) && resource.data.organizerUid==request.auth.uid && existsAfter(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key));
    }
    match /sessionChanges/{key} {
     allow read: if dm(id);
-    allow create: if dm(id) && keys(request.resource.data,['draft','etag','revision','operationId','action']) && validDraft(request.resource.data.draft,key) && text(request.resource.data.etag,200) && request.resource.data.etag.size()>0 && request.resource.data.operationId.matches('[a-f0-9]{32}') && request.resource.data.action in ['edit','cancel'] && request.resource.data.revision==get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('revision',0) && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.organizerUid==request.auth.uid && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('status','scheduled')!='cancelled';
-    allow delete: if dm(id) && resource.data.draft.organizerUid==request.auth.uid;
+    allow create: if meetingDM(id) && keys(request.resource.data,['draft','etag','revision','operationId','action']) && validDraft(request.resource.data.draft,key) && text(request.resource.data.etag,200) && request.resource.data.etag.size()>0 && request.resource.data.operationId.matches('[a-f0-9]{32}') && request.resource.data.action in ['edit','cancel'] && request.resource.data.revision==get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('revision',0) && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.organizerUid==request.auth.uid && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('status','scheduled')!='cancelled';
+    allow delete: if meetingDM(id) && resource.data.draft.organizerUid==request.auth.uid;
    }
    match /sessions/{key} {
     allow read: if member(id);
-    allow create: if dm(id) && validSession(id,key,request.resource.data);
-    allow update: if dm(id) && sessionChange(id,key,resource.data,request.resource.data);
+    allow create: if meetingDM(id) && validSession(id,key,request.resource.data);
+    allow update: if meetingDM(id) && sessionChange(id,key,resource.data,request.resource.data);
 
    }
    match /currencies/{key} {
