@@ -58,6 +58,17 @@ body+='function customSpell(v) { return keys(v,["id","name","level","prepared","
 body+=f'function knownSpells(v,n) {{ return keys(v,["ids"],["ids"]) && v.ids is list && v.ids.size()<=n && v.ids.toSet().hasOnly({quoted(ids)}); }}\n'
 body+=f'function core(c) {{ return keys(c,{quoted([x for x in required if x in coreFields])},{quoted([x for x in allowed if x in coreFields])}) && '+' && '.join(coreChecks)+'; }\n'
 body+=f'function detail(c) {{ return keys(c,{quoted([x for x in required if x not in coreFields and x not in spellFields])},{quoted([x for x in allowed if x not in coreFields and x not in spellFields])}) && '+' && '.join(detailChecks)+'; }\n'
+body+="function emailList(v) { return v is list && v.size()<=50 && v.toSet()==v.join(',').split(',').toSet() && v.join(',').size()<=12749 && v.join(',').matches('[^@, ]{1,64}@[^@, ]{1,189}(,[^@, ]{1,64}@[^@, ]{1,189}){0,49}') && v.join(',').matches('[^@, ]+@[^@, ]+[.][^@, ]+(,[^@, ]+@[^@, ]+[.][^@, ]+){0,49}'); }\n"
+body+='''
+  function combatPath(id) { return /databases/$(database)/documents/campaigns/$(id)/combat/current; }
+  function combatIndex(v) { return text(v,4039) && v.matches('([A-Za-z0-9_-]{1,100}(/[A-Za-z0-9_-]{1,100}){0,39})?'); }
+  function validCombat(v) { return keys(v,['entryIndex','activeId','round','revision','updatedBy','updatedAt']) && combatIndex(v.entryIndex) && text(v.activeId,100) && (v.activeId=='' || indexed(v.entryIndex,v.activeId)) && number(v.round,1,9999) && number(v.revision,1,100000000) && v.updatedBy==request.auth.uid && v.updatedAt==request.time; }
+  function validEntry(v,key) { return keys(v,['id','name','initiative','order','conditions']) && v.id==key && text(v.name,100) && v.name.size()>0 && number(v.initiative,-30,100) && number(v.order,0,1000) && text(v.conditions,200); }
+  function boundContact(id,uid,v) { let m=get(/databases/$(database)/documents/campaigns/$(id)/members/$(uid)).data; return m.inviteId!='' && v.email==get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(m.inviteId)).data.email && v.name==m.name; }
+  function contact(id,uid,v) { return keys(v,['email','name']) && text(v.email,254) && v.email==v.email.lower() && v.email.matches('[^@ ]+@[^@ ]+[.][^@ ]+') && text(v.name,100) && uid in get(campaignPath(id)).data.memberIds && ((uid==request.auth.uid && v.email==request.auth.token.email.lower() && v.name==request.auth.token.name) || (admin() && boundContact(id,uid,v))); }
+  function validDraft(v,key) { return keys(v,['id','title','description','location','start','end','timeZone','attendees','organizerUid']) && key.matches('[a-f0-9]{32}') && v.id==key && text(v.title,150) && v.title.size()>0 && text(v.description,2000) && text(v.location,300) && text(v.start,16) && v.start.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && text(v.end,16) && v.end.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && v.end>v.start && text(v.timeZone,100) && v.timeZone.size()>0 && emailList(v.attendees) && v.attendees.size()>0 && v.attendees.toSet().size()==v.attendees.size() && v.organizerUid==request.auth.uid; }
+  function validSession(id,key,v) { let d=get(/databases/$(database)/documents/campaigns/$(id)/sessionDrafts/$(key)).data; return keys(v,['title','description','location','timeZone','startAt','endAt','calendarUrl','organizerUid']) && v.organizerUid==request.auth.uid && v.organizerUid==d.organizerUid && v.title==d.title && v.description==d.description && v.location==d.location && v.timeZone==d.timeZone && v.startAt is timestamp && v.endAt is timestamp && v.endAt>v.startAt && text(v.calendarUrl,2048) && v.calendarUrl.matches('https://(www[.]google[.]com/calendar/|calendar[.]google[.]com/)[^ ]+'); }
+'''
 body+='''
   function validCampaign(c) { return keys(c,['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt'],['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt']) && text(c.name,100) && c.name.size()>0 && text(c.description,2000) && c.ruleset=='2014' && text(c.createdBy,128) && c.memberIds is list && c.memberIds.size()<=50 && c.memberIds.toSet().size()==c.memberIds.size() && c.dmIds is list && c.dmIds.size()<=20 && c.dmIds.toSet().size()==c.dmIds.size() && c.dmIds.toSet().hasOnly(c.memberIds) && c.createdBy in c.memberIds && index(c.currencyIndex) && c.currencyIndex.size()>0 && c.createdAt is timestamp && c.updatedAt==request.time; }
   function invitation(id,i) { let v=get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(i)).data; let c=get(campaignPath(id)).data; return i is string && i.size()>0 && i.size()<=100 && v.email==request.auth.token.email.lower() && v.expiresAt>request.time && (v.createdBy==c.createdBy || (v.createdBy in c.dmIds && v.get('role','player')=='player')); }
@@ -78,6 +89,30 @@ body+='''
     (dm(id) && request.resource.data.dmIds==resource.data.dmIds && request.resource.data.memberIds.toSet().hasOnly(resource.data.memberIds)) ||
     joining(id,request.resource.data)
    );
+   match /contacts/{uid} {
+    allow get: if member(id) && (dm(id) || uid==request.auth.uid);
+    allow list: if dm(id);
+    allow create,update: if member(id) && contact(id,uid,request.resource.data);
+   }
+   match /combat/{key} {
+    allow read: if key=='current' && member(id);
+    allow create: if key=='current' && dm(id) && validCombat(request.resource.data) && request.resource.data.revision==1;
+    allow update: if key=='current' && dm(id) && validCombat(request.resource.data) && request.resource.data.revision==resource.data.revision+1;
+    match /entries/{entryId} {
+     allow read: if key=='current' && member(id);
+     allow create,update: if key=='current' && dm(id) && validEntry(request.resource.data,entryId) && indexed(getAfter(combatPath(id)).data.entryIndex,entryId) && getAfter(combatPath(id)).data.updatedAt==request.time;
+     allow delete: if key=='current' && dm(id) && !indexed(getAfter(combatPath(id)).data.entryIndex,entryId) && getAfter(combatPath(id)).data.updatedAt==request.time;
+    }
+   }
+   match /sessionDrafts/{key} {
+    allow read: if dm(id);
+    allow create: if dm(id) && validDraft(request.resource.data,key);
+    allow delete: if dm(id) && resource.data.organizerUid==request.auth.uid && existsAfter(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key));
+   }
+   match /sessions/{key} {
+    allow read: if member(id);
+    allow create: if dm(id) && validSession(id,key,request.resource.data);
+   }
    match /currencies/{key} {
     allow read: if member(id);
     allow create,update: if signed() && (admin() || request.auth.uid in getAfter(campaignPath(id)).data.dmIds) && currency(request.resource.data) && request.resource.data.id==key && indexed(getAfter(campaignPath(id)).data.currencyIndex,key) && getAfter(campaignPath(id)).data.updatedAt==request.time;
@@ -89,7 +124,7 @@ body+='''
     allow delete: if dm(id) && (admin() || !(uid in get(campaignPath(id)).data.dmIds)) && uid!=get(campaignPath(id)).data.createdBy && !(uid in getAfter(campaignPath(id)).data.memberIds);
    }
    match /invitations/{key} {
-    allow read: if signed() && ((admin() || (dm(id) && resource.data.createdBy==request.auth.uid)) || (resource.data.email==request.auth.token.email.lower() && resource.data.expiresAt>request.time));
+    allow read: if signed() && ((admin() || (dm(id) && (resource.data.createdBy==request.auth.uid || resource.data.role=='player'))) || (resource.data.email==request.auth.token.email.lower() && resource.data.expiresAt>request.time));
     allow create: if dm(id) && keys(request.resource.data,['email','campaignName','createdBy','createdAt','expiresAt','role'],['email','campaignName','createdBy','createdAt','expiresAt','role']) && request.resource.data.get('role','player') in ['player','dm'] && (request.resource.data.get('role','player')=='player' || admin()) && text(request.resource.data.email,254) && request.resource.data.email.matches('[^@ ]+@[^@ ]+\\.[^@ ]+') && request.resource.data.email==request.resource.data.email.lower() && request.resource.data.campaignName==get(campaignPath(id)).data.name && request.resource.data.createdBy==request.auth.uid && request.resource.data.createdAt==request.time && request.resource.data.expiresAt is timestamp && request.resource.data.expiresAt>request.time && request.resource.data.expiresAt<=request.time+duration.value(7,'d');
     allow delete: if admin() || (dm(id) && resource.data.get('role','player')=='player');
    }

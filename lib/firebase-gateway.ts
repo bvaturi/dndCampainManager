@@ -1,3 +1,5 @@
+import {FirebaseParty} from './firebase-party';
+import type {Combat,PartyContact,PartySession,SessionDraft} from './party-tools';
 import {FILE_CHUNK_SIZE,validatePartyFile,checkFileContent,digestFile,assembleFile,type PartyFile} from './party-files';
 import { isPlatformAdmin } from "./access";
 import firebaseConfig from "./firebase-config.json";
@@ -16,6 +18,7 @@ import {
   doc,
   query,
   where,
+  or,
   onSnapshot,
   getDoc,
   getDocs,
@@ -135,6 +138,15 @@ export class FirebaseGateway implements Gateway {
       ),
     );
   }
+  private get party(){return new FirebaseParty(this.db,this.auth);}
+  renameCampaign(id:string,name:string){return this.party.renameCampaign(id,name);}
+  watchCombat(id:string,next:Watch<Combat>,fail:Fail){return this.party.watchCombat(id,next,fail);}
+  saveCombat(id:string,value:Combat){return this.party.saveCombat(id,value);}
+  ensurePartyContact(id:string,user:Profile){return this.party.ensurePartyContact(id,user);}
+  watchPartyContacts(id:string,next:Watch<PartyContact[]>,fail:Fail){return this.party.watchPartyContacts(id,next,fail);}
+  watchSessions(id:string,next:Watch<PartySession[]>,fail:Fail){return this.party.watchSessions(id,next,fail);}
+  watchSessionDrafts(id:string,next:Watch<SessionDraft[]>,fail:Fail){return this.party.watchSessionDrafts(id,next,fail);}
+  sendSession(id:string,draft:SessionDraft){return this.party.sendSession(id,draft);}
   async signIn() {
     await signInWithPopup(this.auth, new GoogleAuthProvider());
   }
@@ -250,7 +262,7 @@ export class FirebaseGateway implements Gateway {
   watchInvitations(id: string, next: Watch<Invitation[]>, fail: Fail) {
     return this.list(
       isPlatformAdmin(this.auth.currentUser) ? this.rows(id, "invitations") :
-      query(this.rows(id, "invitations"), where("createdBy", "==", this.uid())),
+      query(this.rows(id, "invitations"), or(where("createdBy", "==", this.uid()),where("role", "==", "player"))),
       next,
       fail,
     );

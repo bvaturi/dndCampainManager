@@ -1,3 +1,4 @@
+import {emptyCombat,validateCombat,validateSession,type Combat,type PartyContact,type PartySession,type SessionDraft} from './party-tools';
 import {validatePartyFile,checkFileContent,digestFile,FILE_CHUNK_SIZE,type PartyFile} from './party-files';
 /** Development-only UI fixture. No network, authentication, or production persistence. */
 import type {Gateway,Profile,Watch,Fail} from './gateway';
@@ -11,6 +12,16 @@ import {defaultRates,emptyCoins} from './wallet';
 import {characterSchema} from './character-schema';
 const clone=<T,>(x:T):T=>structuredClone(x);
 export class PreviewGateway implements Gateway {
+ readonly previewOnly=true;
+ private combats:Record<string,Combat>={};private sessions:Record<string,PartySession[]>={};
+ renameCampaign(id:string,name:string){return this.updateCampaign(id,name,this.dm(id).description,this.dm(id).currencies);}
+ watchCombat(id:string,next:Watch<Combat>,_fail:Fail){return this.watch(()=>this.combats[id]||emptyCombat(),next);}
+ async saveCombat(id:string,c:Combat){this.dm(id);validateCombat(c);if((this.combats[id]?.revision||0)!==c.revision)throw Error('Initiative changed on another device');this.combats[id]={...clone(c),revision:c.revision+1};this.emit();}
+ async ensurePartyContact(id:string,_user:Profile){this.campaign(id);}
+ watchPartyContacts(id:string,next:Watch<PartyContact[]>,_fail:Fail){this.dm(id);return this.watch(()=>this.members[id].map(m=>({id:m.id,email:m.email,name:m.name})),next);}
+ watchSessions(id:string,next:Watch<PartySession[]>,_fail:Fail){return this.watch(()=>this.sessions[id]||[],next);}
+ watchSessionDrafts(id:string,next:Watch<SessionDraft[]>,_fail:Fail){this.dm(id);return this.watch(()=>[],next);}
+ async sendSession(id:string,value:SessionDraft){this.dm(id);const d=validateSession(value);(this.sessions[id]||=[]).push({id:d.id,title:d.title+' · Preview only — no email sent',description:d.description,location:d.location,timeZone:d.timeZone,startAt:Date.parse(d.start),endAt:Date.parse(d.end),calendarUrl:'https://calendar.google.com/',organizerUid:d.organizerUid});this.emit();}
  private files:Record<string,PartyFile[]>={};private fileBlobs=new Map<string,Blob>();
  private profiles:Profile[]=[{uid:'preview-dm',email:'barakv01@gmail.com',displayName:'Preview admin',emailVerified:true},{uid:'preview-player',email:'player@example.test',displayName:'Preview player',emailVerified:true},{uid:'preview-other',email:'other@example.test',displayName:'Second player',emailVerified:true}];
  private user:Profile|null;private watchers=new Set<()=>void>();

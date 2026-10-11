@@ -1,3 +1,4 @@
+import type {Combat,PartyContact,PartySession,SessionDraft} from './party-tools';
 import type {PartyFile} from './party-files';
 import type {Campaign,CharacterRecord,CharacterType,Currency,Invitation,Member,PartyNote,PartySummary} from './campaign-types';
 import type {Character} from './rules';
@@ -6,6 +7,15 @@ export interface Profile {uid:string;email:string;displayName:string;emailVerifi
 export type Watch<T>=(value:T)=>void;
 export type Fail=(error:Error)=>void;
 export interface Gateway {
+ readonly previewOnly?:boolean;
+ renameCampaign(id:string,name:string):Promise<void>;
+ watchCombat(id:string,next:Watch<Combat>,fail:Fail):()=>void;
+ saveCombat(id:string,combat:Combat):Promise<void>;
+ ensurePartyContact(id:string,user:Profile):Promise<void>;
+ watchPartyContacts(id:string,next:Watch<PartyContact[]>,fail:Fail):()=>void;
+ watchSessions(id:string,next:Watch<PartySession[]>,fail:Fail):()=>void;
+ watchSessionDrafts(id:string,next:Watch<SessionDraft[]>,fail:Fail):()=>void;
+ sendSession(id:string,draft:SessionDraft):Promise<void>;
  watchUser(next:Watch<Profile|null>):()=>void;
  signIn():Promise<void>;signOut():Promise<void>;
  watchCampaigns(user:Profile,next:Watch<Campaign[]>,fail:Fail):()=>void;
