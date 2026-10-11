@@ -4,18 +4,21 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=24.12.0"
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "preview:local": "VITE_PREVIEW=true vite --host 127.0.0.1"
+    "preview:local": "VITE_PREVIEW=true vite --host 127.0.0.1",
+    "test:rules": "npx firebase-tools@latest emulators:exec --only firestore --project demo-stormkeep \"vitest run tests/security.rules.test.ts\"",
+    "deploy": "npm run build && npx firebase-tools@latest deploy --only auth,firestore,hosting --account barakv01@gmail.com"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "firebase": "^13.0.0",
     "lucide-react": "^1.31.0",
     "radix-ui": "^1.6.7",
     "react": "19.2.6",
@@ -24,14 +27,19 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
+    "firebase-tools": "^15.33.0",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "vite": "^8.3.4",
     "vitest": "^5.0.3"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "^1.13.6"
   }
 }

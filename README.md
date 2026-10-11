@@ -1,68 +1,74 @@
-# Stormkeep · D&D Campaign Manager
+# Stormkeep campaign manager
 
-A campaign app with player-owned character sheets, a shared Party journal, and a DM console. One account can belong to multiple campaigns and have a different role in each.
+A Google-authenticated D&D campaign workspace with English/Hebrew support, multiple campaigns, multiple DMs, private character sheets, and a shared Party journal. Character automation uses the 2014 rules: Tempest cleric / legacy Goliath and bard / Eberron Changeling.
 
-## Current status
+Each campaign has its own members and DMs. Players edit their own characters; current campaign DMs can view, edit, and reassign all its characters. Anyone can create a separate campaign and become its DM. Invitations are linked to a verified Google email and expire after seven days. Invite links are copied manually; the app does not send email. Each DM sees the invitations they created. Removing a member revokes their campaign access and their original invitation.
 
-The interface and character-sheet integration are built and tested locally. **Firebase is not connected or deployed yet.** The requested account, `barakv01@gmail.com`, must complete Google sign-in, and the owner must choose an existing Firebase project or request a new one before Firebase configuration begins.
+Party shows automatically updated character summaries plus shared notes, quests, session entries, and loot. Equipment, character notes, balances, and backstories remain inside the private sheet. DM notebooks are stored separately and never downloaded by player queries.
 
-The production build deliberately shows a setup screen instead of offering a simulated login. Local preview data is fictional, exists only in memory, resets on refresh, and is compiled out of production. Preview role changes do not establish production access control.
+## Using the app
 
-## Local review
+1. Continue with Google and create a campaign, or open a DM's invitation link using the invited Google account.
+2. Open the DM console to invite members, promote another DM, assign characters, and define campaign currencies.
+3. Create a cleric/bard sheet or import an existing sheet's JSON backup. Import the latest backup from the original site to preserve levels and balances; no PDF-derived data overwrites existing saves.
+4. Use My characters for your sheets and Party for the shared journal. Sheets autosave and have an explicit Save button. Save conflicts stop autosave so you can export your edits before reloading.
+5. In a wallet, select a default currency, add coins, or record a purchase with a price and tender. Change is calculated within that currency using its configured conversion rates. Different currencies are not exchanged automatically.
 
-Requires Node.js 22.13 or later (CI uses Node.js 24).
+The original Sites app and its saves are independent of this app. Production has no preview login or fictional seeded characters. Development preview is a clearly labelled, in-memory fixture that resets on refresh.
+
+## Local development
+
+Requires Node 24.12+ (24 LTS recommended), npm, and Java 21 for security-rule tests.
 
 ```sh
 npm ci
-npm run preview:local -- --port 5174
+npm run dev
+npm test
+npm run test:rules
+npm run build
 ```
 
-Open `http://127.0.0.1:5174/`. The preview banner switches between DM and player views. The first campaign has one DM and two players; the same people have different roles in the second campaign.
+`npm run preview:local` starts the fictional UI fixture. `?previewUser=dm`, `player`, or `other` chooses a fixture account only in this development mode.
+
+The checked-in `lib/firebase-config.json` contains public browser SDK configuration, not administrative credentials. You can override it with `VITE_FIREBASE_CONFIG` (a JSON object) and `VITE_FIRESTORE_DATABASE` in an ignored `.env.local`. Keep CLI credentials, service-account keys, exports, and private character backups out of Git.
+
+## Firebase deployment
+
+Project: `stormkeep-barakv01`. Firestore: named `campaigns` database, Enterprise edition, Native API access and realtime updates enabled, MongoDB access disabled, in Tel Aviv (`me-west1`). Hosting supplies HTTPS at `https://stormkeep-barakv01.web.app` and `https://stormkeep-barakv01.firebaseapp.com`. A custom domain can be connected in Firebase Hosting after choosing a domain and configuring its DNS.
 
 ```sh
-npm test
-npm run build
-npm run dev
+npx firebase-tools@latest login
+npm run deploy
 ```
 
-`npm run dev` uses the production setup screen until Firebase is connected. GitHub Actions checks tests and builds, and uploads a build artifact. It does not deploy an unfinished backend.
+The deploy command selects `barakv01@gmail.com`. Sign into the correct account first. The app needs Google sign-in configured; `firebase.json` contains the provider and authorized domains. GitHub Actions checks the build, unit tests, and security tests on pushes and pull requests. Firebase releases are deployed with the command above; the repository contains no deployment credential.
 
-## Interface
+For a fresh Firebase project, create the database explicitly before the first deploy:
 
-- Campaign lobby: create campaigns, switch between campaigns, accept an invitation.
-- My characters: edit owned sheets, save manually or automatically, export JSON backups, cast selected spells, track resources and coins, and level up without an application approval step.
-- Party: character summaries, shared notes, quests, session records, and loot notes.
-- DM console: all sheets, character assignment, player invitations, multiple DMs, a private DM notebook, campaign settings, campaign currency definitions, and JSON campaign export.
-- Hebrew and English with RTL layout, searchable bilingual spells, smart change, additive coin deposits, and default currency selection.
+```sh
+npx firebase-tools@latest firestore:databases:create campaigns --project YOUR_PROJECT --location me-west1 --edition enterprise --firestore-data-access ENABLED --mongodb-compatible-data-access DISABLED --realtime-updates ENABLED
+```
 
-Character automation initially supports the two existing sheet types: 2014 Tempest cleric with legacy Goliath traits, and 2014 bard with Eberron Changeling traits. Other classes and rule editions are future work. Application approval is not required for leveling; the character tools still explain normal tabletop rules and DM-dependent feat choices.
+Update the public web SDK config, `.firebaserc`, auth domains, and support email for that project. `dataAccessMode: FIRESTORE_NATIVE` in the Firestore configuration prevents the CLI from provisioning a MongoDB database by default.
 
-## Existing characters
+## Data and permissions
 
-Saved characters and player account data are not committed to this public repository. Generic starting templates are included. Export the latest JSON backup from the existing site, then use **Add character → Import JSON backup** with the matching character tools and owner after Firebase is connected. Import validation preserves levels, spell selections, resources, and wallet balances. The old site remains unchanged.
+Firestore paths:
 
-## Backend contract
+- `campaigns/{id}`: bounded campaign metadata, member/DM UIDs, creator, timestamps, and currency index.
+- `members/{uid}`: display name, joined time and invitation reference; no login emails.
+- `currencies/{id}`: campaign currency names and conversion rates.
+- `invitations/{id}`: email-bound, expiring invitations; visible to the creating DM and the intended verified account.
+- `characters/{id}`: private core statistics, owner, type, revision, updater and wallet index.
+- Character subcollections `details`, `spells`, `history`, and `wallets`: private bounded data validated separately to stay within Firestore's evaluation limits.
+- `summaries/{id}`: an exact safe projection of the character core, written atomically with the sheet.
+- `notes/{id}`: shared journal; authors edit their own entries and DMs edit any.
+- `dmNotes/{id}`: campaign-DM-only notebook.
 
-`lib/gateway.ts` defines the operations required from the production adapter. `lib/backend.ts` currently returns no backend in production, or the explicit development fixture in preview mode. `app/sheet.tsx` uses an injected store with revision checks rather than the old Sites-specific API.
+Every nested read requires current campaign membership and its appropriate ownership/role. Rules deny unauthenticated, unverified, and non-Google users. Campaign creation and invitation acceptance are atomic, role escalation is restricted, and the creator remains a DM. Unknown paths, unknown fields, invalid types, oversized text/arrays/maps, stale revisions, forged owners and false summaries are rejected. Character and note saves use optimistic concurrency checks.
 
-The intended Firebase implementation uses Google Authentication, Cloud Firestore, and classic Firebase Hosting for this React SPA. Determine the selected database's edition and location before adding its SDK integration. Secrets and deployment credentials must stay outside source control.
+Wallet and currency IDs use a bounded slash-separated index string (IDs contain only letters, digits, `_` and `-`). Individual balances and rates live in separately validated documents. This avoids evaluating every wallet inside a single large sheet rule; the index is not a permission grant. Currently the editor supports 20 currencies/wallets and 50 members per campaign.
 
-The production adapter and rules must enforce these permissions, regardless of the interface:
+`firestore.rules` is generated by `python3 scripts/generate-rules.py`; rerun rule tests after changing the generator. Standard SDK queries and `onSnapshot` are an intentional Enterprise exception because live party synchronization is required. The emulator tests exercise allowed queries and hostile writes; they use only a disposable local demo project.
 
-| Resource | Player | Campaign DM |
-| --- | --- | --- |
-| Campaign membership and roles | Accept a valid invitation for their verified Google email | Invite, revoke, assign roles |
-| Full character sheets | Read and edit their own | Read and edit all campaign sheets |
-| Character ownership | Cannot change | Assign to a campaign member |
-| Party summaries | Read | Read |
-| Party notes | Read all; create and edit their own | Read and edit all |
-| Private DM notebook | No access | Read and edit |
-| Campaign currencies and settings | Read | Edit |
-
-Character writes and the corresponding Party summary must commit atomically, with optimistic revision checks. Private notes and full sheets must never be included in the Party summary payload. Removal from a campaign must revoke data access; the campaign creator remains a DM to prevent an ownerless campaign. Invite acceptance must not allow self-promotion to DM.
-
-Before production deployment, implement the real adapter, database rules, indexes, and Google sign-in configuration; run emulator access tests for multiple users and campaigns, revoked members, forged ownership, and forged roles. Then enable Firebase hosting/deployment and use the project's HTTPS `web.app` address. Connecting a purchased custom domain can follow once a domain is chosen.
-
-## Validation completed
-
-Production build and ten automated checks: import integrity, invalid character and wallet data, purchase change, additive deposits, restricted Party summary shape, and 2014 level-three spell limits. Browser checks cover DM/player navigation, shared note creation, manual sheet saves updating Party HP summaries, and Hebrew layout. These are interface and data checks; production authentication and database-rule tests remain pending.
+Security Rules are a prototype and should be reviewed before broadly sharing the app. Production dependencies can be audited with `npm audit --omit=dev`; Firebase CLI is development/deployment tooling and can have separate upstream advisories.

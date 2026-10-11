@@ -1,0 +1,23 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "campaigns",
+      "queryScope": "COLLECTION",
+      "density": "SPARSE_ANY",
+      "fields": [{ "fieldPath": "memberIds", "arrayConfig": "CONTAINS" }]
+    },
+    {
+      "collectionGroup": "characters",
+      "queryScope": "COLLECTION",
+      "density": "SPARSE_ANY",
+      "fields": [{ "fieldPath": "ownerUid", "order": "ASCENDING" }]
+    },
+    {
+      "collectionGroup": "invitations",
+      "queryScope": "COLLECTION",
+      "density": "SPARSE_ANY",
+      "fields": [{ "fieldPath": "createdBy", "order": "ASCENDING" }]
+    }
+  ],
+  "fieldOverrides": []
+}

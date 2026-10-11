@@ -537,5 +537,10 @@
   "Invitations are tied to the specified Google account and expire after 7 days. Share the link yourself.": "ההזמנות מקושרות לחשבון Google שצוין, ותוקפן שבעה ימים. יש להעביר את הקישור לשחקן.",
   "These currencies are available in everyone’s wallet. Each player chooses their own default. Rates are copper equivalents; existing coin counts are preserved.": "מטבעות אלו זמינים בארנקים של כולם. כל שחקן בוחר את מטבע ברירת המחדל שלו. השערים הם ביחידות נחושת; מספר המטבעות הקיים נשמר.",
   "Create a level 1 sheet, or import a JSON backup from the existing app. Choose the matching character tools before importing. Imported levels, spell choices, and coin balances are preserved.": "יצירת דף בדרגה 1, או ייבוא גיבוי JSON מהיישום הקיים. בחרו את כלי הדמות המתאימים לפני הייבוא. דרגות, בחירות לחשים ויתרות מטבעות נשמרות.",
-  "You become this campaign’s DM. Invite players and add other DMs from its console. Character tools currently use 2014 rules.": "תהיו מנחי הקמפיין. אפשר להזמין שחקנים ולהוסיף מנחים מלוח הניהול. כלי הדמות משתמשים כרגע בחוקי 2014."
+  "You become this campaign’s DM. Invite players and add other DMs from its console. Character tools currently use 2014 rules.": "תהיו מנחי הקמפיין. אפשר להזמין שחקנים ולהוסיף מנחים מלוח הניהול. כלי הדמות משתמשים כרגע בחוקי 2014.",
+  "Paste JSON backup": "הדבקת גיבוי JSON",
+  "JSON backup text": "טקסט גיבוי JSON",
+  "Import pasted backup": "ייבוא הגיבוי שהודבק",
+  "Paste your character backup JSON here": "יש להדביק כאן את גיבוי הדמות בפורמט JSON",
+  "Loading character sheet…": "טוען דף דמות…"
 }
