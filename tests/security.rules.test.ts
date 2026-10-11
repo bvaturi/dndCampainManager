@@ -8,6 +8,7 @@ import {
   type RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
 import {
+  Bytes,
   doc,
   setDoc,
   getDoc,
@@ -611,6 +612,43 @@ describe.skipIf(!process.env.FIRESTORE_EMULATOR_HOST)(
       await assertFails(writeSheet(db,sheet("player",3,{...initial,image:"data:image/jpeg;base64,"+"A".repeat(180000)})));
       await assertSucceeds(writeSheet(db,sheet("player",3,{...initial,image:""})));
     });
+    it("shares file bytes only inside the campaign and preserves authorship", async () => {
+      const db=user('player'),ref=row(db,'files','pdf'),chunk=doc(ref,'chunks','0');
+      const payload={name:'guide.pdf',title:'Campaign guide',contentType:'application/pdf',size:9,chunkCount:1,sha256:'a'.repeat(64),authorUid:'player',authorName:'player',createdAt:serverTimestamp(),updatedAt:serverTimestamp(),archived:false};
+      const bytes={index:0,data:Bytes.fromUint8Array(new TextEncoder().encode('%PDF-test'))};
+      const upload=(data=payload,part=bytes,target=db,key='pdf')=>{const batch=writeBatch(target),r=row(target,'files',key);batch.set(r,data);batch.set(doc(r,'chunks','0'),part);return batch.commit();};
+      await assertFails(setDoc(ref,payload));
+      await assertSucceeds(upload());
+      await assertSucceeds(getDoc(doc(row(user('dm'),'files','pdf'),'chunks','0')));
+      await assertFails(getDoc(doc(row(user('outsider'),'files','pdf'),'chunks','0')));
+      await assertFails(getDocs(collection(row(env.unauthenticatedContext().firestore(),'files','pdf'),'chunks')));
+      await assertFails(upload({...payload,authorUid:'dm'},bytes,db,'forged'));
+      await assertFails(upload({...payload,contentType:'image/svg+xml'},bytes,db,'svg'));
+      await assertFails(upload({...payload,size:8388609,chunkCount:33},bytes,db,'huge'));
+      await assertFails(upload(payload,{...bytes,index:1},db,'index'));
+      await assertFails(upload(payload,{...bytes,data:Bytes.fromUint8Array(new Uint8Array(10))},db,'length'));
+      await assertFails(updateDoc(chunk,{data:Bytes.fromUint8Array(new Uint8Array(9))}));
+      await assertFails(deleteDoc(chunk));
+      await assertFails(updateDoc(ref,{authorUid:'dm',updatedAt:serverTimestamp()}));
+      await assertFails(updateDoc(ref,{title:'b'.repeat(151),updatedAt:serverTimestamp()}));
+      await assertFails(setDoc(doc(ref,'chunks','1'),{index:1,data:Bytes.fromUint8Array(new Uint8Array(9))}));
+      await invite('second@example.test','second');await join('second','second');
+      await assertFails(updateDoc(row(user('second'),'files','pdf'),{archived:true,updatedAt:serverTimestamp()}));
+      await assertSucceeds(getDoc(doc(row(user('second'),'files','pdf'),'chunks','0')));
+      await assertSucceeds(updateDoc(row(user('dm'),'files','pdf'),{archived:true,updatedAt:serverTimestamp()}));
+      await assertFails(getDoc(doc(row(user('second'),'files','pdf'),'chunks','0')));
+      await assertSucceeds(updateDoc(ref,{archived:false,updatedAt:serverTimestamp()}));
+      await assertSucceeds(getDoc(doc(row(user('second'),'files','pdf'),'chunks','0')));
+      await assertFails(setDoc(row(user('outsider'),'files','bad'),payload));
+      await assertFails(setDoc(doc(user('player'),'campaigns','missing','files','pdf','chunks','0'),bytes));
+    });
+    it("accepts maximum bounded file chunks in one atomic upload", async () => {
+      const db=user('player'),batch=writeBatch(db),ref=row(db,'files','large');
+      batch.set(ref,{name:'map.png',title:'Map',contentType:'image/png',size:8388608,chunkCount:32,sha256:'b'.repeat(64),authorUid:'player',authorName:'player',createdAt:serverTimestamp(),updatedAt:serverTimestamp(),archived:false});
+      for(let i=0;i<32;i++)batch.set(doc(ref,'chunks',String(i)),{index:i,data:Bytes.fromUint8Array(new Uint8Array(262144))});
+      await assertSucceeds(batch.commit());
+      await assertSucceeds(getDoc(doc(row(user('dm'),'files','large'),'chunks','31')));
+    },30000);
     it("denies orphaned and unknown paths", async () => {
       await assertFails(
         setDoc(doc(user("player"), "users", "player"), { email: "private" }),

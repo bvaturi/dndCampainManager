@@ -36,6 +36,9 @@ function detail(c) { return keys(c,["alignment", "background", "equipment", "not
   function editCharacter(id,r) { return member(id) && (r.ownerUid==request.auth.uid || adminIdentity() || request.auth.uid in get(campaignPath(id)).data.dmIds); }
   function matchingSummary(id,key,r) { let s=getAfter(/databases/$(database)/documents/campaigns/$(id)/summaries/$(key)).data; return s=={'image':r.data.get('image',''),'ownerUid':r.ownerUid,'name':r.data.name,'player':r.data.player,'className':(r.type=='arad'?'Changeling · Bard':'Goliath · Tempest cleric'),'level':r.data.level,'hp':r.data.hp,'maxHP':r.data.maxHP,'ac':r.data.ac,'concentration':r.data.concentration,'updatedAt':r.updatedAt}; }
   function validNote(n) { return keys(n,['title','text','kind','authorUid','authorName','createdAt','updatedAt','url']) && text(n.title,150) && text(n.text,20000) && n.kind in ['note','quest','session','loot','link'] && (!('url' in n) || n.url=='' || webLink(n.url)) && (n.kind!='link' || webLink(n.url)) && text(n.authorUid,128) && text(n.authorName,100) && n.createdAt is timestamp && n.updatedAt==request.time; }
+  // Shared attachments are immutable bounded byte chunks. Archive changes are reversible.
+  function filePath(id,key) { return /databases/$(database)/documents/campaigns/$(id)/files/$(key); }
+  function validFile(f) { return keys(f,['name','title','contentType','size','chunkCount','sha256','authorUid','authorName','createdAt','updatedAt','archived']) && text(f.name,150) && f.name.size()>0 && text(f.title,150) && f.title.size()>0 && f.contentType in ['application/pdf','image/png','image/jpeg','image/webp'] && number(f.size,1,8388608) && number(f.chunkCount,1,32) && (f.chunkCount-1)*262144<f.size && f.size<=f.chunkCount*262144 && text(f.sha256,64) && f.sha256.matches('[a-f0-9]{64}') && text(f.authorUid,128) && text(f.authorName,100) && f.createdAt is timestamp && f.updatedAt==request.time && f.archived is bool; }
   match /campaigns/{id} {
    allow read: if signed() && (admin() || request.auth.uid in resource.data.memberIds);
    allow create: if admin() && validCampaign(request.resource.data) && request.resource.data.createdBy==request.auth.uid && request.resource.data.memberIds==[request.auth.uid] && request.resource.data.dmIds==[] && request.resource.data.createdAt==request.time && getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data.inviteId=='';
@@ -84,6 +87,15 @@ function detail(c) { return keys(c,["alignment", "background", "equipment", "not
    match /summaries/{key} {
     allow read: if member(id);
     allow create,update: if editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time && matchingSummary(id,key,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data);
+   }
+   match /files/{key} {
+    allow read: if member(id);
+    allow create: if member(id) && validFile(request.resource.data) && request.resource.data.authorUid==request.auth.uid && request.resource.data.authorName==request.auth.token.name && request.resource.data.createdAt==request.time && request.resource.data.archived==false && getAfter(/databases/$(database)/documents/campaigns/$(id)/files/$(key)/chunks/0).data.index==0;
+    allow update: if member(id) && (resource.data.authorUid==request.auth.uid || dm(id)) && validFile(request.resource.data) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['archived','updatedAt']);
+    match /chunks/{chunkId} {
+     allow read: if member(id) && exists(filePath(id,key)) && (!get(filePath(id,key)).data.archived || get(filePath(id,key)).data.authorUid==request.auth.uid || dm(id));
+     allow create: if member(id) && getAfter(filePath(id,key)).data.authorUid==request.auth.uid && getAfter(filePath(id,key)).data.createdAt==request.time && keys(request.resource.data,['index','data']) && number(request.resource.data.index,0,getAfter(filePath(id,key)).data.chunkCount-1) && chunkId==string(request.resource.data.index) && request.resource.data.data is bytes && request.resource.data.data.size()==(request.resource.data.index==getAfter(filePath(id,key)).data.chunkCount-1?getAfter(filePath(id,key)).data.size-request.resource.data.index*262144:262144);
+    }
    }
    match /notes/{key} {
     allow read: if member(id);

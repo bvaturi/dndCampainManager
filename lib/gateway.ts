@@ -1,3 +1,4 @@
+import type {PartyFile} from './party-files';
 import type {Campaign,CharacterRecord,CharacterType,Currency,Invitation,Member,PartyNote,PartySummary} from './campaign-types';
 import type {Character} from './rules';
 import type {SheetStore} from '@/app/sheet';
@@ -13,6 +14,10 @@ export interface Gateway {
  watchCharacters(id:string,user:Profile,dm:boolean,next:Watch<CharacterRecord[]>,fail:Fail):()=>void;
  watchSummaries(id:string,next:Watch<PartySummary[]>,fail:Fail):()=>void;
  watchNotes(id:string,privateNotes:boolean,next:Watch<PartyNote[]>,fail:Fail):()=>void;
+ watchFiles(id:string,next:Watch<PartyFile[]>,fail:Fail):()=>void;
+ uploadPartyFile(id:string,user:Profile,file:File,title:string):Promise<void>;
+ downloadPartyFile(id:string,file:PartyFile):Promise<Blob>;
+ archivePartyFile(id:string,file:PartyFile,archived:boolean):Promise<void>;
  watchInvitations(id:string,next:Watch<Invitation[]>,fail:Fail):()=>void;
  createCampaign(user:Profile,name:string,description:string):Promise<string>;
  joinCampaign(user:Profile,campaignId:string,inviteId:string):Promise<void>;

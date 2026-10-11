@@ -1,3 +1,4 @@
+import {FILE_CHUNK_SIZE,validatePartyFile,checkFileContent,digestFile,assembleFile,type PartyFile} from './party-files';
 import { isPlatformAdmin } from "./access";
 import firebaseConfig from "./firebase-config.json";
 import { initializeApp } from "firebase/app";
@@ -9,6 +10,7 @@ import {
   signOut,
 } from "firebase/auth";
 import {
+  Bytes,
   getFirestore,
   collection,
   doc,
@@ -226,6 +228,22 @@ export class FirebaseGateway implements Gateway {
   }
   watchNotes(id: string, priv: boolean, next: Watch<PartyNote[]>, fail: Fail) {
     return this.list(this.rows(id, priv ? "dmNotes" : "notes"), next, fail);
+  }
+  watchFiles(id:string,next:Watch<PartyFile[]>,fail:Fail){return this.list(this.rows(id,'files'),next,fail);}
+  async uploadPartyFile(id:string,user:Profile,file:File,title:string){
+    validatePartyFile(file);if(!title.trim()||title.trim().length>150)throw Error('Enter a file title of at most 150 characters.');
+    const bytes=new Uint8Array(await file.arrayBuffer());await checkFileContent(bytes,file.type);
+    const ref=doc(this.rows(id,'files')),batch=writeBatch(this.db),chunkCount=Math.ceil(bytes.length/FILE_CHUNK_SIZE);
+    batch.set(ref,{name:file.name,title:title.trim(),contentType:file.type,size:file.size,chunkCount,sha256:await digestFile(bytes),authorUid:this.uid(),authorName:user.displayName,createdAt:serverTimestamp(),updatedAt:serverTimestamp(),archived:false});
+    for(let i=0;i<chunkCount;i++)batch.set(doc(ref,'chunks',String(i)),{index:i,data:Bytes.fromUint8Array(bytes.slice(i*FILE_CHUNK_SIZE,(i+1)*FILE_CHUNK_SIZE))});
+    await batch.commit();
+  }
+  async downloadPartyFile(id:string,file:PartyFile){
+    const snapshot=await getDocs(collection(this.row(id,'files',file.id),'chunks'));
+    return assembleFile(file,snapshot.docs.map(d=>({index:d.data().index,data:d.data().data.toUint8Array()})));
+  }
+  async archivePartyFile(id:string,file:PartyFile,archived:boolean){
+    await runTransaction(this.db,async tx=>{const ref=this.row(id,'files',file.id),snap=await tx.get(ref);if(!snap.exists()||decode(snap.data()).updatedAt!==file.updatedAt)throw Error('This file changed. Reopen it before saving.');tx.update(ref,{archived,updatedAt:serverTimestamp()});});
   }
   watchInvitations(id: string, next: Watch<Invitation[]>, fail: Fail) {
     return this.list(
