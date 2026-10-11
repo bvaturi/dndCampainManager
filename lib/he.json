@@ -716,5 +716,19 @@
   "Preview session saved. No Calendar event or email was sent.": "מפגש הדגמה נשמר. לא נוצר אירוע ביומן ולא נשלח דוא״ל.",
   "Check the session title, date, time and recipient emails.": "בדקו את כותרת המפגש, התאריך, השעות וכתובות הדוא״ל של המוזמנים.",
   "Name": "שם",
-  "Actions": "פעולות"
+  "Actions": "פעולות",
+  "Edit session": "עריכת מפגש",
+  "Cancel session": "ביטול מפגש",
+  "Cancel session?": "לבטל את המפגש?",
+  "Review changes": "בדיקת השינויים",
+  "Save changes & notify guests": "שמירת שינויים ושליחת עדכון למוזמנים",
+  "Cancel session & notify guests": "ביטול מפגש והודעה למוזמנים",
+  "Cancelled": "בוטל",
+  "Google Calendar will notify the existing guests:": "יומן Google יודיע למוזמנים הקיימים:",
+  "The existing guest list and RSVP responses are preserved.": "רשימת המוזמנים ואישורי ההגעה הקיימים נשמרים.",
+  "Session cancelled. Google Calendar notified the guests.": "המפגש בוטל. יומן Google שלח הודעה למוזמנים.",
+  "Session updated. Google Calendar notified the guests.": "המפגש עודכן. יומן Google שלח הודעה למוזמנים.",
+  "Check Google Calendar for RSVP and any changes made outside Stormkeep.": "בדקו ביומן Google אישורי הגעה ושינויים שבוצעו מחוץ ל־Stormkeep.",
+  "Google will request Calendar permission. Guests can RSVP in their invitation email.": "Google יבקש הרשאה ליומן. מוזמנים יכולים לאשר הגעה דרך הודעת ההזמנה.",
+  "Preview session changed. No Calendar event or email was sent.": "מפגש ההדגמה עודכן. לא נוצר אירוע ביומן ולא נשלח דוא״ל."
 }

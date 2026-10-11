@@ -25,8 +25,14 @@ import {
   type PartyContact,
   type PartySession,
   type SessionDraft,
+  type SessionChange,
 } from "./party-tools";
-import { CALENDAR_SCOPE, sendCalendarEvent } from "./calendar";
+import {
+  CALENDAR_SCOPE,
+  sendCalendarEvent,
+  readCalendarSession,
+  changeCalendarSession,
+} from "./calendar";
 export class FirebaseParty {
   constructor(
     private db: Firestore,
@@ -192,6 +198,114 @@ export class FirebaseParty {
         next(s.docs.map((d) => ({ id: d.id, ...d.data() }) as SessionDraft)),
       fail,
     );
+  }
+  private async calendarToken(id: string, organizerUid: string) {
+    const user = this.auth.currentUser;
+    if (!user || organizerUid !== user.uid)
+      throw Error("Only the original organizer can change this session");
+    const campaign = await getDoc(doc(this.db, "campaigns", id));
+    if (
+      !campaign.exists() ||
+      (!isPlatformAdmin(user) && !campaign.data().dmIds.includes(user.uid))
+    )
+      throw Error("DM access required");
+    const provider = new GoogleAuthProvider();
+    provider.addScope(CALENDAR_SCOPE);
+    provider.setCustomParameters({ login_hint: user.email || "" });
+    const result = await reauthenticateWithPopup(user, provider);
+    const token = GoogleAuthProvider.credentialFromResult(result)?.accessToken;
+    if (!token) throw Error("Google Calendar permission is required");
+    return token;
+  }
+  async loadSession(id: string, session: PartySession): Promise<SessionChange> {
+    if (session.organizerUid !== this.uid())
+      throw Error("Only the original organizer can change this session");
+    const pending = await getDoc(this.row(id, "sessionChanges", session.id));
+    if (pending.exists())
+      return { ...pending.data(), recovery: true } as SessionChange;
+    return readCalendarSession(
+      await this.calendarToken(id, session.organizerUid),
+      id,
+      session,
+    );
+  }
+  async changeSession(id: string, value: SessionChange) {
+    const { recovery: _, ...operationValue } = value;
+    const change = { ...operationValue, draft: validateSession(value.draft) };
+    const token = await this.calendarToken(id, change.draft.organizerUid);
+    const ref = this.row(id, "sessions", change.draft.id),
+      pending = this.row(id, "sessionChanges", change.draft.id);
+    const session = await runTransaction(this.db, async (tx) => {
+      const [old, operation] = await Promise.all([
+        tx.get(ref),
+        tx.get(pending),
+      ]);
+      if (
+        !old.exists() ||
+        old.data().organizerUid !== this.uid() ||
+        old.data().status === "cancelled"
+      )
+        throw Error("This session cannot be changed");
+      if ((old.data().revision || 0) !== change.revision)
+        throw Error("The session changed. Close and reopen Edit.");
+      if (operation.exists()) {
+        if (JSON.stringify(operation.data()) !== JSON.stringify(change)) {
+          // Firestore field order is not guaranteed.
+          const o = operation.data() as SessionChange;
+          if (
+            o.operationId !== change.operationId ||
+            o.action !== change.action ||
+            o.etag !== change.etag ||
+            JSON.stringify(validateSession(o.draft)) !==
+              JSON.stringify(change.draft)
+          )
+            throw Error(
+              "A change is pending. Close and reopen Edit to resume it.",
+            );
+        }
+      } else tx.set(pending, change);
+      const v = old.data();
+      return {
+        ...v,
+        id: old.id,
+        startAt: v.startAt.toMillis(),
+        endAt: v.endAt.toMillis(),
+      } as PartySession;
+    });
+    let updated: PartySession;
+    try {
+      updated = await changeCalendarSession(token, id, change, session);
+    } catch (e) {
+      if (
+        (e as Error).message.startsWith(
+          "This meeting changed in Google Calendar.",
+        )
+      ) {
+        const batch = writeBatch(this.db);
+        batch.delete(pending);
+        await batch.commit();
+      }
+      throw e;
+    }
+    try {
+      await runTransaction(this.db, async (tx) => {
+        const current = await tx.get(ref);
+        if ((current.data()?.revision || 0) !== change.revision)
+          throw Error("Session changed");
+        const { id: _, ...data } = updated;
+        tx.set(ref, {
+          ...data,
+          revision: change.revision + 1,
+          startAt: Timestamp.fromMillis(updated.startAt),
+          endAt: Timestamp.fromMillis(updated.endAt),
+        });
+        tx.delete(pending);
+      });
+    } catch {
+      throw Error(
+        "Google Calendar was updated, but the party listing could not be saved. Reopen Edit or Cancel session to resume the saved change without duplicate notifications.",
+      );
+    }
   }
   async sendSession(id: string, value: SessionDraft) {
     const draft = validateSession(value),

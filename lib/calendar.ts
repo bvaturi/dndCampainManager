@@ -83,3 +83,155 @@ export async function sendCalendarEvent(
     calendarUrl: url.href,
   };
 }
+
+import type { SessionChange } from "./party-tools";
+function verifyEvent(event: any, campaignId: string, id: string) {
+  if (
+    event.id !== id ||
+    event.extendedProperties?.private?.stormkeepCampaign !== campaignId ||
+    event.extendedProperties?.private?.stormkeepSession !== id
+  )
+    throw Error("Calendar event could not be verified.");
+}
+async function calendarResult(response: Response) {
+  if (!response.ok) {
+    if (response.status === 412)
+      throw Error(
+        "This meeting changed in Google Calendar. Close and reopen Edit before trying again.",
+      );
+    const error = await response.json().catch(() => ({}));
+    throw Error(
+      error?.error?.message ||
+        "Google Calendar request failed. Retry the saved change.",
+    );
+  }
+  return response.json();
+}
+export async function readCalendarSession(
+  token: string,
+  campaignId: string,
+  session: PartySession,
+  request: typeof fetch = fetch,
+): Promise<SessionChange> {
+  const event = await calendarResult(
+    await request(base + "/" + session.id, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+  );
+  verifyEvent(event, campaignId, session.id);
+  if (event.status === "cancelled")
+    throw Error(
+      "This meeting is already cancelled in Google Calendar. Use Cancel session to update the party listing.",
+    );
+  if (
+    !event.etag ||
+    !event.start?.dateTime ||
+    !event.end?.dateTime ||
+    event.attendeesOmitted
+  )
+    throw Error(
+      "This Calendar event cannot be edited here. Open Google Calendar.",
+    );
+  const zone = event.start.timeZone || session.timeZone;
+  const local = (value: string) => {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+      timeZone: zone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    }).formatToParts(new Date(value));
+    const p = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+    return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`;
+  };
+  return {
+    draft: validateSession({
+      id: session.id,
+      title: event.summary || session.title,
+      description: event.description || "",
+      location: event.location || "",
+      start: local(event.start.dateTime),
+      end: local(event.end.dateTime),
+      timeZone: zone,
+      attendees: (event.attendees || []).map((a: any) => a.email),
+      organizerUid: session.organizerUid,
+    }),
+    etag: event.etag,
+    revision: session.revision || 0,
+    operationId: crypto.randomUUID().replaceAll("-", ""),
+    action: "edit",
+  };
+}
+/** The durable operation ID recovers a successful PATCH after an interrupted database save. Attendees are omitted to preserve guests and their RSVPs. */
+export async function changeCalendarSession(
+  token: string,
+  campaignId: string,
+  change: SessionChange,
+  session: PartySession,
+  request: typeof fetch = fetch,
+): Promise<PartySession> {
+  const d = validateSession(change.draft),
+    url = base + "/" + d.id,
+    headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+  const response = await request(url, { headers });
+  if (change.action === "cancel" && [404, 410].includes(response.status))
+    return { ...session, status: "cancelled" };
+  const current = await calendarResult(response);
+  verifyEvent(current, campaignId, d.id);
+  if (change.action === "cancel") {
+    if (current.status !== "cancelled") {
+      const removed = await request(url + "?sendUpdates=all", {
+        method: "DELETE",
+        headers: { ...headers, "If-Match": change.etag },
+      });
+      if (!removed.ok && ![404, 410].includes(removed.status))
+        await calendarResult(removed);
+    }
+    return { ...session, status: "cancelled" };
+  }
+  if (current.status === "cancelled")
+    throw Error("This meeting was cancelled in Google Calendar.");
+  const event =
+    current.extendedProperties?.private?.stormkeepOperation ===
+    change.operationId
+      ? current
+      : await calendarResult(
+          await request(url + "?sendUpdates=all", {
+            method: "PATCH",
+            headers: { ...headers, "If-Match": change.etag },
+            body: JSON.stringify({
+              summary: d.title,
+              description: d.description,
+              location: d.location,
+              start: { dateTime: d.start + ":00", timeZone: d.timeZone },
+              end: { dateTime: d.end + ":00", timeZone: d.timeZone },
+              extendedProperties: {
+                private: {
+                  ...current.extendedProperties.private,
+                  stormkeepOperation: change.operationId,
+                },
+              },
+            }),
+          }),
+        );
+  verifyEvent(event, campaignId, d.id);
+  const startAt = Date.parse(event.start?.dateTime),
+    endAt = Date.parse(event.end?.dateTime);
+  if (!Number.isFinite(startAt) || !Number.isFinite(endAt) || endAt <= startAt)
+    throw Error("Unexpected Calendar response. Retry the saved change.");
+  return {
+    ...session,
+    title: d.title,
+    description: d.description,
+    location: d.location,
+    timeZone: d.timeZone,
+    startAt,
+    endAt,
+    status: "scheduled",
+  };
+}

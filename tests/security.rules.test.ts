@@ -2,7 +2,7 @@ import {newCharacter} from "../lib/custom-character";
 import {classLabel} from "../lib/campaign-types";
 import { aradInitial } from "../lib/bard";
 import { readFileSync } from "node:fs";
-import { beforeAll, afterAll, beforeEach, describe, it } from "vitest";
+import { beforeAll, afterAll, beforeEach, describe, it, expect } from "vitest";
 import {
   initializeTestEnvironment,
   assertFails,
@@ -690,6 +690,28 @@ describe.skipIf(!process.env.FIRESTORE_EMULATOR_HOST)(
     it('allows admin backfill only from the member bound invitation',async()=>{await assertSucceeds(setDoc(row(admin(),'contacts','player'),{name:'player',email:'player@example.test'}));await assertFails(setDoc(row(admin(),'contacts','player'),{name:'player',email:'fake@example.test'}));await assertFails(setDoc(row(admin(),'contacts','outsider'),{name:'outsider',email:'outsider@example.test'}));});
     it('keeps scheduling drafts private and immutable',async()=>{const key='a'.repeat(32),data={id:key,title:'Next game',description:'',location:'',start:'2026-10-20T19:00',end:'2026-10-20T23:00',timeZone:'Asia/Jerusalem',attendees:['player@example.test'],organizerUid:'dm'};await assertSucceeds(setDoc(row(user('dm'),'sessionDrafts',key),data));await assertFails(getDoc(row(user('player'),'sessionDrafts',key)));await assertFails(setDoc(row(user('player'),'sessionDrafts','b'.repeat(32)),{...data,id:'b'.repeat(32),organizerUid:'player'}));await assertFails(updateDoc(row(user('dm'),'sessionDrafts',key),{title:'Edited'}));await assertFails(deleteDoc(row(user('dm'),'sessionDrafts',key)));});
     it('publishes session metadata while keeping recipient emails in the private draft',async()=>{const db=user('dm'),key='a'.repeat(32),draft={id:key,title:'Next game',description:'',location:'',start:'2026-10-20T19:00',end:'2026-10-20T23:00',timeZone:'Asia/Jerusalem',attendees:['player@example.test'],organizerUid:'dm'};await setDoc(row(db,'sessionDrafts',key),draft);const data={title:draft.title,description:'',location:'',timeZone:draft.timeZone,organizerUid:'dm',startAt:Timestamp.fromMillis(Date.now()+3600000),endAt:Timestamp.fromMillis(Date.now()+7200000),calendarUrl:'https://www.google.com/calendar/event?eid=example'};await assertFails(setDoc(row(db,'sessions',key),{...data,attendees:draft.attendees}));await assertFails(setDoc(row(db,'sessions',key),{...data,calendarUrl:'https://evil.example/'}));const b=writeBatch(db);b.set(row(db,'sessions',key),data);b.delete(row(db,'sessionDrafts',key));await assertSucceeds(b.commit());await assertSucceeds(getDoc(row(user('player'),'sessions',key)));await assertFails(getDoc(row(user('outsider'),'sessions',key)));await assertFails(updateDoc(row(user('player'),'sessions',key),{title:'No'}));});
+    it('limits edits and cancellation to the original organizer, with a private immutable operation and atomic listing update',async()=>{
+      const db=user('dm'),key='c'.repeat(32),draft={id:key,title:'Original',description:'',location:'',start:'2026-10-20T19:00',end:'2026-10-20T23:00',timeZone:'Asia/Jerusalem',attendees:['player@example.test'],organizerUid:'dm'};
+      await setDoc(row(db,'sessionDrafts',key),draft);
+      const original={title:draft.title,description:'',location:'',timeZone:draft.timeZone,organizerUid:'dm',startAt:Timestamp.fromMillis(Date.now()+3600000),endAt:Timestamp.fromMillis(Date.now()+7200000),calendarUrl:'https://www.google.com/calendar/event?eid=example'};
+      const create=writeBatch(db);create.set(row(db,'sessions',key),original);create.delete(row(db,'sessionDrafts',key));await create.commit();
+      const operation={draft:{...draft,title:'Updated'},etag:'"old"',revision:0,operationId:'d'.repeat(32),action:'edit'};
+      await assertFails(setDoc(row(user('player'),'sessionChanges',key),{...operation,draft:{...operation.draft,organizerUid:'player'}}));
+      await assertFails(setDoc(row(admin(),'sessionChanges',key),{...operation,draft:{...operation.draft,organizerUid:'admin'}}));
+      await assertSucceeds(setDoc(row(db,'sessionChanges',key),operation));
+      await assertFails(getDoc(row(user('player'),'sessionChanges',key)));
+      await assertFails(updateDoc(row(db,'sessionChanges',key),{action:'cancel'}));
+      await assertFails(updateDoc(row(db,'sessions',key),{title:'Updated',revision:1,status:'scheduled'}));
+      const edited={...original,title:'Updated',revision:1,status:'scheduled'};
+      const wrong=writeBatch(db);wrong.set(row(db,'sessions',key),{...edited,calendarUrl:'https://evil.test/'});wrong.delete(row(db,'sessionChanges',key));await assertFails(wrong.commit());
+      const edit=writeBatch(db);edit.set(row(db,'sessions',key),edited);edit.delete(row(db,'sessionChanges',key));await assertSucceeds(edit.commit());
+      await assertFails(setDoc(row(db,'sessionChanges',key),operation));
+      await setDoc(row(db,'sessionChanges',key),{...operation,revision:1,action:'cancel'});
+      const cancel=writeBatch(db);cancel.set(row(db,'sessions',key),{...edited,revision:2,status:'cancelled'});cancel.delete(row(db,'sessionChanges',key));await assertSucceeds(cancel.commit());
+      expect((await getDoc(row(user('player'),'sessions',key))).data()?.status).toBe('cancelled');
+      await assertFails(setDoc(row(db,'sessionChanges',key),{...operation,revision:2}));
+      await assertFails(deleteDoc(row(db,'sessions',key)));
+    });
     it('accepts fifty recipients and rejects invalid dates or excess recipients',async()=>{const key='a'.repeat(32),draft={id:key,title:'x'.repeat(150),description:'x'.repeat(2000),location:'x'.repeat(300),start:'2026-10-20T19:00',end:'2026-10-20T23:00',timeZone:'Asia/Jerusalem',attendees:Array.from({length:50},(_,i)=>`player${i}@example.test`),organizerUid:'dm'};await assertSucceeds(setDoc(row(user('dm'),'sessionDrafts',key),draft));const second='b'.repeat(32);await assertFails(setDoc(row(user('dm'),'sessionDrafts',second),{...draft,id:second,attendees:[{email:'player@example.test'}]}));await assertFails(setDoc(row(user('dm'),'sessionDrafts',second),{...draft,id:second,attendees:['x'.repeat(255)+'@example.test']}));await assertFails(setDoc(row(user('dm'),'sessionDrafts',second),{...draft,id:second,attendees:[...draft.attendees,'extra@example.test']}));await assertFails(setDoc(row(user('dm'),'sessionDrafts',second),{...draft,id:second,end:draft.start}));});
     it('lets assigned DMs include admin-invited players only in their own campaign',async()=>{const data={email:'future@example.test',role:'player',campaignName:'Test campaign',createdBy:'admin',createdAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+3600000)};await setDoc(row(admin(),'invitations','future'),data);await assertSucceeds(getDoc(row(user('dm'),'invitations','future')));await assertSucceeds(getDocs(query(collection(camp(user('dm')),'invitations'),where('role','==','player'))));await assertFails(getDoc(row(user('outsider'),'invitations','future')));await bootstrap('other-dm','two');await assertFails(getDoc(row(user('other-dm'),'invitations','future')));});
   },

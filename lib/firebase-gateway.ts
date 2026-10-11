@@ -1,5 +1,5 @@
 import {FirebaseParty} from './firebase-party';
-import type {Combat,PartyContact,PartySession,SessionDraft} from './party-tools';
+import type {Combat,PartyContact,PartySession,SessionChange,SessionDraft} from './party-tools';
 import {FILE_CHUNK_SIZE,validatePartyFile,checkFileContent,digestFile,assembleFile,type PartyFile} from './party-files';
 import { isPlatformAdmin } from "./access";
 import firebaseConfig from "./firebase-config.json";
@@ -146,6 +146,8 @@ export class FirebaseGateway implements Gateway {
   watchPartyContacts(id:string,next:Watch<PartyContact[]>,fail:Fail){return this.party.watchPartyContacts(id,next,fail);}
   watchSessions(id:string,next:Watch<PartySession[]>,fail:Fail){return this.party.watchSessions(id,next,fail);}
   watchSessionDrafts(id:string,next:Watch<SessionDraft[]>,fail:Fail){return this.party.watchSessionDrafts(id,next,fail);}
+  loadSession(id:string,session:PartySession){return this.party.loadSession(id,session);}
+  changeSession(id:string,change:SessionChange){return this.party.changeSession(id,change);}
   sendSession(id:string,draft:SessionDraft){return this.party.sendSession(id,draft);}
   async signIn() {
     await signInWithPopup(this.auth, new GoogleAuthProvider());

@@ -78,7 +78,17 @@ export const sessionDraftSchema = z
   })
   .strict();
 export type SessionDraft = z.infer<typeof sessionDraftSchema>;
+export interface SessionChange {
+  recovery?: boolean;
+  draft: SessionDraft;
+  etag: string;
+  revision: number;
+  operationId: string;
+  action: "edit" | "cancel";
+}
 export interface PartySession {
+  revision?: number;
+  status?: "scheduled" | "cancelled";
   id: string;
   title: string;
   description: string;

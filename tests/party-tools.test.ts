@@ -7,7 +7,11 @@ import {
   validateSession,
   type SessionDraft,
 } from "../lib/party-tools";
-import { sendCalendarEvent } from "../lib/calendar";
+import {
+  sendCalendarEvent,
+  changeCalendarSession,
+  readCalendarSession,
+} from "../lib/calendar";
 const draft: SessionDraft = {
   id: "a".repeat(32),
   title: "Next game",
@@ -142,5 +146,133 @@ describe("party tools", () => {
             ),
         ),
       ).rejects.toThrow("could not be verified");
+  });
+});
+
+describe("Calendar session changes", () => {
+  const change = {
+    draft,
+    etag: '"old"',
+    revision: 0,
+    operationId: "b".repeat(32),
+    action: "edit" as const,
+  };
+  const current = {
+    ...event,
+    etag: '"old"',
+    attendees: [{ email: "player@example.test", responseStatus: "accepted" }],
+  };
+  const session = {
+    id: draft.id,
+    title: draft.title,
+    description: draft.description,
+    location: draft.location,
+    timeZone: draft.timeZone,
+    organizerUid: draft.organizerUid,
+    startAt: Date.parse(event.start.dateTime),
+    endAt: Date.parse(event.end.dateTime),
+    calendarUrl: event.htmlLink,
+  };
+  it("patches the same event with an ETag and notifies all guests without overwriting RSVPs", async () => {
+    const request = vi
+      .fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify(current)))
+      .mockResolvedValueOnce(new Response(JSON.stringify(event)));
+    await changeCalendarSession("secret", "campaign", change, session, request);
+    const [url, options] = request.mock.calls[1];
+    expect(url).toContain("/" + draft.id + "?sendUpdates=all");
+    expect(options.method).toBe("PATCH");
+    expect(options.headers["If-Match"]).toBe('"old"');
+    expect(JSON.parse(options.body).attendees).toBeUndefined();
+  });
+  it("recovers an applied operation without sending another notification", async () => {
+    const request = vi
+      .fn()
+      .mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            ...current,
+            extendedProperties: {
+              private: {
+                ...event.extendedProperties.private,
+                stormkeepOperation: change.operationId,
+              },
+            },
+          }),
+        ),
+      );
+    await changeCalendarSession("secret", "campaign", change, session, request);
+    expect(request).toHaveBeenCalledTimes(1);
+  });
+  it("cancels the existing event with guest notifications and recovers an already deleted event", async () => {
+    const request = vi
+      .fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify(current)))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    expect(
+      await changeCalendarSession(
+        "secret",
+        "campaign",
+        { ...change, action: "cancel" },
+        session,
+        request,
+      ),
+    ).toMatchObject({ status: "cancelled" });
+    expect(request.mock.calls[1][1].method).toBe("DELETE");
+    expect(request.mock.calls[1][0]).toContain("sendUpdates=all");
+    const retry = vi
+      .fn()
+      .mockResolvedValue(new Response("{}", { status: 410 }));
+    expect(
+      await changeCalendarSession(
+        "secret",
+        "campaign",
+        { ...change, action: "cancel" },
+        session,
+        retry,
+      ),
+    ).toMatchObject({ status: "cancelled" });
+    expect(retry).toHaveBeenCalledTimes(1);
+  });
+  it("refuses concurrent changes and unrelated events", async () => {
+    const request = vi
+      .fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify(current)))
+      .mockResolvedValueOnce(new Response("{}", { status: 412 }));
+    await expect(
+      changeCalendarSession("secret", "campaign", change, session, request),
+    ).rejects.toThrow("changed in Google Calendar");
+    await expect(
+      changeCalendarSession(
+        "secret",
+        "other",
+        change,
+        session,
+        vi.fn().mockResolvedValue(new Response(JSON.stringify(current))),
+      ),
+    ).rejects.toThrow("could not be verified");
+  });
+  it("loads current Calendar details in the event timezone", async () => {
+    const request = vi
+      .fn()
+      .mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            ...current,
+            summary: "Edited in Calendar",
+            start: { ...event.start, timeZone: "Asia/Jerusalem" },
+          }),
+        ),
+      );
+    const loaded = await readCalendarSession(
+      "secret",
+      "campaign",
+      session,
+      request,
+    );
+    expect(loaded.draft.start).toBe(draft.start);
+    expect(loaded.draft.title).toBe("Edited in Calendar");
+    expect(loaded.draft.attendees).toEqual(draft.attendees);
+    expect(loaded.etag).toBe('"old"');
   });
 });

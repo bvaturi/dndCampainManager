@@ -39,6 +39,11 @@ function emailList(v) { return v is list && v.size()<=50 && v.toSet()==v.join(',
   function boundContact(id,uid,v) { let m=get(/databases/$(database)/documents/campaigns/$(id)/members/$(uid)).data; return m.inviteId!='' && v.email==get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(m.inviteId)).data.email && v.name==m.name; }
   function contact(id,uid,v) { return keys(v,['email','name']) && text(v.email,254) && v.email==v.email.lower() && v.email.matches('[^@ ]+@[^@ ]+[.][^@ ]+') && text(v.name,100) && uid in get(campaignPath(id)).data.memberIds && ((uid==request.auth.uid && v.email==request.auth.token.email.lower() && v.name==request.auth.token.name) || (admin() && boundContact(id,uid,v))); }
   function validDraft(v,key) { return keys(v,['id','title','description','location','start','end','timeZone','attendees','organizerUid']) && key.matches('[a-f0-9]{32}') && v.id==key && text(v.title,150) && v.title.size()>0 && text(v.description,2000) && text(v.location,300) && text(v.start,16) && v.start.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && text(v.end,16) && v.end.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && v.end>v.start && text(v.timeZone,100) && v.timeZone.size()>0 && emailList(v.attendees) && v.attendees.size()>0 && v.attendees.toSet().size()==v.attendees.size() && v.organizerUid==request.auth.uid; }
+  function sessionChange(id,key,old,v) {
+    let c=get(/databases/$(database)/documents/campaigns/$(id)/sessionChanges/$(key)).data;
+    let d=c.draft;
+    return keys(v,['title','description','location','timeZone','startAt','endAt','calendarUrl','organizerUid','status','revision']) && old.organizerUid==request.auth.uid && v.organizerUid==old.organizerUid && old.get('status','scheduled')!='cancelled' && v.calendarUrl==old.calendarUrl && c.revision==old.get('revision',0) && v.revision==c.revision+1 && v.startAt is timestamp && v.endAt is timestamp && v.endAt>v.startAt && !existsAfter(/databases/$(database)/documents/campaigns/$(id)/sessionChanges/$(key)) && ((c.action=='edit' && v.status=='scheduled' && v.title==d.title && v.description==d.description && v.location==d.location && v.timeZone==d.timeZone) || (c.action=='cancel' && v.status=='cancelled' && v.diff(old).affectedKeys().hasOnly(['status','revision'])));
+  }
   function validSession(id,key,v) { let d=get(/databases/$(database)/documents/campaigns/$(id)/sessionDrafts/$(key)).data; return keys(v,['title','description','location','timeZone','startAt','endAt','calendarUrl','organizerUid']) && v.organizerUid==request.auth.uid && v.organizerUid==d.organizerUid && v.title==d.title && v.description==d.description && v.location==d.location && v.timeZone==d.timeZone && v.startAt is timestamp && v.endAt is timestamp && v.endAt>v.startAt && text(v.calendarUrl,2048) && v.calendarUrl.matches('https://(www[.]google[.]com/calendar/|calendar[.]google[.]com/)[^ ]+'); }
 
   function validCampaign(c) { return keys(c,['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt']) && text(c.name,100) && c.name.size()>0 && text(c.description,2000) && c.ruleset=='2014' && text(c.createdBy,128) && c.memberIds is list && c.memberIds.size()<=50 && c.memberIds.toSet().size()==c.memberIds.size() && c.dmIds is list && c.dmIds.size()<=20 && c.dmIds.toSet().size()==c.dmIds.size() && c.dmIds.toSet().hasOnly(c.memberIds) && c.createdBy in c.memberIds && index(c.currencyIndex) && c.currencyIndex.size()>0 && c.createdAt is timestamp && c.updatedAt==request.time; }
@@ -80,9 +85,16 @@ function emailList(v) { return v is list && v.size()<=50 && v.toSet()==v.join(',
     allow create: if dm(id) && validDraft(request.resource.data,key);
     allow delete: if dm(id) && resource.data.organizerUid==request.auth.uid && existsAfter(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key));
    }
+   match /sessionChanges/{key} {
+    allow read: if dm(id);
+    allow create: if dm(id) && keys(request.resource.data,['draft','etag','revision','operationId','action']) && validDraft(request.resource.data.draft,key) && text(request.resource.data.etag,200) && request.resource.data.etag.size()>0 && request.resource.data.operationId.matches('[a-f0-9]{32}') && request.resource.data.action in ['edit','cancel'] && request.resource.data.revision==get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('revision',0) && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.organizerUid==request.auth.uid && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('status','scheduled')!='cancelled';
+    allow delete: if dm(id) && resource.data.draft.organizerUid==request.auth.uid;
+   }
    match /sessions/{key} {
     allow read: if member(id);
     allow create: if dm(id) && validSession(id,key,request.resource.data);
+    allow update: if dm(id) && sessionChange(id,key,resource.data,request.resource.data);
+
    }
    match /currencies/{key} {
     allow read: if member(id);

@@ -8,6 +8,7 @@ import {
   type PartyContact,
   type PartySession,
   type SessionDraft,
+  type SessionChange,
 } from "@/lib/party-tools";
 import { useLanguage } from "./language";
 export default function PartySessions({
@@ -31,6 +32,7 @@ export default function PartySessions({
   const [sessions, setSessions] = useState<PartySession[]>([]),
     [contacts, setContacts] = useState<PartyContact[]>([]),
     [drafts, setDrafts] = useState<SessionDraft[]>([]),
+    [editing, setEditing] = useState<SessionChange | null>(null),
     [open, setOpen] = useState(false),
     [review, setReview] = useState<SessionDraft | null>(null),
     [busy, setBusy] = useState(false),
@@ -89,14 +91,45 @@ export default function PartySessions({
     setBusy(true);
     setNotice("");
     try {
-      await gateway.sendSession(campaign.id, review);
+      if (editing)
+        await gateway.changeSession(campaign.id, { ...editing, draft: review });
+      else await gateway.sendSession(campaign.id, review);
       setNotice(
-        gateway.previewOnly
-          ? "Preview session saved. No Calendar event or email was sent."
-          : "Session scheduled. Google Calendar sent invitations to the reviewed recipients.",
+        editing
+          ? gateway.previewOnly
+            ? "Preview session changed. No Calendar event or email was sent."
+            : editing.action === "cancel"
+              ? "Session cancelled. Google Calendar notified the guests."
+              : "Session updated. Google Calendar notified the guests."
+          : gateway.previewOnly
+            ? "Preview session saved. No Calendar event or email was sent."
+            : "Session scheduled. Google Calendar sent invitations to the reviewed recipients.",
       );
       setReview(null);
+      setEditing(null);
       setOpen(false);
+    } catch (e) {
+      report((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function editSession(session: PartySession, action: "edit" | "cancel") {
+    setBusy(true);
+    setNotice("");
+    try {
+      const change = await gateway.loadSession(campaign.id, session);
+      const resumed = change.recovery ? change : { ...change, action };
+      setEditing(resumed);
+      const d = resumed.draft;
+      setTitle(d.title);
+      setDescription(d.description);
+      setLocation(d.location);
+      setStart(d.start);
+      setEnd(d.end);
+      setZone(d.timeZone);
+      setReview(resumed.action === "cancel" || resumed.recovery ? d : null);
+      setOpen(true);
     } catch (e) {
       report((e as Error).message);
     } finally {
@@ -130,6 +163,7 @@ export default function PartySessions({
             disabled={busy}
             onClick={() => {
               setOpen(!open);
+              setEditing(null);
               setReview(null);
             }}
           >
@@ -170,20 +204,22 @@ export default function PartySessions({
           onSubmit={(e) => {
             e.preventDefault();
             try {
-              if (missing.length)
+              if (!editing && missing.length)
                 throw Error(
                   "Some party members have no verified address yet. Ask them to open this campaign first.",
                 );
               setReview(
                 validateSession({
-                  id: crypto.randomUUID().replaceAll("-", ""),
+                  id:
+                    editing?.draft.id ||
+                    crypto.randomUUID().replaceAll("-", ""),
                   title,
                   description,
                   location,
                   start,
                   end,
                   timeZone,
-                  attendees: recipients,
+                  attendees: editing?.draft.attendees || recipients,
                   organizerUid: user.uid,
                 }),
               );
@@ -192,7 +228,7 @@ export default function PartySessions({
             }
           }}
         >
-          <h3>Schedule session</h3>
+          <h3>{editing ? "Edit session" : "Schedule session"}</h3>
           <div className="wallet-fields">
             <label className="field">
               Session title
@@ -250,7 +286,7 @@ export default function PartySessions({
               />
             </label>
           </div>
-          {pending.length > 0 && (
+          {!editing && pending.length > 0 && (
             <label className="session-checkbox">
               <input
                 type="checkbox"
@@ -261,10 +297,11 @@ export default function PartySessions({
             </label>
           )}
           <p className="small muted">
-            All current party members are included. Google sends from the DM’s
-            signed-in Google Calendar account.
+            {editing
+              ? "The existing guest list and RSVP responses are preserved."
+              : "All current party members are included. Google sends from the DM’s signed-in Google Calendar account."}
           </p>
-          {missing.length > 0 && (
+          {!editing && missing.length > 0 && (
             <p role="alert" className="error">
               {t("Missing verified address")}:{" "}
               {missing.map((m) => m.name).join(", ")}.{" "}
@@ -274,9 +311,11 @@ export default function PartySessions({
           <div className="button-row">
             <Button
               type="submit"
-              disabled={busy || missing.length > 0 || !recipients.length}
+              disabled={
+                busy || (!editing && (missing.length > 0 || !recipients.length))
+              }
             >
-              Review invitations
+              {editing ? "Review changes" : "Review invitations"}
             </Button>
             <Button
               type="button"
@@ -290,7 +329,13 @@ export default function PartySessions({
       )}
       {dm && open && review && (
         <div className="panel session-review">
-          <h3>Review invitations</h3>
+          <h3>
+            {editing?.action === "cancel"
+              ? "Cancel session?"
+              : editing
+                ? "Review changes"
+                : "Review invitations"}
+          </h3>
           <h4 dir="auto">{review.title}</h4>
           <p dir="ltr">
             {review.start.replace("T", " ")} → {review.end.replace("T", " ")} ·{" "}
@@ -300,7 +345,11 @@ export default function PartySessions({
           <p className="preserve-lines" dir="auto">
             {review.description}
           </p>
-          <p>Send Google Calendar and email invitations to:</p>
+          <p>
+            {editing
+              ? "Google Calendar will notify the existing guests:"
+              : "Send Google Calendar and email invitations to:"}
+          </p>
           <ul>
             {review.attendees.map((email) => (
               <li key={email}>
@@ -310,12 +359,17 @@ export default function PartySessions({
           </ul>
           <p className="small muted">
             Google will request Calendar permission. Guests can RSVP in their
-            invitation email. To change or cancel a sent meeting, open it in
-            Google Calendar.
+            invitation email.
           </p>
           <div className="button-row">
             <Button disabled={busy} onClick={() => void send()}>
-              {busy ? "Sending…" : "Send Calendar invitations"}
+              {busy
+                ? "Sending…"
+                : editing?.action === "cancel"
+                  ? "Cancel session & notify guests"
+                  : editing
+                    ? "Save changes & notify guests"
+                    : "Send Calendar invitations"}
             </Button>
             <Button
               variant="ghost"
@@ -352,10 +406,31 @@ export default function PartySessions({
                   </p>
                 )}
                 <p className="small muted">
-                  Meeting details reflect the original invitation. Check Google
-                  Calendar for later changes and RSVP.
+                  {s.status === "cancelled"
+                    ? "Cancelled"
+                    : "Check Google Calendar for RSVP and any changes made outside Stormkeep."}
                 </p>
               </div>
+              {dm &&
+                s.organizerUid === user.uid &&
+                s.status !== "cancelled" && (
+                  <div className="button-row">
+                    <Button
+                      variant="outline"
+                      disabled={busy}
+                      onClick={() => void editSession(s, "edit")}
+                    >
+                      Edit session
+                    </Button>
+                    <Button
+                      variant="outline"
+                      disabled={busy}
+                      onClick={() => void editSession(s, "cancel")}
+                    >
+                      Cancel session
+                    </Button>
+                  </div>
+                )}
               <a href={s.calendarUrl} target="_blank" rel="noopener noreferrer">
                 Open in Google Calendar ↗
               </a>

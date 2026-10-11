@@ -1,4 +1,4 @@
-import type {Combat,PartyContact,PartySession,SessionDraft} from './party-tools';
+import type {Combat,PartyContact,PartySession,SessionChange,SessionDraft} from './party-tools';
 import type {PartyFile} from './party-files';
 import type {Campaign,CharacterRecord,CharacterType,Currency,Invitation,Member,PartyNote,PartySummary} from './campaign-types';
 import type {Character} from './rules';
@@ -15,6 +15,8 @@ export interface Gateway {
  watchPartyContacts(id:string,next:Watch<PartyContact[]>,fail:Fail):()=>void;
  watchSessions(id:string,next:Watch<PartySession[]>,fail:Fail):()=>void;
  watchSessionDrafts(id:string,next:Watch<SessionDraft[]>,fail:Fail):()=>void;
+ loadSession(id:string,session:PartySession):Promise<SessionChange>;
+ changeSession(id:string,change:SessionChange):Promise<void>;
  sendSession(id:string,draft:SessionDraft):Promise<void>;
  watchUser(next:Watch<Profile|null>):()=>void;
  signIn():Promise<void>;signOut():Promise<void>;
