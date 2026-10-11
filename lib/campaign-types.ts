@@ -7,6 +7,6 @@ export interface Member {id:string;name:string;email:string;joinedAt:number;invi
 export interface CharacterRecord {id:string;ownerUid:string;type:CharacterType;data:Character;revision:number;updatedAt:number;updatedBy:string;}
 export interface PartySummary {id:string;ownerUid:string;name:string;player:string;className:string;level:number;hp:number;maxHP:number;ac:number;concentration:string;updatedAt:number;}
 export interface PartyNote {id:string;title:string;text:string;kind:'note'|'quest'|'session'|'loot';authorUid:string;authorName:string;createdAt:number;updatedAt:number;}
-export interface Invitation {id:string;email:string;campaignName:string;createdBy:string;createdAt:number;expiresAt:number;}
+export interface Invitation {id:string;role?:'player'|'dm';email:string;campaignName:string;createdBy:string;createdAt:number;expiresAt:number;}
 export const summaryOf=(record:Omit<CharacterRecord,'id'>):Omit<PartySummary,'id'>=>({ownerUid:record.ownerUid,name:record.data.name,player:record.data.player,className:record.type==='arad'?'Changeling · Bard':'Goliath · Tempest cleric',level:record.data.level,hp:record.data.hp,maxHP:record.data.maxHP,ac:record.data.ac,concentration:record.data.concentration,updatedAt:record.updatedAt});
 export const isDM=(campaign:Campaign,uid:string)=>campaign.dmIds.includes(uid);

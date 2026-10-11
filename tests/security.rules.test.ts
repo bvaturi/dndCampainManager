@@ -11,6 +11,7 @@ import {
   doc,
   setDoc,
   getDoc,
+  deleteDoc,
   updateDoc,
   getDocs,
   collection,
@@ -39,6 +40,7 @@ const user = (
       firebase: { sign_in_provider: provider as any },
     })
     .firestore();
+const admin = () => user("admin", "barakv01@gmail.com");
 const camp = (db: any, id = "one") => doc(db, "campaigns", id);
 const row = (db: any, kind: string, key: string, id = "one") =>
   doc(db, "campaigns", id, kind, key);
@@ -46,28 +48,32 @@ const campaign = (uid: string) => ({
   name: "Test campaign",
   description: "",
   ruleset: "2014",
-  createdBy: uid,
-  memberIds: [uid],
-  dmIds: [uid],
+  createdBy: "admin",
+  memberIds: ["admin"],
+  dmIds: [],
   currencyIndex: "common",
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
 });
 async function bootstrap(uid = "dm", id = "one") {
-  const db = user(uid),
+  const db = admin(),
     batch = writeBatch(db);
-  batch.set(camp(db, id), campaign(uid));
+  batch.set(camp(db, id), campaign("admin"));
   batch.set(row(db, "currencies", "common", id), {
     id: "common",
     name: "Common",
     rates: defaultRates,
   });
-  batch.set(row(db, "members", uid, id), {
-    name: uid,
+  batch.set(row(db, "members", "admin", id), {
+    name: "admin",
     joinedAt: serverTimestamp(),
     inviteId: "",
   });
   await batch.commit();
+  if (uid !== "admin") {
+    await setDoc(row(db,"invitations","assigned-dm",id), {email:`${uid}@example.test`,role:"dm",campaignName:"Test campaign",createdBy:"admin",createdAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+3600000)});
+    await join(uid,"assigned-dm",id,true);
+  }
 }
 async function invite(
   email = "player@example.test",
@@ -83,14 +89,15 @@ async function invite(
     expiresAt: Timestamp.fromMillis(expiry),
   });
 }
-async function join(uid = "player", key = "invite") {
+async function join(uid = "player", key = "invite", id = "one", asDM = false) {
   const db = user(uid),
     batch = writeBatch(db);
-  batch.update(camp(db), {
+  batch.update(camp(db, id), {
     memberIds: arrayUnion(uid),
+    ...(asDM ? {dmIds: arrayUnion(uid)} : {}),
     updatedAt: serverTimestamp(),
   });
-  batch.set(row(db, "members", uid), {
+  batch.set(row(db, "members", uid, id), {
     name: uid,
     joinedAt: serverTimestamp(),
     inviteId: key,
@@ -223,9 +230,15 @@ describe.skipIf(!process.env.FIRESTORE_EMULATOR_HOST)(
         ),
       );
     });
-    it("creates campaigns only with an atomic creator member", async () => {
+    it("only admin creates campaigns with an atomic creator member", async () => {
       const db = user("new");
-      await assertFails(setDoc(camp(db, "bad"), campaign("new")));
+      await assertFails(setDoc(camp(db, "bad"), {...campaign("new"),createdBy:"new",memberIds:["new"],dmIds:["new"]}));
+      await assertFails(setDoc(camp(admin(), "bad"), campaign("admin")));
+      const batch=writeBatch(db);
+      batch.set(camp(db,"forged"),{...campaign("new"),createdBy:"new",memberIds:["new"],dmIds:["new"]});
+      batch.set(row(db,"members","new","forged"),{name:"new",joinedAt:serverTimestamp(),inviteId:""});
+      batch.set(row(db,"currencies","common","forged"),{id:"common",name:"Common",rates:defaultRates});
+      await assertFails(batch.commit());
       await assertSucceeds(bootstrap("new", "two"));
     });
     it("limits queries and isolates campaigns", async () => {
@@ -287,7 +300,7 @@ describe.skipIf(!process.env.FIRESTORE_EMULATOR_HOST)(
         getDoc(row(user("player"), "invitations", "invite")),
       );
       await assertFails(getDoc(row(user("outsider"), "invitations", "invite")));
-      await updateDoc(camp(user("dm")), {
+      await updateDoc(camp(admin()), {
         dmIds: ["dm", "player"],
         updatedAt: serverTimestamp(),
       });
@@ -481,25 +494,71 @@ describe.skipIf(!process.env.FIRESTORE_EMULATOR_HOST)(
       );
       await assertFails(setDoc(row(user("player"), "dmNotes", "new"), note()));
     });
-    it("protects creator and limits DM promotion to campaign members", async () => {
-      await assertFails(
-        updateDoc(camp(user("dm")), {
-          dmIds: ["player"],
-          updatedAt: serverTimestamp(),
-        }),
-      );
-      await assertFails(
-        updateDoc(camp(user("dm")), {
-          dmIds: ["dm", "outsider"],
-          updatedAt: serverTimestamp(),
-        }),
-      );
-      await assertSucceeds(
-        updateDoc(camp(user("dm")), {
-          dmIds: ["dm", "player"],
-          updatedAt: serverTimestamp(),
-        }),
-      );
+    it("only admin assigns DMs and only to campaign members", async () => {
+      await assertFails(updateDoc(camp(user("dm")),{dmIds:["dm","player"],updatedAt:serverTimestamp()}));
+      await assertFails(updateDoc(camp(user("dm")),{dmIds:["player"],updatedAt:serverTimestamp()}));
+      await assertFails(updateDoc(camp(admin()),{dmIds:["outsider"],updatedAt:serverTimestamp()}));
+      await assertSucceeds(updateDoc(camp(admin()),{dmIds:["dm","player"],updatedAt:serverTimestamp()}));
+      await assertSucceeds(updateDoc(camp(admin()),{dmIds:["player"],updatedAt:serverTimestamp()}));
+      await assertFails(updateDoc(camp(admin()),{memberIds:["player"],updatedAt:serverTimestamp()}));
+    });
+    it("admin can manage all campaigns while each DM is scoped to their own", async () => {
+      await bootstrap("other","two");
+      await assertSucceeds(getDocs(collection(admin(),"campaigns")));
+      await assertSucceeds(getDoc(camp(admin(),"two")));
+      await assertFails(getDoc(camp(user("dm"),"two")));
+      await assertFails(getDocs(collection(user("dm"),"campaigns")));
+      await assertFails(updateDoc(camp(user("dm"),"two"),{name:"Hijack",updatedAt:serverTimestamp()}));
+      await assertFails(getDocs(collection(user("dm"),"campaigns","two","dmNotes")));
+      await assertSucceeds(updateDoc(camp(user("dm")),{name:"DM's campaign",updatedAt:serverTimestamp()}));
+      await assertSucceeds(updateDoc(camp(admin(),"two"),{name:"Admin edit",updatedAt:serverTimestamp()}));
+      await writeSheet(user("player"));
+      await assertSucceeds(getDoc(row(admin(),"characters","hero")));
+      await assertSucceeds(writeSheet(admin(),{...sheet("player",2),updatedBy:"admin"}));
+    });
+    it("rejects spoofed admin identities and profile-based privileges", async () => {
+      await assertFails(getDocs(collection(user("fake","barakv01@gmail.com","password"),"campaigns")));
+      await assertFails(getDocs(collection(user("fake","barakv01@gmail.com","google.com",false),"campaigns")));
+      await assertFails(getDocs(collection(user("fake","Barakv01@elsewhere.test"),"campaigns")));
+      await assertFails(setDoc(doc(user("dm"),"users","dm"),{role:"admin",email:"barakv01@gmail.com"}));
+    });
+    it("only admin can invite a DM; invitation grants exactly that campaign", async () => {
+      const value={email:"newdm@example.test",role:"dm",campaignName:"Test campaign",createdBy:"dm",createdAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+3600000)};
+      await assertFails(setDoc(row(user("dm"),"invitations","newdm"),value));
+      await assertSucceeds(setDoc(row(admin(),"invitations","newdm"),{...value,createdBy:"admin"}));
+      await assertFails(join("newdm","newdm"));
+      await assertSucceeds(join("newdm","newdm","one",true));
+      await assertSucceeds(getDocs(collection(user("newdm"),"campaigns","one","dmNotes")));
+      await bootstrap("other","two");
+      await assertFails(getDoc(camp(user("newdm"),"two")));
+      await assertFails(updateDoc(camp(user("newdm")),{dmIds:arrayUnion("player"),updatedAt:serverTimestamp()}));
+    });
+    it("players cannot promote themselves with a player invitation", async () => {
+      await invite("guest@example.test","guest");
+      await assertFails(join("guest","guest","one",true));
+      await assertSucceeds(join("guest","guest"));
+    });
+    it("DM demotion immediately revokes private access and cannot be reversed by the DM", async () => {
+      await setDoc(row(user("dm"),"dmNotes","secret"),note("dm"));
+      await writeSheet(user("player"));
+      await assertSucceeds(updateDoc(camp(admin()),{dmIds:[],updatedAt:serverTimestamp()}));
+      await assertFails(getDoc(row(user("dm"),"dmNotes","secret")));
+      await assertFails(getDoc(row(user("dm"),"characters","hero")));
+      await assertFails(updateDoc(camp(user("dm")),{dmIds:["dm"],updatedAt:serverTimestamp()}));
+      await assertSucceeds(getDoc(row(user("dm"),"summaries","hero")));
+    });
+    it("DMs cannot remove another DM or revoke admin DM invitations", async () => {
+      await assertFails(deleteDoc(row(user("dm"),"invitations","assigned-dm")));
+      await assertSucceeds(deleteDoc(row(admin(),"invitations","assigned-dm")));
+      const db=user("dm"),batch=writeBatch(db);
+      batch.update(camp(db),{memberIds:arrayRemove("admin"),updatedAt:serverTimestamp()});
+      batch.delete(row(db,"members","admin"));
+      await assertFails(batch.commit());
+      await updateDoc(camp(admin()),{dmIds:["dm","player"],updatedAt:serverTimestamp()});
+      const removal=writeBatch(db);
+      removal.update(camp(db),{memberIds:arrayRemove("player"),dmIds:arrayRemove("player"),updatedAt:serverTimestamp()});
+      removal.delete(row(db,"members","player"));
+      await assertFails(removal.commit());
     });
     it("revokes nested access after membership removal", async () => {
       await writeSheet(user("player"));

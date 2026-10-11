@@ -542,5 +542,15 @@
   "JSON backup text": "טקסט גיבוי JSON",
   "Import pasted backup": "ייבוא הגיבוי שהודבק",
   "Paste your character backup JSON here": "יש להדביק כאן את גיבוי הדמות בפורמט JSON",
-  "Loading character sheet…": "טוען דף דמות…"
+  "Loading character sheet…": "טוען דף דמות…",
+  "Platform admin": "מנהל המערכת",
+  "Admin": "מנהל מערכת",
+  "Admin console": "לוח מנהל המערכת",
+  "PLATFORM ADMIN CONSOLE": "לוח מנהל המערכת",
+  "Invitation role": "תפקיד בהזמנה",
+  "Platform administration · Assign DMs and manage every campaign.": "ניהול המערכת · הקצאת מנחים וניהול כל הקמפיינים.",
+  "Sign in to open your assigned campaigns or accept an invitation.": "יש להתחבר כדי לפתוח קמפיינים שהוקצו לך או לקבל הזמנה.",
+  "You administer this campaign. Assign its DMs from the admin console or invite them by Google email. Character tools currently use 2014 rules.": "הקמפיין בניהולך. ניתן להקצות מנחים בלוח מנהל המערכת או להזמין אותם באמצעות כתובת Google. כלי הדמויות מבוססים על חוקי 2014.",
+  "Ask the admin or your DM for a campaign invitation.": "יש לבקש ממנהל המערכת או מהמנחה הזמנה לקמפיין.",
+  "DMs manage only their assigned campaigns. Only the platform admin can assign or remove DMs.": "מנחים מנהלים רק קמפיינים שהוקצו להם. רק מנהל המערכת רשאי להקצות או להסיר מנחים."
 }

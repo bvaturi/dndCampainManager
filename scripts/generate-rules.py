@@ -31,9 +31,11 @@ service cloud.firestore {
   function text(v,n) { return v is string && v.size()<=n; }
   function number(v,a,b) { return v is int && v>=a && v<=b; }
   function keys(v,required,allowed) { return v is map && v.keys().hasAll(required) && v.keys().hasOnly(allowed); }
+  function adminIdentity() { return request.auth.token.email.lower()=='ADMIN_EMAIL_PLACEHOLDER'; }
+  function admin() { return signed() && adminIdentity(); }
   function campaignPath(id) { return /databases/$(database)/documents/campaigns/$(id); }
-  function member(id) { return signed() && request.auth.uid in get(campaignPath(id)).data.memberIds; }
-  function dm(id) { return member(id) && request.auth.uid in get(campaignPath(id)).data.dmIds; }
+  function member(id) { return signed() && exists(campaignPath(id)) && (adminIdentity() || request.auth.uid in get(campaignPath(id)).data.memberIds); }
+  function dm(id) { return member(id) && (adminIdentity() || request.auth.uid in get(campaignPath(id)).data.dmIds); }
   function rates(v) { return keys(v,['cp','sp','ep','gp','pp'],['cp','sp','ep','gp','pp']) && v.cp==1 && number(v.sp,2,1000000) && number(v.ep,v.sp+1,1000000) && number(v.gp,v.ep+1,1000000) && number(v.pp,v.gp+1,1000000); }
   function coins(v) { return keys(v,['cp','sp','ep','gp','pp'],['cp','sp','ep','gp','pp']) && number(v.cp,0,100000000) && number(v.sp,0,100000000) && number(v.ep,0,100000000) && number(v.gp,0,100000000) && number(v.pp,0,100000000); }
   function index(v) { return text(v,2019) && v.matches('([A-Za-z0-9_-]{1,100}(/[A-Za-z0-9_-]{1,100}){0,19})?'); }
@@ -41,7 +43,7 @@ service cloud.firestore {
   function currency(v) { return keys(v,['id','name','rates'],['id','name','rates']) && text(v.id,100) && v.id.size()>0 && text(v.name,100) && v.name.size()>0 && rates(v.rates); }
   function wallet(v) { return keys(v,['id','name','rates','coins'],['id','name','rates','coins']) && text(v.id,100) && v.id.size()>0 && text(v.name,100) && v.name.size()>0 && rates(v.rates) && coins(v.coins); }
 '''
-body=prefix+'\n'+each('logList',30,'text(VALUE,500)')+'\n'
+body='// Data contract: bounded campaigns, public members, private sheets and DM notes.\n// Platform admin is the verified Google account '+'barakv01@gmail.com'+'. Only admin creates campaigns or assigns DMs.\n// DM invites may grant player access only; admin DM invitations grant exactly the invited account.\n// Subcollections require an existing campaign and membership, ownership or assigned DM access.\n'+prefix.replace('ADMIN_EMAIL_PLACEHOLDER',json.loads(Path('lib/platform-admin.json').read_text())['email'])+'\n'+each('logList',30,'text(VALUE,500)')+'\n'
 spellFields={'prepared','cantrips','secrets','loreSecrets','log'}
 coreFields={'name','player','level','hp','maxHP','tempHP','scores','ac','speed','xp','spent','channel','wrath','stone','reaction','hitDiceSpent','concentration','deathSuccess','deathFailure','defaultCurrencyId'}
 import re
@@ -51,34 +53,36 @@ body+=f'function knownSpells(v,n) {{ return keys(v,["ids"],["ids"]) && v.ids is 
 body+=f'function core(c) {{ return keys(c,{quoted([x for x in allowed if x in coreFields])},{quoted([x for x in allowed if x in coreFields])}) && '+' && '.join(coreChecks)+'; }\n'
 body+=f'function detail(c) {{ return keys(c,{quoted([x for x in allowed if x not in coreFields and x not in spellFields])},{quoted([x for x in allowed if x not in coreFields and x not in spellFields])}) && '+' && '.join(detailChecks)+'; }\n'
 body+='''
-  function validCampaign(c) { return keys(c,['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt'],['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt']) && text(c.name,100) && c.name.size()>0 && text(c.description,2000) && c.ruleset=='2014' && text(c.createdBy,128) && c.memberIds is list && c.memberIds.size()<=50 && c.memberIds.toSet().size()==c.memberIds.size() && c.dmIds is list && c.dmIds.size()<=20 && c.dmIds.toSet().size()==c.dmIds.size() && c.dmIds.toSet().hasOnly(c.memberIds) && c.createdBy in c.dmIds && index(c.currencyIndex) && c.currencyIndex.size()>0 && c.createdAt is timestamp && c.updatedAt==request.time; }
-  function invitation(id,i) { return i is string && i.size()>0 && i.size()<=100 && get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(i)).data.email==request.auth.token.email.lower() && get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(i)).data.expiresAt>request.time && get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(i)).data.createdBy in get(campaignPath(id)).data.dmIds; }
+  function validCampaign(c) { return keys(c,['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt'],['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt']) && text(c.name,100) && c.name.size()>0 && text(c.description,2000) && c.ruleset=='2014' && text(c.createdBy,128) && c.memberIds is list && c.memberIds.size()<=50 && c.memberIds.toSet().size()==c.memberIds.size() && c.dmIds is list && c.dmIds.size()<=20 && c.dmIds.toSet().size()==c.dmIds.size() && c.dmIds.toSet().hasOnly(c.memberIds) && c.createdBy in c.memberIds && index(c.currencyIndex) && c.currencyIndex.size()>0 && c.createdAt is timestamp && c.updatedAt==request.time; }
+  function invitation(id,i) { let v=get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(i)).data; let c=get(campaignPath(id)).data; return i is string && i.size()>0 && i.size()<=100 && v.email==request.auth.token.email.lower() && v.expiresAt>request.time && (v.createdBy==c.createdBy || (v.createdBy in c.dmIds && v.get('role','player')=='player')); }
+  function joining(id,c) { let before=get(campaignPath(id)).data; let m=getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data; let v=get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(m.inviteId)).data; return !(request.auth.uid in before.memberIds) && c.diff(before).affectedKeys().hasOnly(['memberIds','dmIds','updatedAt']) && c.memberIds.toSet()==before.memberIds.toSet().union([request.auth.uid].toSet()) && invitation(id,m.inviteId) && c.dmIds.toSet()==(v.get('role','player')=='dm'?before.dmIds.toSet().union([request.auth.uid].toSet()):before.dmIds.toSet()); }
   function validMember(m) { return keys(m,['name','joinedAt','inviteId'],['name','joinedAt','inviteId']) && text(m.name,100) && m.name==request.auth.token.name && m.joinedAt==request.time && text(m.inviteId,100); }
   function validRecord(r) { return keys(r,['ownerUid','type','data','revision','updatedBy','updatedAt','walletIndex'],['ownerUid','type','data','revision','updatedBy','updatedAt','walletIndex']) && text(r.ownerUid,128) && r.type in ['varen','arad'] && core(r.data) && number(r.revision,1,100000000) && index(r.walletIndex) && (!('defaultCurrencyId' in r.data) || indexed(r.walletIndex,r.data.defaultCurrencyId)) && r.updatedBy==request.auth.uid && r.updatedAt==request.time; }
-  function editCharacter(id,r) { return member(id) && (r.ownerUid==request.auth.uid || dm(id)); }
+  function editCharacter(id,r) { return member(id) && (r.ownerUid==request.auth.uid || adminIdentity() || request.auth.uid in get(campaignPath(id)).data.dmIds); }
   function matchingSummary(id,key,r) { let s=getAfter(/databases/$(database)/documents/campaigns/$(id)/summaries/$(key)).data; return s=={'ownerUid':r.ownerUid,'name':r.data.name,'player':r.data.player,'className':(r.type=='arad'?'Changeling · Bard':'Goliath · Tempest cleric'),'level':r.data.level,'hp':r.data.hp,'maxHP':r.data.maxHP,'ac':r.data.ac,'concentration':r.data.concentration,'updatedAt':r.updatedAt}; }
   function validNote(n) { return keys(n,['title','text','kind','authorUid','authorName','createdAt','updatedAt'],['title','text','kind','authorUid','authorName','createdAt','updatedAt']) && text(n.title,150) && text(n.text,20000) && n.kind in ['note','quest','session','loot'] && text(n.authorUid,128) && text(n.authorName,100) && n.createdAt is timestamp && n.updatedAt==request.time; }
   match /campaigns/{id} {
-   allow read: if signed() && request.auth.uid in resource.data.memberIds;
-   allow create: if signed() && validCampaign(request.resource.data) && request.resource.data.createdBy==request.auth.uid && request.resource.data.memberIds==[request.auth.uid] && request.resource.data.dmIds==[request.auth.uid] && request.resource.data.createdAt==request.time && getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data.inviteId=='';
+   allow read: if signed() && (admin() || request.auth.uid in resource.data.memberIds);
+   allow create: if admin() && validCampaign(request.resource.data) && request.resource.data.createdBy==request.auth.uid && request.resource.data.memberIds==[request.auth.uid] && request.resource.data.dmIds==[] && request.resource.data.createdAt==request.time && getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data.inviteId=='';
    allow update: if signed() && validCampaign(request.resource.data) && request.resource.data.createdBy==resource.data.createdBy && request.resource.data.createdAt==resource.data.createdAt && (
-    (dm(id) && request.resource.data.memberIds.toSet().hasOnly(resource.data.memberIds)) ||
-    (!(request.auth.uid in resource.data.memberIds) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['memberIds','updatedAt']) && request.resource.data.memberIds.toSet()==resource.data.memberIds.toSet().union([request.auth.uid].toSet()) && invitation(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data.inviteId))
+    (admin() && request.resource.data.memberIds.toSet().hasOnly(resource.data.memberIds)) ||
+    (dm(id) && request.resource.data.dmIds==resource.data.dmIds && request.resource.data.memberIds.toSet().hasOnly(resource.data.memberIds)) ||
+    joining(id,request.resource.data)
    );
    match /currencies/{key} {
     allow read: if member(id);
-    allow create,update: if signed() && request.auth.uid in getAfter(campaignPath(id)).data.dmIds && currency(request.resource.data) && request.resource.data.id==key && indexed(getAfter(campaignPath(id)).data.currencyIndex,key) && getAfter(campaignPath(id)).data.updatedAt==request.time;
+    allow create,update: if signed() && (admin() || request.auth.uid in getAfter(campaignPath(id)).data.dmIds) && currency(request.resource.data) && request.resource.data.id==key && indexed(getAfter(campaignPath(id)).data.currencyIndex,key) && getAfter(campaignPath(id)).data.updatedAt==request.time;
     allow delete: if dm(id) && !(indexed(getAfter(campaignPath(id)).data.currencyIndex,key)) && getAfter(campaignPath(id)).data.updatedAt==request.time;
    }
    match /members/{uid} {
     allow read: if member(id);
     allow create: if signed() && uid==request.auth.uid && validMember(request.resource.data) && uid in getAfter(campaignPath(id)).data.memberIds && ((getAfter(campaignPath(id)).data.createdBy==uid && request.resource.data.inviteId=='') || invitation(id,request.resource.data.inviteId));
-    allow delete: if dm(id) && uid!=get(campaignPath(id)).data.createdBy && !(uid in getAfter(campaignPath(id)).data.memberIds);
+    allow delete: if dm(id) && (admin() || !(uid in get(campaignPath(id)).data.dmIds)) && uid!=get(campaignPath(id)).data.createdBy && !(uid in getAfter(campaignPath(id)).data.memberIds);
    }
    match /invitations/{key} {
-    allow read: if signed() && ((dm(id) && resource.data.createdBy==request.auth.uid) || (resource.data.email==request.auth.token.email.lower() && resource.data.expiresAt>request.time));
-    allow create: if dm(id) && keys(request.resource.data,['email','campaignName','createdBy','createdAt','expiresAt'],['email','campaignName','createdBy','createdAt','expiresAt']) && text(request.resource.data.email,254) && request.resource.data.email.matches('[^@ ]+@[^@ ]+\\.[^@ ]+') && request.resource.data.email==request.resource.data.email.lower() && request.resource.data.campaignName==get(campaignPath(id)).data.name && request.resource.data.createdBy==request.auth.uid && request.resource.data.createdAt==request.time && request.resource.data.expiresAt is timestamp && request.resource.data.expiresAt>request.time && request.resource.data.expiresAt<=request.time+duration.value(7,'d');
-    allow delete: if dm(id);
+    allow read: if signed() && ((admin() || (dm(id) && resource.data.createdBy==request.auth.uid)) || (resource.data.email==request.auth.token.email.lower() && resource.data.expiresAt>request.time));
+    allow create: if dm(id) && keys(request.resource.data,['email','campaignName','createdBy','createdAt','expiresAt','role'],['email','campaignName','createdBy','createdAt','expiresAt','role']) && request.resource.data.get('role','player') in ['player','dm'] && (request.resource.data.get('role','player')=='player' || admin()) && text(request.resource.data.email,254) && request.resource.data.email.matches('[^@ ]+@[^@ ]+\\.[^@ ]+') && request.resource.data.email==request.resource.data.email.lower() && request.resource.data.campaignName==get(campaignPath(id)).data.name && request.resource.data.createdBy==request.auth.uid && request.resource.data.createdAt==request.time && request.resource.data.expiresAt is timestamp && request.resource.data.expiresAt>request.time && request.resource.data.expiresAt<=request.time+duration.value(7,'d');
+    allow delete: if admin() || (dm(id) && resource.data.get('role','player')=='player');
    }
    match /characters/{key} {
     allow read: if editCharacter(id,resource.data);

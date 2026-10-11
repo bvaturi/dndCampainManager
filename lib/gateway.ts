@@ -1,7 +1,7 @@
 import type {Campaign,CharacterRecord,CharacterType,Currency,Invitation,Member,PartyNote,PartySummary} from './campaign-types';
 import type {Character} from './rules';
 import type {SheetStore} from '@/app/sheet';
-export interface Profile {uid:string;email:string;displayName:string;}
+export interface Profile {uid:string;email:string;displayName:string;emailVerified:boolean;}
 export type Watch<T>=(value:T)=>void;
 export type Fail=(error:Error)=>void;
 export interface Gateway {
@@ -17,7 +17,7 @@ export interface Gateway {
  createCampaign(user:Profile,name:string,description:string):Promise<string>;
  joinCampaign(user:Profile,campaignId:string,inviteId:string):Promise<void>;
  updateCampaign(id:string,name:string,description:string,currencies:Currency[]):Promise<void>;
- createInvitation(id:string,email:string):Promise<Invitation>;
+ createInvitation(id:string,email:string,role?:'player'|'dm'):Promise<Invitation>;
  revokeInvitation(id:string,inviteId:string):Promise<void>;
  setDM(id:string,uid:string,enabled:boolean):Promise<void>;
  removeMember(id:string,uid:string):Promise<void>;

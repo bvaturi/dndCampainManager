@@ -1,3 +1,4 @@
+import { isPlatformAdmin } from "./access";
 import firebaseConfig from "./firebase-config.json";
 import { initializeApp } from "firebase/app";
 import {
@@ -123,6 +124,7 @@ export class FirebaseGateway implements Gateway {
               uid: u.uid,
               email: u.email || "",
               displayName: u.displayName || "Player",
+              emailVerified: u.emailVerified,
             }
           : null,
       ),
@@ -136,7 +138,7 @@ export class FirebaseGateway implements Gateway {
   }
   watchCampaigns(user: Profile, next: Watch<Campaign[]>, fail: Fail) {
     return this.list(
-      query(
+      isPlatformAdmin(user) ? collection(this.db, "campaigns") : query(
         collection(this.db, "campaigns"),
         where("memberIds", "array-contains", user.uid),
       ),
@@ -226,12 +228,14 @@ export class FirebaseGateway implements Gateway {
   }
   watchInvitations(id: string, next: Watch<Invitation[]>, fail: Fail) {
     return this.list(
+      isPlatformAdmin(this.auth.currentUser) ? this.rows(id, "invitations") :
       query(this.rows(id, "invitations"), where("createdBy", "==", this.uid())),
       next,
       fail,
     );
   }
   async createCampaign(user: Profile, name: string, description: string) {
+    if (!isPlatformAdmin(this.auth.currentUser)) throw Error("Only the platform admin can create campaigns");
     const ref = doc(collection(this.db, "campaigns")),
       batch = writeBatch(this.db);
     batch.set(ref, {
@@ -240,7 +244,7 @@ export class FirebaseGateway implements Gateway {
       ruleset: "2014",
       createdBy: this.uid(),
       memberIds: [this.uid()],
-      dmIds: [this.uid()],
+      dmIds: [],
       currencyIndex: "common",
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -267,6 +271,7 @@ export class FirebaseGateway implements Gateway {
     const batch = writeBatch(this.db);
     batch.update(this.camp(id), {
       memberIds: arrayUnion(this.uid()),
+      ...(data.role === 'dm' ? {dmIds: arrayUnion(this.uid())} : {}),
       updatedAt: serverTimestamp(),
     });
     batch.set(this.row(id, "members", this.uid()), {
@@ -297,7 +302,8 @@ export class FirebaseGateway implements Gateway {
         if (!ids.includes(key)) tx.delete(this.row(id, "currencies", key));
     });
   }
-  async createInvitation(id: string, email: string) {
+  async createInvitation(id: string, email: string, role: 'player' | 'dm' = 'player') {
+    if (role === 'dm' && !isPlatformAdmin(this.auth.currentUser)) throw Error("Only the platform admin can invite DMs");
     const c = await getDoc(this.camp(id)),
       ref = doc(this.rows(id, "invitations")),
       now = Date.now(),
@@ -305,6 +311,7 @@ export class FirebaseGateway implements Gateway {
     const batch = writeBatch(this.db);
     batch.set(ref, {
       email: email.trim().toLowerCase(),
+      role,
       campaignName: c.data()!.name,
       createdBy: this.uid(),
       createdAt: serverTimestamp(),
@@ -314,6 +321,7 @@ export class FirebaseGateway implements Gateway {
     return {
       id: ref.id,
       email: email.trim().toLowerCase(),
+      role,
       campaignName: c.data()!.name,
       createdBy: this.uid(),
       createdAt: now,
@@ -326,6 +334,7 @@ export class FirebaseGateway implements Gateway {
     await batch.commit();
   }
   async setDM(id: string, uid: string, enabled: boolean) {
+    if (!isPlatformAdmin(this.auth.currentUser)) throw Error("Only the platform admin can assign DMs");
     const batch = writeBatch(this.db);
     batch.update(this.camp(id), {
       dmIds: enabled ? arrayUnion(uid) : arrayRemove(uid),

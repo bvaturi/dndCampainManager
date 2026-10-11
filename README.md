@@ -2,14 +2,14 @@
 
 A Google-authenticated D&D campaign workspace with English/Hebrew support, multiple campaigns, multiple DMs, private character sheets, and a shared Party journal. Character automation uses the 2014 rules: Tempest cleric / legacy Goliath and bard / Eberron Changeling.
 
-Each campaign has its own members and DMs. Players edit their own characters; current campaign DMs can view, edit, and reassign all its characters. Anyone can create a separate campaign and become its DM. Invitations are linked to a verified Google email and expire after seven days. Invite links are copied manually; the app does not send email. Each DM sees the invitations they created. Removing a member revokes their campaign access and their original invitation.
+Each campaign has its own members and DMs. Players edit their own characters; current campaign DMs can view, edit, and reassign all its characters. The verified Google account `barakv01@gmail.com` is the platform administrator. Only this account creates campaigns, assigns/removes DMs, and creates DM invitations. It can manage all campaigns. Other accounts see only campaigns they belong to; DM access applies only within assigned campaigns. DMs can invite and remove players, but cannot appoint DMs or remove another DM. Invitations are linked to a verified Google email and expire after seven days. Invite links are copied manually; the app does not send email. Each DM sees the player invitations they created. The admin sees all invitations in a campaign. New DMs accept an admin-created DM invitation; existing members can be promoted with Make DM in the admin console. Removing a member revokes their campaign access and their original invitation.
 
 Party shows automatically updated character summaries plus shared notes, quests, session entries, and loot. Equipment, character notes, balances, and backstories remain inside the private sheet. DM notebooks are stored separately and never downloaded by player queries.
 
 ## Using the app
 
-1. Continue with Google and create a campaign, or open a DM's invitation link using the invited Google account.
-2. Open the DM console to invite members, promote another DM, assign characters, and define campaign currencies.
+1. Continue with Google. The admin creates campaigns; other accounts open an invitation link using the invited Google account.
+2. Open the Admin console to assign DMs or invite them with Invitation role → DM. Assigned DMs use their DM console to invite players, assign characters, and define campaign currencies.
 3. Create a cleric/bard sheet or import an existing sheet's JSON backup. Import the latest backup from the original site to preserve levels and balances; no PDF-derived data overwrites existing saves.
 4. Use My characters for your sheets and Party for the shared journal. Sheets autosave and have an explicit Save button. Save conflicts stop autosave so you can export your edits before reloading.
 5. In a wallet, select a default currency, add coins, or record a purchase with a price and tender. Change is calculated within that currency using its configured conversion rates. Different currencies are not exchanged automatically.
@@ -65,9 +65,11 @@ Firestore paths:
 - `notes/{id}`: shared journal; authors edit their own entries and DMs edit any.
 - `dmNotes/{id}`: campaign-DM-only notebook.
 
-Every nested read requires current campaign membership and its appropriate ownership/role. Rules deny unauthenticated, unverified, and non-Google users. Campaign creation and invitation acceptance are atomic, role escalation is restricted, and the creator remains a DM. Unknown paths, unknown fields, invalid types, oversized text/arrays/maps, stale revisions, forged owners and false summaries are rejected. Character and note saves use optimistic concurrency checks.
+Every nested read requires current campaign membership and its appropriate ownership/role. Rules deny unauthenticated, unverified, and non-Google users. Campaign creation and invitation acceptance are atomic, role escalation is restricted, and only the admin can change DM assignments (including email-bound DM invitation acceptance). Campaign creators remain members, but do not need a DM assignment. Unknown paths, unknown fields, invalid types, oversized text/arrays/maps, stale revisions, forged owners and false summaries are rejected. Character and note saves use optimistic concurrency checks.
 
 Wallet and currency IDs use a bounded slash-separated index string (IDs contain only letters, digits, `_` and `-`). Individual balances and rates live in separately validated documents. This avoids evaluating every wallet inside a single large sheet rule; the index is not a permission grant. Currently the editor supports 20 currencies/wallets and 50 members per campaign.
+
+`lib/platform-admin.json` is the single admin-identity source shared by the UI and rules generator; no client-editable profile grants admin access. Rules require the matching verified Google identity.
 
 `firestore.rules` is generated by `python3 scripts/generate-rules.py`; rerun rule tests after changing the generator. Standard SDK queries and `onSnapshot` are an intentional Enterprise exception because live party synchronization is required. The emulator tests exercise allowed queries and hostile writes; they use only a disposable local demo project.
 
