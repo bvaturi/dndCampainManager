@@ -26,7 +26,8 @@ export interface Gateway {
  revokeInvitation(id:string,inviteId:string):Promise<void>;
  setDM(id:string,uid:string,enabled:boolean):Promise<void>;
  removeMember(id:string,uid:string):Promise<void>;
- createCharacter(id:string,user:Profile,ownerUid:string,type:CharacterType,data:Character):Promise<string>;
+ createCharacter(id:string,user:Profile,ownerUid:string,type:CharacterType,data:Character,pendingOwnerEmail?:string):Promise<string>;
+ claimInvitedCharacters(id:string,user:Profile):Promise<void>;
  assignCharacter(id:string,charId:string,ownerUid:string):Promise<void>;
  sheetStore(id:string,charId:string,user:Profile,currencies:Currency[]):SheetStore;
  saveNote(id:string,privateNotes:boolean,user:Profile,note:Pick<PartyNote,'title'|'text'|'kind'|'url'>,existing?:PartyNote):Promise<void>;

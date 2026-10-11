@@ -54,6 +54,7 @@ const decode = (value: any): any =>
           )
         : value;
 const spellFields = new Set([
+  "customSpells",
   "prepared",
   "cantrips",
   "secrets",
@@ -61,6 +62,7 @@ const spellFields = new Set([
   "log",
 ]);
 const coreFields = new Set([
+  "className", "species", "subclass", "rulesEdition",
   "image",
   "name",
   "player",
@@ -380,6 +382,7 @@ export class FirebaseGateway implements Gateway {
     charId: string,
     record: Omit<CharacterRecord, "id" | "updatedAt">,
     oldWalletIds: string[] = [],
+    oldCustomIds: string[] = [],
   ) {
     const parsed = compact(characterSchema.parse(record.data)),
       wallets = parsed.wallets || [],
@@ -387,6 +390,7 @@ export class FirebaseGateway implements Gateway {
     delete parsed.wallets;
     batch.set(this.row(id, "characters", charId), {
       ownerUid: record.ownerUid,
+      pendingOwnerEmail: record.pendingOwnerEmail||'',
       type: record.type,
       data: Object.fromEntries(
         Object.entries(parsed).filter(([k]) => coreFields.has(k)),
@@ -394,6 +398,7 @@ export class FirebaseGateway implements Gateway {
       revision: record.revision,
       updatedBy: record.updatedBy,
       walletIndex: walletIds.join("/"),
+      customSpellIndex: (parsed.customSpells||[]).map(s=>s.id).join("/"),
       updatedAt: serverTimestamp(),
     });
     batch.set(
@@ -417,6 +422,8 @@ export class FirebaseGateway implements Gateway {
         batch.set(doc(this.row(id, "characters", charId), "spells", key), {
           ids: parsed[key],
         });
+    for(const spell of parsed.customSpells||[])batch.set(doc(this.row(id,"characters",charId),"customSpells",spell.id),spell);
+    for(const key of oldCustomIds)if(!parsed.customSpells?.some(s=>s.id===key))batch.delete(doc(this.row(id,"characters",charId),"customSpells",key));
     for (const wallet of wallets)
       batch.set(
         doc(this.row(id, "characters", charId), "wallets", wallet.id),
@@ -432,11 +439,12 @@ export class FirebaseGateway implements Gateway {
   }
   private async fullSheet(id: string, charId: string, r: any) {
     const ref = this.row(id, "characters", charId);
-    const [wallets, details, spells, history] = await Promise.all([
+    const [wallets, details, spells, history, customSpells] = await Promise.all([
       getDocs(collection(ref, "wallets")),
       getDoc(doc(ref, "details", "state")),
       getDocs(collection(ref, "spells")),
       getDoc(doc(ref, "history", "actions")),
+      getDocs(collection(ref,"customSpells")),
     ]);
     const byId = new Map(wallets.docs.map((d) => [d.id, decode(d.data())]));
     return {
@@ -444,6 +452,7 @@ export class FirebaseGateway implements Gateway {
       ...r.data,
       ...Object.fromEntries(spells.docs.map((d) => [d.id, d.data().ids])),
       log: history.data()?.entries || [],
+      ...(r.type==="custom"?{customSpells:indexIds(r.customSpellIndex||"").map(key=>customSpells.docs.find(d=>d.id===key)?.data()).filter(Boolean)}:{}),
       wallets: indexIds(r.walletIndex)
         .map((key) => byId.get(key))
         .filter(Boolean),
@@ -455,12 +464,14 @@ export class FirebaseGateway implements Gateway {
     ownerUid: string,
     type: CharacterType,
     data: Character,
+    pendingOwnerEmail = "",
   ) {
     data = this.wallets(data, await this.campaignCurrencies(id));
     const ref = doc(this.rows(id, "characters")),
       batch = writeBatch(this.db);
     this.writeSheet(batch, id, ref.id, {
       ownerUid,
+      pendingOwnerEmail,
       type,
       data,
       revision: 1,
@@ -468,6 +479,16 @@ export class FirebaseGateway implements Gateway {
     });
     await batch.commit();
     return ref.id;
+  }
+  async claimInvitedCharacters(id:string,user:Profile) {
+    const pending=await getDocs(query(this.rows(id,"characters"),where("pendingOwnerEmail","==",user.email.toLowerCase())));
+    for(const candidate of pending.docs)await runTransaction(this.db,async tx=>{
+      const snap=await tx.get(candidate.ref);if(!snap.exists()||snap.data().pendingOwnerEmail!==user.email.toLowerCase())return;
+      const record=decode(snap.data()) as CharacterRecord;
+      const next={...record,ownerUid:this.uid(),pendingOwnerEmail:"",revision:record.revision+1,updatedBy:this.uid()};
+      tx.update(candidate.ref,{ownerUid:next.ownerUid,pendingOwnerEmail:"",revision:next.revision,updatedBy:next.updatedBy,updatedAt:serverTimestamp()});
+      tx.set(this.row(id,"summaries",candidate.id),{...summaryOf(next),updatedAt:serverTimestamp()});
+    });
   }
   async assignCharacter(id: string, charId: string, ownerUid: string) {
     await runTransaction(this.db, async (tx) => {
@@ -484,10 +505,12 @@ export class FirebaseGateway implements Gateway {
           ...r,
           data: this.wallets(full, []),
           ownerUid,
+          pendingOwnerEmail: "",
           revision: r.revision + 1,
           updatedBy: this.uid(),
         },
         indexIds(wallets.data()?.walletIndex || ""),
+        indexIds(snap.data()?.customSpellIndex || ""),
       );
     });
   }
@@ -545,12 +568,14 @@ export class FirebaseGateway implements Gateway {
             charId,
             {
               ownerUid: r.ownerUid,
+              pendingOwnerEmail: r.pendingOwnerEmail||"",
               type: r.type,
               data: this.wallets(data, currencies),
               revision: revision + 1,
               updatedBy: this.uid(),
             },
             indexIds(snap.data()?.walletIndex || ""),
+            indexIds(snap.data()?.customSpellIndex || ""),
           );
           return { revision: revision + 1 };
         });

@@ -1,3 +1,5 @@
+import {newCharacter} from "../lib/custom-character";
+import {classLabel} from "../lib/campaign-types";
 import { aradInitial } from "../lib/bard";
 import { readFileSync } from "node:fs";
 import { beforeAll, afterAll, beforeEach, describe, it } from "vitest";
@@ -118,7 +120,7 @@ const summary = (r: any) => ({
   ownerUid: r.ownerUid,
   name: r.data.name,
   player: r.data.player,
-  className: "Goliath · Tempest cleric",
+  className: classLabel(r.type,r.data),
   level: r.data.level,
   hp: r.data.hp,
   maxHP: r.data.maxHP,
@@ -127,6 +129,7 @@ const summary = (r: any) => ({
   updatedAt: serverTimestamp(),
 });
 const spellFields = new Set([
+  "customSpells",
   "prepared",
   "cantrips",
   "secrets",
@@ -134,6 +137,7 @@ const spellFields = new Set([
   "log",
 ]);
 const coreFields = new Set([
+  "className", "species", "subclass", "rulesEdition",
   "image",
   "name",
   "player",
@@ -156,7 +160,7 @@ const coreFields = new Set([
   "deathFailure",
   "defaultCurrencyId",
 ]);
-async function writeSheet(db: any, r = sheet(), extra = {}, summaryExtra = {}) {
+async function writeSheet(db: any, r: ReturnType<typeof sheet> & {pendingOwnerEmail?:string} = sheet(), extra = {}, summaryExtra = {}) {
   const batch = writeBatch(db);
   const data = { ...r.data };
   delete data.wallets;
@@ -167,6 +171,7 @@ async function writeSheet(db: any, r = sheet(), extra = {}, summaryExtra = {}) {
       Object.entries(data).filter(([k]) => coreFields.has(k)),
     ),
     walletIndex: walletIds.join("/"),
+    customSpellIndex: (data.customSpells||[]).map((s:any)=>s.id).join("/"),
     ...extra,
   });
   batch.set(
@@ -185,6 +190,7 @@ async function writeSheet(db: any, r = sheet(), extra = {}, summaryExtra = {}) {
       batch.set(doc(row(db, "characters", "hero"), "spells", key), {
         ids: data[key],
       });
+  for(const spell of data.customSpells||[])batch.set(doc(row(db,"characters","hero"),"customSpells",spell.id),spell);
   for (const w of r.data.wallets || [])
     batch.set(doc(row(db, "characters", "hero"), "wallets", w.id), w);
   batch.set(row(db, "summaries", "hero"), { ...summary(r), ...summaryExtra });
@@ -660,5 +666,21 @@ describe.skipIf(!process.env.FIRESTORE_EMULATOR_HOST)(
         getDoc(row(user("player"), "dmNotes", "secret", "nonexistent")),
       );
     });
+ it('saves a wizard without inheriting cleric data and prevents another player reading it',async()=>{await invite('other@example.test','other');await join('other','other');const data={...newCharacter('Wizard','player'),className:'Wizard',species:'Elf',customSpells:[{id:'mage-hand',name:'Mage Hand',level:0,prepared:true,description:'A spectral hand',concentration:false}]};await assertSucceeds(writeSheet(user('player'),{...sheet('player',1,data),type:'custom'}));await assertFails(getDoc(row(user('other'),'characters','hero')));await assertFails(getDoc(doc(row(user('other'),'characters','hero'),'details','state')));await assertSucceeds(getDoc(row(user('other'),'summaries','hero')));});
+ it('rejects invalid custom spell payloads and false public class labels',async()=>{const data={...newCharacter('Wizard','player'),className:'Wizard'};const r={...sheet('player',1,data),type:'custom'};await assertFails(writeSheet(user('player'),r,{}, {className:'Bard'}));await assertFails(writeSheet(user('player'),{...r,data:{...data,customSpells:[{id:'bad',name:'bad',level:10,prepared:true,description:'',concentration:false}]}}));await assertFails(writeSheet(user('player'),{...r,data:{...data,features:'x'.repeat(20001)}}));});
+
+    it('allows only DMs to reserve sheets and only the invited verified member to claim them',async()=>{
+      const db=user('dm'), r={...sheet('admin'),pendingOwnerEmail:'player@example.test',updatedBy:'dm'};
+      await assertFails(writeSheet(user('player'),{...sheet(),pendingOwnerEmail:'other@example.test'}));
+      await assertSucceeds(writeSheet(db,r));
+      await assertFails(getDoc(doc(row(user('player'),'characters','hero'),'details','state')));
+      await assertSucceeds(getDocs(query(collection(user('player'),'campaigns','one','characters'),where('pendingOwnerEmail','==','player@example.test'))));
+      const claim=(actor:string,change={})=>{const db=user(actor),batch=writeBatch(db);batch.update(row(db,'characters','hero'),{ownerUid:actor,pendingOwnerEmail:'',revision:2,updatedBy:actor,updatedAt:serverTimestamp(),...change});batch.set(row(db,'summaries','hero'),summary({...r,ownerUid:actor}));return batch.commit();};
+      await assertFails(claim('player',{walletIndex:'forged'}));
+      await invite('other@example.test','other');await join('other','other');await assertFails(claim('other'));
+      await assertSucceeds(claim('player'));await assertSucceeds(getDoc(doc(row(user('player'),'characters','hero'),'details','state')));
+      await assertFails(writeSheet(user('player'),{...sheet('player',3),pendingOwnerEmail:'other@example.test'}));
+    });
+    it('accepts a full bounded general spell library',async()=>{const data={...newCharacter('Wizard','player'),className:'Wizard',customSpells:Array.from({length:60},(_,i)=>({id:`spell-${i}`,name:`Spell ${i}`,level:i%10,prepared:false,description:'x'.repeat(2000),concentration:false}))};await assertSucceeds(writeSheet(user('player'),{...sheet('player',1,data),type:'custom'}));});
   },
 );
