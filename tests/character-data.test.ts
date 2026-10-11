@@ -23,3 +23,8 @@ describe('2014 level-three guidance',()=>{
  it('uses three cleric cantrips, four first-level slots and two second-level slots',()=>{expect(cantripCount(3)).toBe(3);expect(slotTable[3]).toEqual([4,2]);expect(domainSpells(3)).toEqual(['fog-cloud','thunderwave','gust-of-wind','shatter']);});
  it('uses two bard cantrips and six known spells',()=>{expect(bardCantrips(3)).toBe(2);expect(bardKnown[3]).toBe(6);});
 });
+
+describe('Character portraits',()=>{
+ it('preserves uploaded portraits and HTTPS images in backups and summaries',()=>{for(const image of ['https://example.com/portrait.jpg','data:image/jpeg;base64,AAAA']){const c=characterSchema.parse({...initial,image});expect(c.image).toBe(image);expect(summaryOf({data:c,ownerUid:'player',type:'varen',revision:1,updatedAt:1,updatedBy:'player'}).image).toBe(image);}});
+ it('rejects script URLs, SVG data, credentials and oversized images',()=>{for(const image of ['javascript:alert(1)','data:image/svg+xml;base64,AAAA','https://user:secret@example.com/image.png','data:image/jpeg;base64,'+'A'.repeat(180000)])expect(characterSchema.safeParse({...initial,image}).success).toBe(false);});
+});

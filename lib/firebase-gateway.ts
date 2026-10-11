@@ -59,6 +59,7 @@ const spellFields = new Set([
   "log",
 ]);
 const coreFields = new Set([
+  "image",
   "name",
   "player",
   "level",
@@ -558,7 +559,7 @@ export class FirebaseGateway implements Gateway {
     id: string,
     priv: boolean,
     user: Profile,
-    note: Pick<PartyNote, "title" | "text" | "kind">,
+    note: Pick<PartyNote, "title" | "text" | "kind" | "url">,
     existing?: PartyNote,
   ) {
     const ref = existing

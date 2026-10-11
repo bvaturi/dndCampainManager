@@ -19,8 +19,9 @@ for k,(a,b) in nums.items():checks.append(f'(c.{k} is int && c.{k}>={a} && c.{k}
 checks.extend(['c.reaction is bool',f'c.scores is list && c.scores.size()==6 && c.scores.toSet().hasOnly({list(range(1,31))})'])
 checks.extend([f'c.spent is list && c.spent.size()==9 && c.spent.toSet().hasOnly({list(range(21))})'])
 checks.extend([f'c.proficient is list && c.proficient.size()<=18 && c.proficient.toSet().hasOnly({quoted(skills)})','c.saveProf is list && c.saveProf.size()<=6 && c.saveProf.toSet().hasOnly([0,1,2,3,4,5])','spellList(c.prepared,100)','spellList(c.cantrips,7)','logList(c.log)'])
-optionaltext={'persona':1000,'falseIdentity':5000,'scheme':1000,'backstory':15000,'defaultCurrencyId':100}
+optionaltext={'image':180000,'persona':1000,'falseIdentity':5000,'scheme':1000,'backstory':15000,'defaultCurrencyId':100}
 for k,n in optionaltext.items():checks.append(f"(!('{k}' in c) || text(c.{k},{n}))")
+checks.append("(!('image' in c) || image(c.image))")
 checks.extend([f"(!('expertise' in c) || (c.expertise is list && c.expertise.size()<=4 && c.expertise.toSet().hasOnly({quoted(skills)})))","(!('inspiration' in c) || number(c.inspiration,0,20))","(!('college' in c) || c.college in ['','lore','valor'])","(!('secrets' in c) || spellList(c.secrets,6))","(!('loreSecrets' in c) || spellList(c.loreSecrets,2))","!('wallets' in c)"])
 required=list(texts)+list(nums)+['scores','spent','reaction','proficient','saveProf','prepared','cantrips','log']
 allowed=required+list(optionaltext)+['expertise','inspiration','college','secrets','loreSecrets']
@@ -29,6 +30,8 @@ service cloud.firestore {
  match /databases/{database}/documents {
   function signed() { return request.auth != null && request.auth.token.email_verified == true && request.auth.token.firebase.sign_in_provider == 'google.com'; }
   function text(v,n) { return v is string && v.size()<=n; }
+  function webLink(v) { return text(v,2048) && v.matches('https?://[^\\\\s/?#@]+([/?#][^\\\\s]*)?'); }
+  function image(v) { return text(v,180000) && (v=='' || (v.size()<=2048 && v.matches('https://[^\\\\s/?#@]+([/?#][^\\\\s]*)?')) || v.matches('data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}')); }
   function number(v,a,b) { return v is int && v>=a && v<=b; }
   function keys(v,required,allowed) { return v is map && v.keys().hasAll(required) && v.keys().hasOnly(allowed); }
   function adminIdentity() { return request.auth.token.email.lower()=='ADMIN_EMAIL_PLACEHOLDER'; }
@@ -45,7 +48,7 @@ service cloud.firestore {
 '''
 body='// Data contract: bounded campaigns, public members, private sheets and DM notes.\n// Platform admin is the verified Google account '+'barakv01@gmail.com'+'. Only admin creates campaigns or assigns DMs.\n// DM invites may grant player access only; admin DM invitations grant exactly the invited account.\n// Subcollections require an existing campaign and membership, ownership or assigned DM access.\n'+prefix.replace('ADMIN_EMAIL_PLACEHOLDER',json.loads(Path('lib/platform-admin.json').read_text())['email'])+'\n'+each('logList',30,'text(VALUE,500)')+'\n'
 spellFields={'prepared','cantrips','secrets','loreSecrets','log'}
-coreFields={'name','player','level','hp','maxHP','tempHP','scores','ac','speed','xp','spent','channel','wrath','stone','reaction','hitDiceSpent','concentration','deathSuccess','deathFailure','defaultCurrencyId'}
+coreFields={'image','name','player','level','hp','maxHP','tempHP','scores','ac','speed','xp','spent','channel','wrath','stone','reaction','hitDiceSpent','concentration','deathSuccess','deathFailure','defaultCurrencyId'}
 import re
 coreChecks=[x for x in checks if set(re.findall(r'c\.([A-Za-z]+)',x)).issubset(coreFields)]
 detailChecks=[x for x in checks if not set(re.findall(r'c\.([A-Za-z]+)',x)).issubset(coreFields) and "wallets" not in x and not (set(re.findall(r'c\.([A-Za-z]+)',x)) & spellFields)]
@@ -59,8 +62,8 @@ body+='''
   function validMember(m) { return keys(m,['name','joinedAt','inviteId'],['name','joinedAt','inviteId']) && text(m.name,100) && m.name==request.auth.token.name && m.joinedAt==request.time && text(m.inviteId,100); }
   function validRecord(r) { return keys(r,['ownerUid','type','data','revision','updatedBy','updatedAt','walletIndex'],['ownerUid','type','data','revision','updatedBy','updatedAt','walletIndex']) && text(r.ownerUid,128) && r.type in ['varen','arad'] && core(r.data) && number(r.revision,1,100000000) && index(r.walletIndex) && (!('defaultCurrencyId' in r.data) || indexed(r.walletIndex,r.data.defaultCurrencyId)) && r.updatedBy==request.auth.uid && r.updatedAt==request.time; }
   function editCharacter(id,r) { return member(id) && (r.ownerUid==request.auth.uid || adminIdentity() || request.auth.uid in get(campaignPath(id)).data.dmIds); }
-  function matchingSummary(id,key,r) { let s=getAfter(/databases/$(database)/documents/campaigns/$(id)/summaries/$(key)).data; return s=={'ownerUid':r.ownerUid,'name':r.data.name,'player':r.data.player,'className':(r.type=='arad'?'Changeling · Bard':'Goliath · Tempest cleric'),'level':r.data.level,'hp':r.data.hp,'maxHP':r.data.maxHP,'ac':r.data.ac,'concentration':r.data.concentration,'updatedAt':r.updatedAt}; }
-  function validNote(n) { return keys(n,['title','text','kind','authorUid','authorName','createdAt','updatedAt'],['title','text','kind','authorUid','authorName','createdAt','updatedAt']) && text(n.title,150) && text(n.text,20000) && n.kind in ['note','quest','session','loot'] && text(n.authorUid,128) && text(n.authorName,100) && n.createdAt is timestamp && n.updatedAt==request.time; }
+  function matchingSummary(id,key,r) { let s=getAfter(/databases/$(database)/documents/campaigns/$(id)/summaries/$(key)).data; return s=={'image':r.data.get('image',''),'ownerUid':r.ownerUid,'name':r.data.name,'player':r.data.player,'className':(r.type=='arad'?'Changeling · Bard':'Goliath · Tempest cleric'),'level':r.data.level,'hp':r.data.hp,'maxHP':r.data.maxHP,'ac':r.data.ac,'concentration':r.data.concentration,'updatedAt':r.updatedAt}; }
+  function validNote(n) { return keys(n,['title','text','kind','authorUid','authorName','createdAt','updatedAt','url'],['title','text','kind','authorUid','authorName','createdAt','updatedAt','url']) && text(n.title,150) && text(n.text,20000) && n.kind in ['note','quest','session','loot','link'] && (!('url' in n) || n.url=='' || webLink(n.url)) && (n.kind!='link' || webLink(n.url)) && text(n.authorUid,128) && text(n.authorName,100) && n.createdAt is timestamp && n.updatedAt==request.time; }
   match /campaigns/{id} {
    allow read: if signed() && (admin() || request.auth.uid in resource.data.memberIds);
    allow create: if admin() && validCampaign(request.resource.data) && request.resource.data.createdBy==request.auth.uid && request.resource.data.memberIds==[request.auth.uid] && request.resource.data.dmIds==[] && request.resource.data.createdAt==request.time && getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data.inviteId=='';

@@ -113,6 +113,7 @@ const sheet = (uid = "player", revision = 1, data = initial) => ({
   updatedAt: serverTimestamp(),
 });
 const summary = (r: any) => ({
+  image: r.data.image || "",
   ownerUid: r.ownerUid,
   name: r.data.name,
   player: r.data.player,
@@ -132,6 +133,7 @@ const spellFields = new Set([
   "log",
 ]);
 const coreFields = new Set([
+  "image",
   "name",
   "player",
   "level",
@@ -586,6 +588,28 @@ describe.skipIf(!process.env.FIRESTORE_EMULATOR_HOST)(
       });
       for (const c of currencies) batch.set(row(db, "currencies", c.id), c);
       await assertSucceeds(batch.commit());
+    });
+    it("saves shared links and rejects unsafe URLs on create and update", async () => {
+      const db=user("player");
+      await assertSucceeds(setDoc(row(db,"notes","link"),{...note(),kind:"link",text:"",url:"https://www.aidedd.org/dnd-filters/spells-5e.php"}));
+      await assertSucceeds(getDoc(row(user("dm"),"notes","link")));
+      await assertFails(updateDoc(row(db,"notes","link"),{url:"javascript:alert(1)",updatedAt:serverTimestamp()}));
+      await assertFails(setDoc(row(db,"notes","unsafe"),{...note(),kind:"link",url:"data:text/html,bad"}));
+      await assertFails(setDoc(row(db,"notes","missing"),{...note(),kind:"link"}));
+      await assertFails(updateDoc(row(db,"notes","link"),{url:"https://"+"a".repeat(2048),updatedAt:serverTimestamp()}));
+      await assertSucceeds(updateDoc(row(db,"notes","link"),{title:"Updated resource",url:"https://example.com/guide",updatedAt:serverTimestamp()}));
+      await assertFails(updateDoc(row(user("dm"),"notes","link"),{authorUid:"dm",updatedAt:serverTimestamp()}));
+    });
+    it("shares portraits atomically and bounds uploaded image content", async () => {
+      const db=user("player");
+      await assertSucceeds(writeSheet(db,sheet("player",1,{...initial,image:"https://example.com/portrait.jpg"})));
+      await assertSucceeds(getDoc(row(user("dm"),"summaries","hero")));
+      await assertFails(writeSheet(db,sheet("player",2,{...initial,image:"javascript:alert(1)"})));
+      await assertFails(writeSheet(db,sheet("player",2,{...initial,image:"data:image/svg+xml;base64,PHN2Zz4="})));
+      await assertFails(writeSheet(db,sheet("player",2,{...initial,image:"https://example.com/portrait.jpg"}),{}, {image:"https://example.com/forged.jpg"}));
+      await assertSucceeds(writeSheet(db,sheet("player",2,{...initial,image:"data:image/jpeg;base64,"+"A".repeat(179960)})));
+      await assertFails(writeSheet(db,sheet("player",3,{...initial,image:"data:image/jpeg;base64,"+"A".repeat(180000)})));
+      await assertSucceeds(writeSheet(db,sheet("player",3,{...initial,image:""})));
     });
     it("denies orphaned and unknown paths", async () => {
       await assertFails(

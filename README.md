@@ -4,7 +4,7 @@ A Google-authenticated D&D campaign workspace with English/Hebrew support, multi
 
 Each campaign has its own members and DMs. Players edit their own characters; current campaign DMs can view, edit, and reassign all its characters. The verified Google account `barakv01@gmail.com` is the platform administrator. Only this account creates campaigns, assigns/removes DMs, and creates DM invitations. It can manage all campaigns. Other accounts see only campaigns they belong to; DM access applies only within assigned campaigns. DMs can invite and remove players, but cannot appoint DMs or remove another DM. Invitations are linked to a verified Google email and expire after seven days. Invite links are copied manually; the app does not send email. Each DM sees the player invitations they created. The admin sees all invitations in a campaign. New DMs accept an admin-created DM invitation; existing members can be promoted with Make DM in the admin console. Removing a member revokes their campaign access and their original invitation.
 
-Party shows automatically updated character summaries plus shared notes, quests, session entries, and loot. Equipment, character notes, balances, and backstories remain inside the private sheet. DM notebooks are stored separately and never downloaded by player queries.
+Party shows automatically updated character summaries and portraits plus shared notes, quests, session entries, loot, and clickable links. Add link supports a title, HTTP/HTTPS URL, optional details, and author/DM editing. Equipment, character notes, balances, and backstories remain inside the private sheet. DM notebooks are stored separately and never downloaded by player queries.
 
 ## Using the app
 
@@ -12,7 +12,8 @@ Party shows automatically updated character summaries plus shared notes, quests,
 2. Open the Admin console to assign DMs or invite them with Invitation role → DM. Assigned DMs use their DM console to invite players, assign characters, and define campaign currencies.
 3. Create a cleric/bard sheet or import an existing sheet's JSON backup. Import the latest backup from the original site to preserve levels and balances; no PDF-derived data overwrites existing saves.
 4. Use My characters for your sheets and Party for the shared journal. Sheets autosave and have an explicit Save button. Save conflicts stop autosave so you can export your edits before reloading.
-5. In a wallet, select a default currency, add coins, or record a purchase with a price and tender. Change is calculated within that currency using its configured conversion rates. Different currencies are not exchanged automatically.
+5. In Equipment & story, upload a PNG/JPEG/WebP portrait (up to 8 MB) or use a direct HTTPS image URL. Uploads are resized to at most 600 pixels, re-encoded, and stored with the sheet and its Party summary. Clearing a portrait clears its shared summary. The bounded embedded portrait needs no Storage bucket. Backups include images.
+6. In a wallet, select a default currency, add coins, or record a purchase with a price and tender. Change is calculated within that currency using its configured conversion rates. Different currencies are not exchanged automatically.
 
 The original Sites app and its saves are independent of this app. Production has no preview login or fictional seeded characters. Development preview is a clearly labelled, in-memory fixture that resets on refresh.
 

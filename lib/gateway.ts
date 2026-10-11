@@ -24,6 +24,6 @@ export interface Gateway {
  createCharacter(id:string,user:Profile,ownerUid:string,type:CharacterType,data:Character):Promise<string>;
  assignCharacter(id:string,charId:string,ownerUid:string):Promise<void>;
  sheetStore(id:string,charId:string,user:Profile,currencies:Currency[]):SheetStore;
- saveNote(id:string,privateNotes:boolean,user:Profile,note:Pick<PartyNote,'title'|'text'|'kind'>,existing?:PartyNote):Promise<void>;
+ saveNote(id:string,privateNotes:boolean,user:Profile,note:Pick<PartyNote,'title'|'text'|'kind'|'url'>,existing?:PartyNote):Promise<void>;
  deleteNote(id:string,privateNotes:boolean,note:PartyNote):Promise<void>;
 }
