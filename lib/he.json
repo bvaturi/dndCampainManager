@@ -730,5 +730,13 @@
   "Session updated. Google Calendar notified the guests.": "המפגש עודכן. יומן Google שלח הודעה למוזמנים.",
   "Check Google Calendar for RSVP and any changes made outside Stormkeep.": "בדקו ביומן Google אישורי הגעה ושינויים שבוצעו מחוץ ל־Stormkeep.",
   "Google will request Calendar permission. Guests can RSVP in their invitation email.": "Google יבקש הרשאה ליומן. מוזמנים יכולים לאשר הגעה דרך הודעת ההזמנה.",
-  "Preview session changed. No Calendar event or email was sent.": "מפגש ההדגמה עודכן. לא נוצר אירוע ביומן ולא נשלח דוא״ל."
+  "Preview session changed. No Calendar event or email was sent.": "מפגש ההדגמה עודכן. לא נוצר אירוע ביומן ולא נשלח דוא״ל.",
+  "Signed in as": "מחוברים בתור",
+  "Use the exact Google email your DM invited. If it is different, switch accounts before accepting.": "השתמשו בכתובת Google המדויקת שהמנחה הזמין. אם זו כתובת אחרת, החליפו חשבון לפני קבלת ההזמנה.",
+  "Use another Google account": "כניסה עם חשבון Google אחר",
+  "Use a verified Google account to accept this invitation.": "יש להתחבר עם חשבון Google מאומת כדי לקבל את ההזמנה.",
+  "This invitation link is incomplete. Ask your DM for a new link.": "קישור ההזמנה אינו שלם. בקשו מהמנחה קישור חדש.",
+  "This invitation is unavailable. Ask your DM for a new link.": "ההזמנה אינה זמינה. בקשו מהמנחה קישור חדש.",
+  "This invitation has expired or belongs to another Google account. Use the invited account or ask your DM for a new link.": "תוקף ההזמנה פג או שהיא מיועדת לחשבון Google אחר. התחברו לחשבון שהוזמן או בקשו מהמנחה קישור חדש.",
+  "This invitation is not available for your signed-in Google account. Check the email shown below. Sign out and use the invited account, or ask your DM for a fresh invitation link.": "ההזמנה אינה זמינה לחשבון Google המחובר. בדקו את כתובת הדוא״ל המוצגת למטה. צאו והתחברו לחשבון שהוזמן, או בקשו מהמנחה קישור הזמנה חדש."
 }

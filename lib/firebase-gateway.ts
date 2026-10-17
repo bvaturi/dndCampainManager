@@ -150,7 +150,9 @@ export class FirebaseGateway implements Gateway {
   changeSession(id:string,change:SessionChange){return this.party.changeSession(id,change);}
   sendSession(id:string,draft:SessionDraft){return this.party.sendSession(id,draft);}
   async signIn() {
-    await signInWithPopup(this.auth, new GoogleAuthProvider());
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({prompt:'select_account'});
+    await signInWithPopup(this.auth, provider);
   }
   async signOut() {
     await signOut(this.auth);
@@ -298,11 +300,14 @@ export class FirebaseGateway implements Gateway {
     return ref.id;
   }
   async joinCampaign(user: Profile, id: string, inviteId: string) {
+    if(!user.emailVerified) throw Error('Use a verified Google account to accept this invitation.');
+    if(!/^[A-Za-z0-9_-]{1,100}$/.test(id) || !/^[A-Za-z0-9_-]{1,100}$/.test(inviteId)) throw Error('This invitation link is incomplete. Ask your DM for a new link.');
+    try {
     const invite = await getDoc(this.row(id, "invitations", inviteId));
-    if (!invite.exists()) throw Error("Invitation unavailable");
+    if (!invite.exists()) throw Error("This invitation is unavailable. Ask your DM for a new link.");
     const data = decode(invite.data());
     if (data.email !== user.email.toLowerCase() || data.expiresAt < Date.now())
-      throw Error("Invitation expired or intended for another account");
+      throw Error("This invitation has expired or belongs to another Google account. Use the invited account or ask your DM for a new link.");
     const batch = writeBatch(this.db);
     batch.update(this.camp(id), {
       memberIds: arrayUnion(this.uid()),
@@ -315,6 +320,18 @@ export class FirebaseGateway implements Gateway {
       joinedAt: serverTimestamp(),
     });
     await batch.commit();
+    }catch(error) {
+      if((error as {code?:string}).code==='permission-denied') {
+        // Reopening an accepted invite must not try to recreate an immutable member record.
+        // Existing membership is checked through the normal signed-in rules, never an admin bypass.
+        try {
+          const existing=await getDoc(this.camp(id));
+          if(existing.exists() && existing.data().memberIds.includes(user.uid)) return;
+        }catch { /* A new/non-member account cannot read the campaign yet. */ }
+        throw Error('This invitation is not available for your signed-in Google account. Check the email shown below. Sign out and use the invited account, or ask your DM for a fresh invitation link.');
+      }
+      throw error;
+    }
   }
   async updateCampaign(
     id: string,
