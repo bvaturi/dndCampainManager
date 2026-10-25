@@ -1,171 +1,208 @@
-// Data contract: bounded campaigns, public members, private sheets and DM notes.
-// Platform admin is the verified Google account barakv01@gmail.com. Only admin creates campaigns or assigns DMs.
-// DM invites may grant player access only; admin DM invitations grant exactly the invited account.
-// Subcollections require an existing campaign and membership, ownership or assigned DM access.
 rules_version = '2';
+
+// Campaign Codex security rules.
+// Roles: platform manager (admin) > Dungeon Master of a campaign > invited player.
 service cloud.firestore {
- match /databases/{database}/documents {
-  function signed() { return request.auth != null && request.auth.token.email_verified == true && request.auth.token.firebase.sign_in_provider == 'google.com'; }
-  function text(v,n) { return v is string && v.size()<=n; }
-  function webLink(v) { return text(v,2048) && v.matches('https?://[^\\s/?#@]+([/?#][^\\s]*)?'); }
-  function image(v) { return text(v,180000) && (v=='' || (v.size()<=2048 && v.matches('https://[^\\s/?#@]+([/?#][^\\s]*)?')) || v.matches('data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}')); }
-  function number(v,a,b) { return v is int && v>=a && v<=b; }
-  function keys(v,allowed) { return v is map && v.keys().hasOnly(allowed); }
-  function adminIdentity() { return request.auth.token.email.lower()=='barakv01@gmail.com'; }
-  function admin() { return signed() && adminIdentity(); }
-  function campaignPath(id) { return /databases/$(database)/documents/campaigns/$(id); }
-  function member(id) { return signed() && exists(campaignPath(id)) && (adminIdentity() || request.auth.uid in get(campaignPath(id)).data.memberIds); }
-  function dm(id) { return member(id) && (adminIdentity() || request.auth.uid in get(campaignPath(id)).data.dmIds); }
-  function rates(v) { return keys(v,['cp','sp','ep','gp','pp']) && v.cp==1 && number(v.sp,2,1000000) && number(v.ep,v.sp+1,1000000) && number(v.gp,v.ep+1,1000000) && number(v.pp,v.gp+1,1000000); }
-  function coins(v) { return keys(v,['cp','sp','ep','gp','pp']) && number(v.cp,0,100000000) && number(v.sp,0,100000000) && number(v.ep,0,100000000) && number(v.gp,0,100000000) && number(v.pp,0,100000000); }
-  function index(v) { return text(v,2019) && v.matches('([A-Za-z0-9_-]{1,100}(/[A-Za-z0-9_-]{1,100}){0,19})?'); }
-  function customIndex(v) { return text(v,6059) && v.matches('([A-Za-z0-9_-]{1,100}(/[A-Za-z0-9_-]{1,100}){0,59})?'); }
-  function indexed(v,key) { return key is string && key.matches('[A-Za-z0-9_-]{1,100}') && v.matches('(.*/)?'+key+'(/.*)?'); }
-  function currency(v) { return keys(v,['id','name','rates']) && text(v.id,100) && v.id.size()>0 && text(v.name,100) && v.name.size()>0 && rates(v.rates); }
-  function wallet(v) { return keys(v,['id','name','rates','coins']) && text(v.id,100) && v.id.size()>0 && text(v.name,100) && v.name.size()>0 && rates(v.rates) && coins(v.coins); }
+  match /databases/{database}/documents {
 
-function logList(v) { return v is list && v.size() <= 30 && (v.size() <= 0 || ((v.size() <= 0 || text(v[0],500)) && (v.size() <= 1 || text(v[1],500)) && (v.size() <= 2 || text(v[2],500)) && (v.size() <= 3 || text(v[3],500)) && (v.size() <= 4 || text(v[4],500)))) && (v.size() <= 5 || ((v.size() <= 5 || text(v[5],500)) && (v.size() <= 6 || text(v[6],500)) && (v.size() <= 7 || text(v[7],500)) && (v.size() <= 8 || text(v[8],500)) && (v.size() <= 9 || text(v[9],500)))) && (v.size() <= 10 || ((v.size() <= 10 || text(v[10],500)) && (v.size() <= 11 || text(v[11],500)) && (v.size() <= 12 || text(v[12],500)) && (v.size() <= 13 || text(v[13],500)) && (v.size() <= 14 || text(v[14],500)))) && (v.size() <= 15 || ((v.size() <= 15 || text(v[15],500)) && (v.size() <= 16 || text(v[16],500)) && (v.size() <= 17 || text(v[17],500)) && (v.size() <= 18 || text(v[18],500)) && (v.size() <= 19 || text(v[19],500)))) && (v.size() <= 20 || ((v.size() <= 20 || text(v[20],500)) && (v.size() <= 21 || text(v[21],500)) && (v.size() <= 22 || text(v[22],500)) && (v.size() <= 23 || text(v[23],500)) && (v.size() <= 24 || text(v[24],500)))) && (v.size() <= 25 || ((v.size() <= 25 || text(v[25],500)) && (v.size() <= 26 || text(v[26],500)) && (v.size() <= 27 || text(v[27],500)) && (v.size() <= 28 || text(v[28],500)) && (v.size() <= 29 || text(v[29],500)))); }
-function customSpell(v) { return keys(v,["id","name","level","prepared","description","concentration"]) && text(v.id,100) && v.id.size()>0 && text(v.name,100) && v.name.size()>0 && number(v.level,0,9) && v.prepared is bool && text(v.description,2000) && v.concentration is bool; }
+    function signedIn() { return request.auth != null; }
+    function myEmail() { return request.auth.token.email.lower(); }
+    // Email-based roles (manager, DM) only count for verified emails, so nobody can claim one by typing it in.
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
 
-function knownSpells(v,n) { return keys(v,["ids"]) && v.ids is list && v.ids.size()<=n && v.ids.toSet().hasOnly(["acid-arrow", "acid-splash", "aid", "alarm", "alter-self", "animal-friendship", "animal-messenger", "animal-shapes", "animate-dead", "animate-objects", "antilife-shell", "antimagic-field", "antipathy-sympathy", "arcane-eye", "arcane-hand", "arcane-lock", "arcane-sword", "arcanists-magic-aura", "astral-projection", "augury", "awaken", "bane", "banishment", "barkskin", "beacon-of-hope", "bestow-curse", "black-tentacles", "blade-barrier", "blade-ward", "bless", "blight", "blindness-deafness", "blink", "blur", "branding-smite", "burning-hands", "call-lightning", "calm-emotions", "chain-lightning", "charm-person", "chill-touch", "circle-of-death", "clairvoyance", "clone", "cloud-of-daggers", "cloudkill", "color-spray", "command", "commune", "commune-with-nature", "comprehend-languages", "compulsion", "cone-of-cold", "confusion", "conjure-animals", "conjure-celestial", "conjure-elemental", "conjure-fey", "conjure-minor-elementals", "conjure-woodland-beings", "contact-other-plane", "contagion", "contingency", "continual-flame", "control-water", "control-weather", "counterspell", "create-food-and-water", "create-or-destroy-water", "create-undead", "creation", "crown-of-madness", "cure-wounds", "dancing-lights", "darkness", "darkvision", "daylight", "death-ward", "delayed-blast-fireball", "demiplane", "destructive-wave", "detect-evil-and-good", "detect-magic", "detect-poison-and-disease", "detect-thoughts", "dimension-door", "disguise-self", "disintegrate", "dispel-evil-and-good", "dispel-magic", "dissonant-whispers", "divination", "divine-favor", "divine-word", "dominate-beast", "dominate-monster", "dominate-person", "dream", "druidcraft", "earthquake", "eldritch-blast", "enhance-ability", "enlarge-reduce", "entangle", "enthrall", "etherealness", "expeditious-retreat", "eyebite", "fabricate", "faerie-fire", "faithful-hound", "false-life", "fear", "feather-fall", "feeblemind", "feign-death", "find-familiar", "find-steed", "find-the-path", "find-traps", "finger-of-death", "fire-bolt", "fire-shield", "fire-storm", "fireball", "flame-blade", "flame-strike", "flaming-sphere", "flesh-to-stone", "floating-disk", "fly", "fog-cloud", "forbiddance", "forcecage", "foresight", "freedom-of-movement", "freezing-sphere", "friends", "gaseous-form", "gate", "geas", "gentle-repose", "giant-insect", "glibness", "globe-of-invulnerability", "glyph-of-warding", "goodberry", "grease", "greater-invisibility", "greater-restoration", "guardian-of-faith", "guards-and-wards", "guidance", "guiding-bolt", "gust-of-wind", "hallow", "hallucinatory-terrain", "harm", "haste", "heal", "healing-word", "heat-metal", "hellish-rebuke", "heroes-feast", "heroism", "hideous-laughter", "hold-monster", "hold-person", "holy-aura", "hunters-mark", "hypnotic-pattern", "ice-storm", "identify", "illusory-script", "imprisonment", "incendiary-cloud", "inflict-wounds", "insect-plague", "instant-summons", "invisibility", "irresistible-dance", "jump", "knock", "legend-lore", "lesser-restoration", "levitate", "light", "lightning-bolt", "locate-animals-or-plants", "locate-creature", "locate-object", "longstrider", "mage-armor", "mage-hand", "magic-circle", "magic-jar", "magic-missile", "magic-mouth", "magic-weapon", "magnificent-mansion", "major-image", "mass-cure-wounds", "mass-heal", "mass-healing-word", "mass-suggestion", "maze", "meld-into-stone", "mending", "message", "meteor-swarm", "mind-blank", "minor-illusion", "mirage-arcane", "mirror-image", "mislead", "misty-step", "modify-memory", "moonbeam", "move-earth", "nondetection", "pass-without-trace", "passwall", "phantasmal-force", "phantasmal-killer", "phantom-steed", "planar-ally", "planar-binding", "plane-shift", "plant-growth", "poison-spray", "polymorph", "power-word-heal", "power-word-kill", "power-word-stun", "prayer-of-healing", "prestidigitation", "prismatic-spray", "prismatic-wall", "private-sanctum", "produce-flame", "programmed-illusion", "project-image", "protection-from-energy", "protection-from-evil-and-good", "protection-from-poison", "purify-food-and-drink", "raise-dead", "ray-of-enfeeblement", "ray-of-frost", "regenerate", "reincarnate", "remove-curse", "resilient-sphere", "resistance", "resurrection", "reverse-gravity", "revivify", "rope-trick", "sacred-flame", "sanctuary", "scorching-ray", "scrying", "secret-chest", "see-invisibility", "seeming", "sending", "sequester", "shapechange", "shatter", "shield", "shield-of-faith", "shillelagh", "shocking-grasp", "silence", "silent-image", "simulacrum", "sleep", "sleet-storm", "slow", "spare-the-dying", "speak-with-animals", "speak-with-dead", "speak-with-plants", "spider-climb", "spike-growth", "spirit-guardians", "spiritual-weapon", "stinking-cloud", "stone-shape", "stoneskin", "storm-of-vengeance", "suggestion", "sunbeam", "sunburst", "symbol", "telekinesis", "telepathic-bond", "teleport", "teleportation-circle", "thaumaturgy", "thunderwave", "time-stop", "tiny-hut", "tongues", "transport-via-plants", "tree-stride", "true-polymorph", "true-resurrection", "true-seeing", "true-strike", "unseen-servant", "vampiric-touch", "vicious-mockery", "wall-of-fire", "wall-of-force", "wall-of-ice", "wall-of-stone", "wall-of-thorns", "warding-bond", "water-breathing", "water-walk", "web", "weird", "wind-walk", "wind-wall", "wish", "word-of-recall", "zone-of-truth"]); }
-function core(c) { return keys(c,["name", "player", "concentration", "level", "hp", "maxHP", "tempHP", "ac", "speed", "xp", "channel", "wrath", "stone", "hitDiceSpent", "deathSuccess", "deathFailure", "scores", "spent", "reaction", "className", "species", "subclass", "image", "defaultCurrencyId", "rulesEdition"]) && text(c.name,100) && text(c.player,100) && text(c.concentration,100) && (c.level is int && c.level>=1 && c.level<=20) && (c.hp is int && c.hp>=0 && c.hp<=1000000) && (c.maxHP is int && c.maxHP>=1 && c.maxHP<=1000000) && (c.tempHP is int && c.tempHP>=0 && c.tempHP<=1000000) && (c.ac is int && c.ac>=0 && c.ac<=50) && (c.speed is int && c.speed>=0 && c.speed<=500) && (c.xp is int && c.xp>=0 && c.xp<=100000000) && (c.channel is int && c.channel>=0 && c.channel<=20) && (c.wrath is int && c.wrath>=0 && c.wrath<=20) && (c.stone is int && c.stone>=0 && c.stone<=1) && (c.hitDiceSpent is int && c.hitDiceSpent>=0 && c.hitDiceSpent<=20) && (c.deathSuccess is int && c.deathSuccess>=0 && c.deathSuccess<=3) && (c.deathFailure is int && c.deathFailure>=0 && c.deathFailure<=3) && c.reaction is bool && c.scores is list && c.scores.size()==6 && c.scores.toSet().hasOnly([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]) && c.spent is list && c.spent.size()==9 && c.spent.toSet().hasOnly([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) && (!('className' in c) || text(c.className,100)) && (!('species' in c) || text(c.species,100)) && (!('subclass' in c) || text(c.subclass,100)) && (!('image' in c) || text(c.image,180000)) && (!('defaultCurrencyId' in c) || text(c.defaultCurrencyId,100)) && (!('image' in c) || image(c.image)) && !('wallets' in c) && (!('rulesEdition' in c) || c.rulesEdition in ['2014','2024','custom']); }
-function detail(c) { return keys(c,["alignment", "background", "equipment", "notes", "languages", "coins", "proficient", "saveProf", "features", "persona", "falseIdentity", "scheme", "backstory", "expertise", "inspiration", "college", "slotMax", "spellAbility"]) && text(c.alignment,100) && text(c.background,100) && text(c.equipment,10000) && text(c.notes,20000) && text(c.languages,1000) && text(c.coins,1000) && c.proficient is list && c.proficient.size()<=18 && c.proficient.toSet().hasOnly(["Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception", "History", "Insight", "Intimidation", "Investigation", "Medicine", "Nature", "Perception", "Performance", "Persuasion", "Religion", "Sleight of Hand", "Stealth", "Survival"]) && c.saveProf is list && c.saveProf.size()<=6 && c.saveProf.toSet().hasOnly([0,1,2,3,4,5]) && (!('features' in c) || text(c.features,20000)) && (!('persona' in c) || text(c.persona,1000)) && (!('falseIdentity' in c) || text(c.falseIdentity,5000)) && (!('scheme' in c) || text(c.scheme,1000)) && (!('backstory' in c) || text(c.backstory,15000)) && (!('expertise' in c) || (c.expertise is list && c.expertise.size()<=4 && c.expertise.toSet().hasOnly(["Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception", "History", "Insight", "Intimidation", "Investigation", "Medicine", "Nature", "Perception", "Performance", "Persuasion", "Religion", "Sleight of Hand", "Stealth", "Survival"]))) && (!('inspiration' in c) || number(c.inspiration,0,20)) && (!('college' in c) || c.college in ['','lore','valor']) && (!('slotMax' in c) || (c.slotMax is list && c.slotMax.size()==9 && c.slotMax.toSet().hasOnly([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]))) && (!('spellAbility' in c) || number(c.spellAbility,0,5)); }
-function emailList(v) { return v is list && v.size()<=50 && v.toSet()==v.join(',').split(',').toSet() && v.join(',').size()<=12749 && v.join(',').matches('[^@, ]{1,64}@[^@, ]{1,189}(,[^@, ]{1,64}@[^@, ]{1,189}){0,49}') && v.join(',').matches('[^@, ]+@[^@, ]+[.][^@, ]+(,[^@, ]+@[^@, ]+[.][^@, ]+){0,49}'); }
+    // Platform managers: keep this list in sync with VITE_ADMIN_EMAILS in .env.
+    // More managers can be added from the app (stored in /admins/{email}).
+    function isAdmin() {
+      return verified() && (
+        myEmail() in ['barakv01@gmail.com', 'barakvaturi@gmail.com'] ||
+        exists(/databases/$(database)/documents/admins/$(myEmail()))
+      );
+    }
 
-  function combatPath(id) { return /databases/$(database)/documents/campaigns/$(id)/combat/current; }
-  function combatIndex(v) { return text(v,4039) && v.matches('([A-Za-z0-9_-]{1,100}(/[A-Za-z0-9_-]{1,100}){0,39})?'); }
-  function validCombat(v) { return keys(v,['entryIndex','activeId','round','revision','updatedBy','updatedAt']) && combatIndex(v.entryIndex) && text(v.activeId,100) && (v.activeId=='' || indexed(v.entryIndex,v.activeId)) && number(v.round,1,9999) && number(v.revision,1,100000000) && v.updatedBy==request.auth.uid && v.updatedAt==request.time; }
-  function validEntry(v,key) { return keys(v,['id','name','initiative','order','conditions']) && v.id==key && text(v.name,100) && v.name.size()>0 && number(v.initiative,-30,100) && number(v.order,0,1000) && text(v.conditions,200); }
-  function boundContact(id,uid,v) { let m=get(/databases/$(database)/documents/campaigns/$(id)/members/$(uid)).data; return m.inviteId!='' && v.email==get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(m.inviteId)).data.email && v.name==m.name; }
-  function contact(id,uid,v) { return keys(v,['email','name']) && text(v.email,254) && v.email==v.email.lower() && v.email.matches('[^@ ]+@[^@ ]+[.][^@ ]+') && text(v.name,100) && uid in get(campaignPath(id)).data.memberIds && ((uid==request.auth.uid && v.email==request.auth.token.email.lower() && v.name==request.auth.token.name) || (admin() && boundContact(id,uid,v))); }
-  function validDraft(v,key) { return keys(v,['id','title','description','location','start','end','timeZone','attendees','organizerUid']) && key.matches('[a-f0-9]{32}') && v.id==key && text(v.title,150) && v.title.size()>0 && text(v.description,2000) && text(v.location,300) && text(v.start,16) && v.start.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && text(v.end,16) && v.end.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}') && v.end>v.start && text(v.timeZone,100) && v.timeZone.size()>0 && emailList(v.attendees) && v.attendees.size()>0 && v.attendees.toSet().size()==v.attendees.size() && v.organizerUid==request.auth.uid; }
-  function meetingDM(id) { return member(id) && request.auth.uid in get(campaignPath(id)).data.dmIds; }
-  function sessionChange(id,key,old,v) {
-    let c=get(/databases/$(database)/documents/campaigns/$(id)/sessionChanges/$(key)).data;
-    let d=c.draft;
-    return keys(v,['title','description','location','timeZone','startAt','endAt','calendarUrl','organizerUid','status','revision']) && old.organizerUid==request.auth.uid && v.organizerUid==old.organizerUid && old.get('status','scheduled')!='cancelled' && v.calendarUrl==old.calendarUrl && c.revision==old.get('revision',0) && v.revision==c.revision+1 && v.startAt is timestamp && v.endAt is timestamp && v.endAt>v.startAt && !existsAfter(/databases/$(database)/documents/campaigns/$(id)/sessionChanges/$(key)) && ((c.action=='edit' && v.status=='scheduled' && v.title==d.title && v.description==d.description && v.location==d.location && v.timeZone==d.timeZone) || (c.action=='cancel' && v.status=='cancelled' && v.diff(old).affectedKeys().hasOnly(['status','revision'])));
+    function campaignDoc(cid) { return get(/databases/$(database)/documents/campaigns/$(cid)).data; }
+    function isDm(cid) { return verified() && campaignDoc(cid).dmEmail == myEmail(); }
+    function isOwner() { return signedIn() && resource.data.ownerUid == request.auth.uid; }
+    function isMember(cid) {
+      return signedIn() && exists(/databases/$(database)/documents/campaigns/$(cid)/members/$(request.auth.uid));
+    }
+    function canManage(cid) { return isAdmin() || isDm(cid); }
+    function canView(cid) { return canManage(cid) || isMember(cid); }
+    // The map on the table (campaigns/{cid}/combat/map), written by the DM only.
+    function mapState(cid) { return get(/databases/$(database)/documents/campaigns/$(cid)/combat/map).data; }
+
+    // A suggestion may be for no character or for one character the suggesting player owns.
+    function ownCharacterGrant(cid, granted) {
+      return granted is list && (
+        granted.size() == 0 || (
+          granted.size() == 1
+          && get(/databases/$(database)/documents/campaigns/$(cid)/characters/$(granted[0])).data.ownerUid == request.auth.uid
+        )
+      );
+    }
+
+    function validInvite(cid, token) {
+      let inv = get(/databases/$(database)/documents/campaigns/$(cid)/invites/$(token)).data;
+      return inv.campaignId == cid
+        && inv.revoked == false
+        && inv.expiresAt > request.time.toMillis()
+        && (inv.email == null || inv.email == myEmail());
+    }
+
+    match /users/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow write: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /admins/{email} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /dms/{email} {
+      allow read, write: if isAdmin();
+    }
+
+    match /campaigns/{cid} {
+      allow get: if isAdmin() || (verified() && resource.data.dmEmail == myEmail()) || isMember(cid);
+      allow list: if isAdmin() || (verified() && resource.data.dmEmail == myEmail());
+      allow create, delete: if isAdmin();
+      // A DM can edit their campaign but cannot hand it to someone else.
+      allow update: if isAdmin() || (
+        verified() && resource.data.dmEmail == myEmail()
+        && request.resource.data.dmEmail == resource.data.dmEmail
+        && request.resource.data.createdBy == resource.data.createdBy
+      );
+
+      match /invites/{token} {
+        allow get: if signedIn();             // the token itself is the secret
+        allow list, create, delete: if canManage(cid);
+        // Joining bumps the counter in the same batch that creates the member doc.
+        allow update: if canManage(cid) || (
+          signedIn()
+          && existsAfter(/databases/$(database)/documents/campaigns/$(cid)/members/$(request.auth.uid))
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['uses'])
+          && request.resource.data.uses == resource.data.uses + 1
+        );
+      }
+
+      match /members/{uid} {
+        allow read: if canView(cid);
+        allow create: if signedIn() && request.auth.uid == uid
+          && request.resource.data.uid == uid
+          && validInvite(cid, request.resource.data.inviteToken);
+        allow delete: if canManage(cid) || (signedIn() && request.auth.uid == uid);
+      }
+
+      // A character can be changed only by its owner (while still in the campaign), the campaign's DM,
+      // or a platform manager. Party members can read it. Nobody can hand it to another player.
+      match /characters/{chid} {
+        allow read: if canView(cid);
+        allow create: if isMember(cid)
+          && request.resource.data.ownerUid == request.auth.uid
+          && request.resource.data.campaignId == cid;
+        allow update: if (canManage(cid) || (isOwner() && isMember(cid)))
+          && request.resource.data.ownerUid == resource.data.ownerUid
+          && request.resource.data.campaignId == cid;
+        allow delete: if canManage(cid) || (isOwner() && isMember(cid));
+      }
+
+      match /sessions/{sid} {
+        allow read: if canView(cid);
+        allow write: if canManage(cid);
+      }
+
+      match /private/{docId} {
+        allow read, write: if canManage(cid);
+      }
+
+      // ---- combat manager
+      match /combat/{docId} {
+        allow read: if canView(cid);
+        allow write: if canManage(cid);
+      }
+      // Initiative order. A player may add only their own character and change only its initiative roll
+      // (and, when the DM allows it, move its token on the map on the table);
+      // enemies, turns, conditions and hidden entries are the DM's. Hidden entries are invisible to players.
+      match /combatants/{id} {
+        allow read: if canManage(cid) || (isMember(cid) && resource.data.hidden == false);
+        allow create: if canManage(cid) || (
+          isMember(cid)
+          && request.resource.data.kind == 'pc'
+          && request.resource.data.ownerUid == request.auth.uid
+          && request.resource.data.hidden == false
+          && get(/databases/$(database)/documents/campaigns/$(cid)/characters/$(id)).data.ownerUid == request.auth.uid
+        );
+        allow update: if canManage(cid) || (
+          isMember(cid)
+          && resource.data.kind == 'pc'
+          && resource.data.ownerUid == request.auth.uid
+          && (
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(['initiative', 'roll', 'dexMod', 'name'])
+            || (
+              request.resource.data.diff(resource.data).affectedKeys().hasOnly(['mapPos'])
+              && mapState(cid).playersMove == true
+              && request.resource.data.mapPos.mapId == mapState(cid).mapId
+              && request.resource.data.mapPos.keys().hasOnly(['mapId', 'x', 'y'])
+              && request.resource.data.mapPos.x is int && request.resource.data.mapPos.y is int
+            )
+          )
+        );
+        allow delete: if canManage(cid);
+      }
+      // Enemy HP / AC / notes: DM only.
+      match /combatSecrets/{id} {
+        allow read, write: if canManage(cid);
+      }
+
+      // ---- battle maps: the DM's library. Players can read only the map on the table, never the rest
+      // (so maps prepared for later stay secret). Images live in Firestore docs (no Cloud Storage on Spark).
+      match /maps/{mapId} {
+        allow read: if canManage(cid) || (isMember(cid) && mapState(cid).mapId == mapId);
+        allow write: if canManage(cid);
+      }
+      match /mapImages/{mapId} {
+        allow read: if canManage(cid) || (isMember(cid) && mapState(cid).mapId == mapId);
+        allow write: if canManage(cid);
+      }
+
+      // ---- homebrew library (spells and abilities). The DM curates it; approved items are visible to the party.
+      // Players may suggest: a pending item they created, granted at most to one character of their own,
+      // which they can edit or withdraw until the DM approves it. Only the DM approves or grants.
+      match /homebrew/{hid} {
+        allow read: if canManage(cid) || (
+          isMember(cid) && (resource.data.status == 'approved' || resource.data.createdBy == request.auth.uid)
+        );
+        allow create: if canManage(cid) || (
+          isMember(cid)
+          && hid.matches('hb-[A-Za-z0-9]+')
+          && request.resource.data.kind in ['spell', 'ability']
+          && request.resource.data.status == 'pending'
+          && request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.campaignId == cid
+          && ownCharacterGrant(cid, request.resource.data.grantedTo)
+        );
+        allow update: if canManage(cid) || (
+          isMember(cid)
+          && resource.data.createdBy == request.auth.uid
+          && resource.data.status == 'pending'
+          && request.resource.data.status == 'pending'
+          && request.resource.data.createdBy == resource.data.createdBy
+          && request.resource.data.campaignId == cid
+          && request.resource.data.kind == resource.data.kind
+          && ownCharacterGrant(cid, request.resource.data.grantedTo)
+        );
+        allow delete: if canManage(cid) || (
+          isMember(cid) && resource.data.createdBy == request.auth.uid && resource.data.status == 'pending'
+        );
+      }
+    }
+
+    // Collection-group queries ("my campaigns", "my characters", "all characters").
+    match /{path=**}/members/{uid} {
+      allow read: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+    match /{path=**}/characters/{chid} {
+      allow read: if isAdmin() || (signedIn() && resource.data.ownerUid == request.auth.uid);
+    }
   }
-  function validSession(id,key,v) { let d=get(/databases/$(database)/documents/campaigns/$(id)/sessionDrafts/$(key)).data; return keys(v,['title','description','location','timeZone','startAt','endAt','calendarUrl','organizerUid']) && v.organizerUid==request.auth.uid && v.organizerUid==d.organizerUid && v.title==d.title && v.description==d.description && v.location==d.location && v.timeZone==d.timeZone && v.startAt is timestamp && v.endAt is timestamp && v.endAt>v.startAt && text(v.calendarUrl,2048) && v.calendarUrl.matches('https://(www[.]google[.]com/calendar/|calendar[.]google[.]com/)[^ ]+'); }
-
-  function validCampaign(c) { return keys(c,['name','description','ruleset','createdBy','memberIds','dmIds','currencyIndex','createdAt','updatedAt']) && text(c.name,100) && c.name.size()>0 && text(c.description,2000) && c.ruleset=='2014' && text(c.createdBy,128) && c.memberIds is list && c.memberIds.size()<=50 && c.memberIds.toSet().size()==c.memberIds.size() && c.dmIds is list && c.dmIds.size()<=20 && c.dmIds.toSet().size()==c.dmIds.size() && c.dmIds.toSet().hasOnly(c.memberIds) && c.createdBy in c.memberIds && index(c.currencyIndex) && c.currencyIndex.size()>0 && c.createdAt is timestamp && c.updatedAt==request.time; }
-  function invitation(id,i) { let v=get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(i)).data; let c=get(campaignPath(id)).data; return i is string && i.size()>0 && i.size()<=100 && v.email==request.auth.token.email.lower() && v.expiresAt>request.time && (v.createdBy==c.createdBy || (v.createdBy in c.dmIds && v.get('role','player')=='player')); }
-  function joining(id,c) { let before=get(campaignPath(id)).data; let m=getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data; let v=get(/databases/$(database)/documents/campaigns/$(id)/invitations/$(m.inviteId)).data; return !(request.auth.uid in before.memberIds) && c.diff(before).affectedKeys().hasOnly(['memberIds','dmIds','updatedAt']) && c.memberIds.toSet()==before.memberIds.toSet().union([request.auth.uid].toSet()) && invitation(id,m.inviteId) && c.dmIds.toSet()==(v.get('role','player')=='dm'?before.dmIds.toSet().union([request.auth.uid].toSet()):before.dmIds.toSet()); }
-  function validMember(m) { return keys(m,['name','joinedAt','inviteId']) && text(m.name,100) && m.name==request.auth.token.name && m.joinedAt==request.time && text(m.inviteId,100); }
-  function validRecord(r) { return keys(r,['ownerUid','type','data','revision','updatedBy','updatedAt','walletIndex','pendingOwnerEmail','customSpellIndex']) && text(r.ownerUid,128) && (r.get('pendingOwnerEmail','')=='' || (text(r.pendingOwnerEmail,254) && r.pendingOwnerEmail==r.pendingOwnerEmail.lower() && r.pendingOwnerEmail.matches('[^@ ]+@[^@ ]+\\.[^@ ]+'))) && r.type in ['varen','arad','custom'] && core(r.data) && (r.type!='custom' || (text(r.data.get('className',''),100) && r.data.get('className','').size()>0)) && number(r.revision,1,100000000) && customIndex(r.get('customSpellIndex','')) && index(r.walletIndex) && (!('defaultCurrencyId' in r.data) || indexed(r.walletIndex,r.data.defaultCurrencyId)) && r.updatedBy==request.auth.uid && r.updatedAt==request.time; }
-  function editCharacter(id,r) { return member(id) && (r.ownerUid==request.auth.uid || adminIdentity() || request.auth.uid in get(campaignPath(id)).data.dmIds); }
-  function matchingSummary(id,key,r) { let s=getAfter(/databases/$(database)/documents/campaigns/$(id)/summaries/$(key)).data; return s=={'image':r.data.get('image',''),'ownerUid':r.ownerUid,'name':r.data.name,'player':r.data.player,'className':(r.type=='custom'?((r.data.get('species','')==''?'':r.data.species+' · ')+r.data.className):(r.type=='arad'?'Changeling · Bard':'Goliath · Tempest cleric')),'level':r.data.level,'hp':r.data.hp,'maxHP':r.data.maxHP,'ac':r.data.ac,'concentration':r.data.concentration,'updatedAt':r.updatedAt}; }
-  function validNote(n) { return keys(n,['title','text','kind','authorUid','authorName','createdAt','updatedAt','url']) && text(n.title,150) && text(n.text,20000) && n.kind in ['note','quest','session','loot','link'] && (!('url' in n) || n.url=='' || webLink(n.url)) && (n.kind!='link' || webLink(n.url)) && text(n.authorUid,128) && text(n.authorName,100) && n.createdAt is timestamp && n.updatedAt==request.time; }
-  // Shared attachments are immutable bounded byte chunks. Archive changes are reversible.
-  function filePath(id,key) { return /databases/$(database)/documents/campaigns/$(id)/files/$(key); }
-  function validFile(f) { return keys(f,['name','title','contentType','size','chunkCount','sha256','authorUid','authorName','createdAt','updatedAt','archived']) && text(f.name,150) && f.name.size()>0 && text(f.title,150) && f.title.size()>0 && f.contentType in ['application/pdf','image/png','image/jpeg','image/webp'] && number(f.size,1,8388608) && number(f.chunkCount,1,32) && (f.chunkCount-1)*262144<f.size && f.size<=f.chunkCount*262144 && text(f.sha256,64) && f.sha256.matches('[a-f0-9]{64}') && text(f.authorUid,128) && text(f.authorName,100) && f.createdAt is timestamp && f.updatedAt==request.time && f.archived is bool; }
-  match /campaigns/{id} {
-   allow read: if signed() && (admin() || request.auth.uid in resource.data.memberIds);
-   allow create: if admin() && validCampaign(request.resource.data) && request.resource.data.createdBy==request.auth.uid && request.resource.data.memberIds==[request.auth.uid] && request.resource.data.dmIds==[] && request.resource.data.createdAt==request.time && getAfter(/databases/$(database)/documents/campaigns/$(id)/members/$(request.auth.uid)).data.inviteId=='';
-   allow update: if signed() && validCampaign(request.resource.data) && request.resource.data.createdBy==resource.data.createdBy && request.resource.data.createdAt==resource.data.createdAt && (
-    (admin() && request.resource.data.memberIds.toSet().hasOnly(resource.data.memberIds)) ||
-    (dm(id) && request.resource.data.dmIds==resource.data.dmIds && request.resource.data.memberIds.toSet().hasOnly(resource.data.memberIds)) ||
-    joining(id,request.resource.data)
-   );
-   match /contacts/{uid} {
-    allow get: if member(id) && (dm(id) || uid==request.auth.uid);
-    allow list: if dm(id);
-    allow create,update: if member(id) && contact(id,uid,request.resource.data);
-   }
-   match /combat/{key} {
-    allow read: if key=='current' && member(id);
-    allow create: if key=='current' && dm(id) && validCombat(request.resource.data) && request.resource.data.revision==1;
-    allow update: if key=='current' && dm(id) && validCombat(request.resource.data) && request.resource.data.revision==resource.data.revision+1;
-    match /entries/{entryId} {
-     allow read: if key=='current' && member(id);
-     allow create,update: if key=='current' && dm(id) && validEntry(request.resource.data,entryId) && indexed(getAfter(combatPath(id)).data.entryIndex,entryId) && getAfter(combatPath(id)).data.updatedAt==request.time;
-     allow delete: if key=='current' && dm(id) && !indexed(getAfter(combatPath(id)).data.entryIndex,entryId) && getAfter(combatPath(id)).data.updatedAt==request.time;
-    }
-   }
-   match /sessionDrafts/{key} {
-    allow read: if dm(id);
-    allow create: if meetingDM(id) && validDraft(request.resource.data,key);
-    allow delete: if meetingDM(id) && resource.data.organizerUid==request.auth.uid && existsAfter(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key));
-   }
-   match /sessionChanges/{key} {
-    allow read: if dm(id);
-    allow create: if meetingDM(id) && keys(request.resource.data,['draft','etag','revision','operationId','action']) && validDraft(request.resource.data.draft,key) && text(request.resource.data.etag,200) && request.resource.data.etag.size()>0 && request.resource.data.operationId.matches('[a-f0-9]{32}') && request.resource.data.action in ['edit','cancel'] && request.resource.data.revision==get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('revision',0) && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.organizerUid==request.auth.uid && get(/databases/$(database)/documents/campaigns/$(id)/sessions/$(key)).data.get('status','scheduled')!='cancelled';
-    allow delete: if meetingDM(id) && resource.data.draft.organizerUid==request.auth.uid;
-   }
-   match /sessions/{key} {
-    allow read: if member(id);
-    allow create: if meetingDM(id) && validSession(id,key,request.resource.data);
-    allow update: if meetingDM(id) && sessionChange(id,key,resource.data,request.resource.data);
-
-   }
-   match /currencies/{key} {
-    allow read: if member(id);
-    allow create,update: if signed() && (admin() || request.auth.uid in getAfter(campaignPath(id)).data.dmIds) && currency(request.resource.data) && request.resource.data.id==key && indexed(getAfter(campaignPath(id)).data.currencyIndex,key) && getAfter(campaignPath(id)).data.updatedAt==request.time;
-    allow delete: if dm(id) && !(indexed(getAfter(campaignPath(id)).data.currencyIndex,key)) && getAfter(campaignPath(id)).data.updatedAt==request.time;
-   }
-   match /members/{uid} {
-    allow read: if member(id);
-    allow create: if signed() && uid==request.auth.uid && validMember(request.resource.data) && uid in getAfter(campaignPath(id)).data.memberIds && ((getAfter(campaignPath(id)).data.createdBy==uid && request.resource.data.inviteId=='') || invitation(id,request.resource.data.inviteId));
-    allow delete: if dm(id) && (admin() || !(uid in get(campaignPath(id)).data.dmIds)) && uid!=get(campaignPath(id)).data.createdBy && !(uid in getAfter(campaignPath(id)).data.memberIds);
-   }
-   match /invitations/{key} {
-    allow read: if signed() && ((admin() || (dm(id) && (resource.data.createdBy==request.auth.uid || resource.data.role=='player'))) || (resource.data.email==request.auth.token.email.lower() && resource.data.expiresAt>request.time));
-    allow create: if dm(id) && keys(request.resource.data,['email','campaignName','createdBy','createdAt','expiresAt','role']) && request.resource.data.get('role','player') in ['player','dm'] && (request.resource.data.get('role','player')=='player' || admin()) && text(request.resource.data.email,254) && request.resource.data.email.matches('[^@ ]+@[^@ ]+\\.[^@ ]+') && request.resource.data.email==request.resource.data.email.lower() && request.resource.data.campaignName==get(campaignPath(id)).data.name && request.resource.data.createdBy==request.auth.uid && request.resource.data.createdAt==request.time && request.resource.data.expiresAt is timestamp && request.resource.data.expiresAt>request.time && request.resource.data.expiresAt<=request.time+duration.value(7,'d');
-    allow delete: if admin() || (dm(id) && resource.data.get('role','player')=='player');
-   }
-   function pendingOwner(id,r) { return member(id) && r.get('pendingOwnerEmail','')==request.auth.token.email.lower(); }
-   function ownershipClaim(id,old,r) { return pendingOwner(id,old) && r.ownerUid==request.auth.uid && r.get('pendingOwnerEmail','')=='' && r.diff(old).affectedKeys().hasOnly(['ownerUid','pendingOwnerEmail','revision','updatedBy','updatedAt']); }
-   match /characters/{key} {
-    allow read: if editCharacter(id,resource.data) || pendingOwner(id,resource.data);
-    allow create: if validRecord(request.resource.data) && request.resource.data.revision==1 && ((member(id) && request.resource.data.ownerUid==request.auth.uid && request.resource.data.get('pendingOwnerEmail','')=='') || (dm(id) && request.resource.data.ownerUid in get(campaignPath(id)).data.memberIds)) && matchingSummary(id,key,request.resource.data);
-    allow update: if validRecord(request.resource.data) && request.resource.data.type==resource.data.type && request.resource.data.revision==resource.data.revision+1 && matchingSummary(id,key,request.resource.data) && ((editCharacter(id,resource.data) && (request.resource.data.get('pendingOwnerEmail','')==resource.data.get('pendingOwnerEmail','') || dm(id)) && (request.resource.data.ownerUid==resource.data.ownerUid || (dm(id) && request.resource.data.ownerUid in get(campaignPath(id)).data.memberIds))) || ownershipClaim(id,resource.data,request.resource.data));
-    match /customSpells/{spellId} {
-     allow read: if editCharacter(id,get(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data);
-     allow create,update: if editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && customSpell(request.resource.data) && request.resource.data.id==spellId && indexed(getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.get('customSpellIndex',''),spellId) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time;
-     allow delete: if editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && !indexed(getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.get('customSpellIndex',''),spellId) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time;
-    }
-    match /spells/{listId} {
-     allow read: if editCharacter(id,get(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data);
-     allow create,update: if listId in ['prepared','cantrips','secrets','loreSecrets'] && editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && knownSpells(request.resource.data,listId=='prepared'?100:(listId=='cantrips'?7:(listId=='secrets'?6:2))) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time;
-    }
-    match /history/{historyId} {
-     allow read: if editCharacter(id,get(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data);
-     allow create,update: if historyId=='actions' && editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && keys(request.resource.data,['entries']) && logList(request.resource.data.entries) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time;
-    }
-    match /details/{detailId} {
-     allow read: if editCharacter(id,get(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data);
-     allow create,update: if detailId=='state' && editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && detail(request.resource.data) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time;
-    }
-    match /wallets/{walletId} {
-     allow read: if editCharacter(id,get(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data);
-     allow create,update: if editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && wallet(request.resource.data) && request.resource.data.id==walletId && indexed(getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.walletIndex,walletId) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time;
-     allow delete: if editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && !(indexed(getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.walletIndex,walletId)) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time;
-    }
-   }
-   match /summaries/{key} {
-    allow read: if member(id);
-    allow create,update: if editCharacter(id,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data) && getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data.updatedAt==request.time && matchingSummary(id,key,getAfter(/databases/$(database)/documents/campaigns/$(id)/characters/$(key)).data);
-   }
-   match /files/{key} {
-    allow read: if member(id);
-    allow create: if member(id) && validFile(request.resource.data) && request.resource.data.authorUid==request.auth.uid && request.resource.data.authorName==request.auth.token.name && request.resource.data.createdAt==request.time && request.resource.data.archived==false && getAfter(/databases/$(database)/documents/campaigns/$(id)/files/$(key)/chunks/0).data.index==0;
-    allow update: if member(id) && (resource.data.authorUid==request.auth.uid || dm(id)) && validFile(request.resource.data) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['archived','updatedAt']);
-    match /chunks/{chunkId} {
-     allow read: if member(id) && exists(filePath(id,key)) && (!get(filePath(id,key)).data.archived || get(filePath(id,key)).data.authorUid==request.auth.uid || dm(id));
-     allow create: if member(id) && getAfter(filePath(id,key)).data.authorUid==request.auth.uid && getAfter(filePath(id,key)).data.createdAt==request.time && keys(request.resource.data,['index','data']) && number(request.resource.data.index,0,getAfter(filePath(id,key)).data.chunkCount-1) && chunkId==string(request.resource.data.index) && request.resource.data.data is bytes && request.resource.data.data.size()==(request.resource.data.index==getAfter(filePath(id,key)).data.chunkCount-1?getAfter(filePath(id,key)).data.size-request.resource.data.index*262144:262144);
-    }
-   }
-   match /notes/{key} {
-    allow read: if member(id);
-    allow create: if member(id) && validNote(request.resource.data) && request.resource.data.authorUid==request.auth.uid && request.resource.data.authorName==request.auth.token.name && request.resource.data.createdAt==request.time;
-    allow update: if member(id) && (resource.data.authorUid==request.auth.uid || dm(id)) && validNote(request.resource.data) && request.resource.data.authorUid==resource.data.authorUid && request.resource.data.authorName==resource.data.authorName && request.resource.data.createdAt==resource.data.createdAt;
-    allow delete: if member(id) && (resource.data.authorUid==request.auth.uid || dm(id));
-   }
-   match /dmNotes/{key} {
-    allow read: if dm(id);
-    allow create: if dm(id) && validNote(request.resource.data) && request.resource.data.authorUid==request.auth.uid && request.resource.data.authorName==request.auth.token.name && request.resource.data.createdAt==request.time;
-    allow update: if dm(id) && validNote(request.resource.data) && request.resource.data.authorUid==resource.data.authorUid && request.resource.data.authorName==resource.data.authorName && request.resource.data.createdAt==resource.data.createdAt;
-    allow delete: if dm(id);
-   }
-  }
- }
 }

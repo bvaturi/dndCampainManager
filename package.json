@@ -1,46 +1,33 @@
 {
   "name": "dnd-campaign-manager",
-  "version": "1.0.0",
   "private": true,
+  "version": "0.1.0",
   "type": "module",
-  "engines": {
-    "node": ">=24.12.0"
-  },
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "vite",
+    "dev:demo": "vite --mode demo",
     "build": "tsc -b && vite build",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "preview:local": "VITE_PREVIEW=true vite --host 127.0.0.1",
-    "test:rules": "npx firebase-tools@latest emulators:exec --only firestore --project demo-stormkeep \"vitest run tests/security.rules.test.ts\"",
-    "deploy": "npm run build && npx firebase-tools@latest deploy --only auth,firestore,hosting --account barakv01@gmail.com"
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "test:rules": "firebase emulators:exec --only firestore --project codex-rules-test \"node --test tests/rules.test.mjs\"",
+    "test:unit": "tsx --test tests/*.test.mts",
+    "data:merge": "python3 -I scripts/merge_phb_audit.py && python3 -I scripts/merge_races.py"
   },
   "dependencies": {
-    "class-variance-authority": "0.7.1",
-    "clsx": "2.1.1",
-    "firebase": "^13.0.0",
-    "lucide-react": "^1.31.0",
-    "pdfjs-dist": "^6.4.299",
-    "radix-ui": "^1.6.7",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
-    "tailwind-merge": "3.6.0",
-    "zod": "^3.25.76"
+    "firebase": "^11.1.0",
+    "pdf-lib": "^1.17.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
-    "@firebase/rules-unit-testing": "^6.0.0",
-    "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "22.19.19",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "6.0.2",
-    "firebase-tools": "^15.33.0",
-    "tailwindcss": "4.2.1",
-    "typescript": "5.9.3",
-    "vite": "^8.3.4",
-    "vitest": "^5.0.3"
-  },
-  "overrides": {
-    "@grpc/grpc-js": "^1.13.6"
+    "@firebase/rules-unit-testing": "^4.0.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "firebase-tools": "^13.29.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
   }
 }

@@ -1,0 +1,726 @@
+{
+  "class": "sorcerer",
+  "pdfPages": "100-105",
+  "hitDie": 6,
+  "saves": [
+    "con",
+    "cha"
+  ],
+  "armor": [],
+  "weapons": [
+    "Daggers",
+    "Darts",
+    "Slings",
+    "Quarterstaffs",
+    "Light Crossbows"
+  ],
+  "tools": [],
+  "skillChoice": {
+    "choose": 2,
+    "from": [
+      "arcana",
+      "deception",
+      "insight",
+      "intimidation",
+      "persuasion",
+      "religion"
+    ]
+  },
+  "spellcasting": {
+    "ability": "cha",
+    "startsAt": 1
+  },
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Spellcasting",
+        "Sorcerous Origin"
+      ],
+      "columns": {
+        "Sorcery Points": 0,
+        "Cantrips Known": 4,
+        "Spells Known": 2,
+        "1st": 2,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Font of Magic"
+      ],
+      "columns": {
+        "Sorcery Points": 2,
+        "Cantrips Known": 4,
+        "Spells Known": 3,
+        "1st": 3,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [
+        "Metamagic"
+      ],
+      "columns": {
+        "Sorcery Points": 3,
+        "Cantrips Known": 4,
+        "Spells Known": 4,
+        "1st": 4,
+        "2nd": 2,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sorcery Points": 4,
+        "Cantrips Known": 5,
+        "Spells Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Sorcery Points": 5,
+        "Cantrips Known": 5,
+        "Spells Known": 6,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 2,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Sorcerous Origin feature"
+      ],
+      "columns": {
+        "Sorcery Points": 6,
+        "Cantrips Known": 5,
+        "Spells Known": 7,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Sorcery Points": 7,
+        "Cantrips Known": 5,
+        "Spells Known": 8,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 1,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sorcery Points": 8,
+        "Cantrips Known": 5,
+        "Spells Known": 9,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 2,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [],
+      "columns": {
+        "Sorcery Points": 9,
+        "Cantrips Known": 5,
+        "Spells Known": 10,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 1,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Metamagic"
+      ],
+      "columns": {
+        "Sorcery Points": 10,
+        "Cantrips Known": 6,
+        "Spells Known": 11,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [],
+      "columns": {
+        "Sorcery Points": 11,
+        "Cantrips Known": 6,
+        "Spells Known": 12,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sorcery Points": 12,
+        "Cantrips Known": 6,
+        "Spells Known": 12,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [],
+      "columns": {
+        "Sorcery Points": 13,
+        "Cantrips Known": 6,
+        "Spells Known": 13,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Sorcerous Origin feature"
+      ],
+      "columns": {
+        "Sorcery Points": 14,
+        "Cantrips Known": 6,
+        "Spells Known": 13,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [],
+      "columns": {
+        "Sorcery Points": 15,
+        "Cantrips Known": 6,
+        "Spells Known": 14,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sorcery Points": 16,
+        "Cantrips Known": 6,
+        "Spells Known": 14,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Metamagic"
+      ],
+      "columns": {
+        "Sorcery Points": 17,
+        "Cantrips Known": 6,
+        "Spells Known": 15,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Sorcerous Origin feature"
+      ],
+      "columns": {
+        "Sorcery Points": 18,
+        "Cantrips Known": 6,
+        "Spells Known": 15,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sorcery Points": 19,
+        "Cantrips Known": 6,
+        "Spells Known": 15,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Sorcerous Restoration"
+      ],
+      "columns": {
+        "Sorcery Points": 20,
+        "Cantrips Known": 6,
+        "Spells Known": 15,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 2,
+        "8th": 1,
+        "9th": 1
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Spellcasting",
+      "level": 1,
+      "summary": "Charisma-based casting from the sorcerer list; cantrips, spells known, and slots per the Sorcerer table. Swap one known spell on level-up. Arcane focus usable."
+    },
+    {
+      "name": "Sorcerous Origin",
+      "level": 1,
+      "summary": "Choose Draconic Bloodline or Wild Magic; it grants features at 1st, 6th, 14th, and 18th level."
+    },
+    {
+      "name": "Font of Magic",
+      "level": 2,
+      "summary": "Gain sorcery points (table column, regained on a long rest). Flexible Casting: bonus action to turn points into a slot of up to 5th level, or a slot into points equal to its level.",
+      "resource": {
+        "key": "sorcery-points",
+        "label": "Sorcery Points",
+        "max": "table:Sorcery Points",
+        "recharge": "long"
+      }
+    },
+    {
+      "name": "Metamagic",
+      "level": 3,
+      "summary": "Learn two Metamagic options, plus one more at 10th and 17th level. Normally only one option can be applied per spell."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th, and 19th level, raise one ability score by 2 or two scores by 1 (maximum 20)."
+    },
+    {
+      "name": "Sorcerous Restoration",
+      "level": 20,
+      "summary": "Regain 4 spent sorcery points whenever you finish a short rest."
+    }
+  ],
+  "options": [
+    {
+      "feature": "Metamagic",
+      "choices": [
+        {
+          "name": "Careful Spell",
+          "prerequisite": "",
+          "summary": "1 point: when a spell forces saves, up to Cha modifier (min 1) chosen creatures automatically succeed."
+        },
+        {
+          "name": "Distant Spell",
+          "prerequisite": "",
+          "summary": "1 point: double a range of 5 ft. or more, or make a touch spell's range 30 ft."
+        },
+        {
+          "name": "Empowered Spell",
+          "prerequisite": "",
+          "summary": "1 point: reroll up to Cha modifier (min 1) damage dice and keep the new results; can be combined with another Metamagic option."
+        },
+        {
+          "name": "Extended Spell",
+          "prerequisite": "",
+          "summary": "1 point: double a duration of 1 minute or longer, capped at 24 hours."
+        },
+        {
+          "name": "Heightened Spell",
+          "prerequisite": "",
+          "summary": "3 points: one target has disadvantage on its first save against the spell."
+        },
+        {
+          "name": "Quickened Spell",
+          "prerequisite": "",
+          "summary": "2 points: a spell with a 1-action casting time is cast as a bonus action instead."
+        },
+        {
+          "name": "Subtle Spell",
+          "prerequisite": "",
+          "summary": "1 point: cast without verbal or somatic components."
+        },
+        {
+          "name": "Twinned Spell",
+          "prerequisite": "",
+          "summary": "Points equal to spell level (1 for a cantrip): a single-target, non-self spell also targets a second creature in range."
+        }
+      ]
+    },
+    {
+      "feature": "Font of Magic",
+      "choices": [
+        {
+          "name": "Create 1st-level slot",
+          "prerequisite": "",
+          "summary": "Costs 2 sorcery points (bonus action)."
+        },
+        {
+          "name": "Create 2nd-level slot",
+          "prerequisite": "",
+          "summary": "Costs 3 sorcery points (bonus action)."
+        },
+        {
+          "name": "Create 3rd-level slot",
+          "prerequisite": "",
+          "summary": "Costs 5 sorcery points (bonus action)."
+        },
+        {
+          "name": "Create 4th-level slot",
+          "prerequisite": "",
+          "summary": "Costs 6 sorcery points (bonus action)."
+        },
+        {
+          "name": "Create 5th-level slot",
+          "prerequisite": "",
+          "summary": "Costs 7 sorcery points (bonus action)."
+        },
+        {
+          "name": "Convert slot to points",
+          "prerequisite": "",
+          "summary": "Bonus action: expend a spell slot to gain sorcery points equal to its level."
+        }
+      ]
+    }
+  ],
+  "subclasses": [
+    {
+      "id": "draconic",
+      "name": "Draconic Bloodline",
+      "fullName": "Draconic Bloodline",
+      "features": [
+        {
+          "name": "Dragon Ancestor",
+          "level": 1,
+          "resource": null,
+          "summary": "Choose a dragon type (sets your ancestry damage type). You know Draconic, and double your proficiency bonus on Charisma checks with dragons when it applies."
+        },
+        {
+          "name": "Draconic Resilience",
+          "level": 1,
+          "resource": null,
+          "summary": "+1 hit point maximum per sorcerer level; unarmored AC is 13 + Dex modifier."
+        },
+        {
+          "name": "Elemental Affinity",
+          "level": 6,
+          "resource": null,
+          "summary": "Add Cha modifier to damage from spells of your ancestry type; spend 1 sorcery point to resist that type for 1 hour."
+        },
+        {
+          "name": "Dragon Wings",
+          "level": 14,
+          "resource": null,
+          "summary": "Bonus action to grow or dismiss wings giving a fly speed equal to your speed; not while wearing armor not made for them."
+        },
+        {
+          "name": "Draconic Presence",
+          "level": 18,
+          "resource": null,
+          "summary": "Action, 5 sorcery points: 60-ft. aura (concentration, up to 1 minute); hostiles starting their turn in it make a Wis save or are charmed (awe) or frightened (fear); success grants 24-hour immunity."
+        }
+      ],
+      "spells": {},
+      "options": [
+        {
+          "feature": "Dragon Ancestor",
+          "choices": [
+            {
+              "name": "Black",
+              "prerequisite": "",
+              "summary": "Acid damage."
+            },
+            {
+              "name": "Blue",
+              "prerequisite": "",
+              "summary": "Lightning damage."
+            },
+            {
+              "name": "Brass",
+              "prerequisite": "",
+              "summary": "Fire damage."
+            },
+            {
+              "name": "Bronze",
+              "prerequisite": "",
+              "summary": "Lightning damage."
+            },
+            {
+              "name": "Copper",
+              "prerequisite": "",
+              "summary": "Acid damage."
+            },
+            {
+              "name": "Gold",
+              "prerequisite": "",
+              "summary": "Fire damage."
+            },
+            {
+              "name": "Green",
+              "prerequisite": "",
+              "summary": "Poison damage."
+            },
+            {
+              "name": "Red",
+              "prerequisite": "",
+              "summary": "Fire damage."
+            },
+            {
+              "name": "Silver",
+              "prerequisite": "",
+              "summary": "Cold damage."
+            },
+            {
+              "name": "White",
+              "prerequisite": "",
+              "summary": "Cold damage."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wild-magic",
+      "name": "Wild Magic",
+      "fullName": "Wild Magic",
+      "features": [
+        {
+          "name": "Wild Magic Surge",
+          "level": 1,
+          "resource": null,
+          "summary": "After you cast a 1st-level or higher sorcerer spell, the DM may have you roll a d20; on a 1, roll on the Wild Magic Surge table."
+        },
+        {
+          "name": "Tides of Chaos",
+          "level": 1,
+          "summary": "Gain advantage on one attack roll, ability check, or saving throw. Recharges on a long rest, or early if the DM triggers a surge roll after you cast a 1st-level+ sorcerer spell.",
+          "resource": {
+            "key": "tides-of-chaos",
+            "label": "Tides of Chaos",
+            "max": 1,
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Bend Luck",
+          "level": 6,
+          "resource": null,
+          "summary": "Reaction, 2 sorcery points: when a creature you see makes an attack, check, or save, add or subtract 1d4 from its roll (after the roll, before effects)."
+        },
+        {
+          "name": "Controlled Chaos",
+          "level": 14,
+          "resource": null,
+          "summary": "When rolling on the Wild Magic Surge table, roll twice and pick either result."
+        },
+        {
+          "name": "Spell Bombardment",
+          "level": 18,
+          "resource": null,
+          "summary": "Once per turn, when a spell damage die rolls its maximum, roll one such die again and add it to the damage."
+        }
+      ],
+      "spells": {},
+      "options": [
+        {
+          "feature": "Wild Magic Surge",
+          "choices": [
+            {
+              "name": "Wild Magic Surge table (d100)",
+              "prerequisite": "",
+              "summary": "50 random effects in paired d100 bands (01-02 ... 99-00): self-centered spells (fireball, confusion, fog cloud, polymorph, etc.), teleports, cosmetic changes, short buffs or curses, summoned creatures, and at 99-00 regaining all sorcery points."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "discrepancies": [
+    "Wild Magic subclass exists in the app (id 'wild-magic', srd false) with an empty features list; PHB gives Wild Magic Surge (1), Tides of Chaos (1, 1/long rest), Bend Luck (6), Controlled Chaos (14), Spell Bombardment (18), plus the d100 surge table.",
+    "Metamagic: the app only has 'Metamagic: Twinned Spell' as a feature; the other seven PHB options (Careful, Distant, Empowered, Extended, Heightened, Quickened, Subtle) are missing, and there is no option-list structure to choose from.",
+    "progression special.metamagic_known is 4 at level 16; PHB gives the 4th option only at 17th, so level 16 should be 3.",
+    "Feature naming differs from the book: app uses 'Spellcasting: Sorcerer' (book: 'Spellcasting') and splits Font of Magic's sub-rules into separate features 'Flexible Casting: Creating Spell Slots' and 'Flexible Casting: Converting Spell Slot' listed in the level-2 progression row; the book table lists only 'Font of Magic'.",
+    "Draconic subclass is named 'Draconic' in the app; the book name is 'Draconic Bloodline'. The ten dragon ancestries are stored as ten extra subclass features ('Dragon Ancestor: Black - Acid Damage', ...) each with a copy of the Dragon Ancestor text, instead of an option list; all ten dragon/damage-type pairs themselves are correct.",
+    "Twinned Spell desc includes an extra eligibility paragraph (magic missile / scorching ray example) that comes from later errata/SRD, not the 2014 PHB printing.",
+    "Sorcery Points have no resource/uses entry (max = Sorcery Points column, long rest); Tides of Chaos (1/long rest) also untracked. Sorcery point values in progression.special (0 at 1, then equal to level) match the book.",
+    "Progression rows for 5, 7, 9, 11, 13, 15 have empty features, matching the book's dashes. No mismatch found for hit die (d6), saves (Con, Cha), weapons (daggers, darts, slings, quarterstaffs, light crossbows; no armor/tools), skills (2 from Arcana, Deception, Insight, Intimidation, Persuasion, Religion), cantrips, spells known, spell slots, or creating-spell-slot costs (2/3/5/6/7)."
+  ]
+}

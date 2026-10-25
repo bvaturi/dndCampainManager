@@ -1,0 +1,594 @@
+{
+  "class": "monk",
+  "pdfPages": "77-82",
+  "hitDie": 8,
+  "saves": [
+    "str",
+    "dex"
+  ],
+  "armor": [],
+  "weapons": [
+    "Simple Weapons",
+    "Shortswords"
+  ],
+  "tools": [
+    "One type of artisan's tools or one musical instrument (choice)"
+  ],
+  "skillChoice": {
+    "choose": 2,
+    "from": [
+      "acrobatics",
+      "athletics",
+      "history",
+      "insight",
+      "religion",
+      "stealth"
+    ]
+  },
+  "spellcasting": null,
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Unarmored Defense",
+        "Martial Arts"
+      ],
+      "columns": {
+        "Martial Arts": "1d4",
+        "Ki Points": "—",
+        "Unarmored Movement": "—"
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Ki",
+        "Unarmored Movement"
+      ],
+      "columns": {
+        "Martial Arts": "1d4",
+        "Ki Points": 2,
+        "Unarmored Movement": "+10 ft."
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [
+        "Monastic Tradition",
+        "Deflect Missiles"
+      ],
+      "columns": {
+        "Martial Arts": "1d4",
+        "Ki Points": 3,
+        "Unarmored Movement": "+10 ft."
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement",
+        "Slow Fall"
+      ],
+      "columns": {
+        "Martial Arts": "1d4",
+        "Ki Points": 4,
+        "Unarmored Movement": "+10 ft."
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [
+        "Extra Attack",
+        "Stunning Strike"
+      ],
+      "columns": {
+        "Martial Arts": "1d6",
+        "Ki Points": 5,
+        "Unarmored Movement": "+10 ft."
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Ki-Empowered Strikes",
+        "Monastic Tradition feature"
+      ],
+      "columns": {
+        "Martial Arts": "1d6",
+        "Ki Points": 6,
+        "Unarmored Movement": "+15 ft."
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [
+        "Evasion",
+        "Stillness of Mind"
+      ],
+      "columns": {
+        "Martial Arts": "1d6",
+        "Ki Points": 7,
+        "Unarmored Movement": "+15 ft."
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Martial Arts": "1d6",
+        "Ki Points": 8,
+        "Unarmored Movement": "+15 ft."
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [
+        "Unarmored Movement improvement"
+      ],
+      "columns": {
+        "Martial Arts": "1d6",
+        "Ki Points": 9,
+        "Unarmored Movement": "+15 ft."
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Purity of Body"
+      ],
+      "columns": {
+        "Martial Arts": "1d6",
+        "Ki Points": 10,
+        "Unarmored Movement": "+20 ft."
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [
+        "Monastic Tradition feature"
+      ],
+      "columns": {
+        "Martial Arts": "1d8",
+        "Ki Points": 11,
+        "Unarmored Movement": "+20 ft."
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Martial Arts": "1d8",
+        "Ki Points": 12,
+        "Unarmored Movement": "+20 ft."
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [
+        "Tongue of the Sun and Moon"
+      ],
+      "columns": {
+        "Martial Arts": "1d8",
+        "Ki Points": 13,
+        "Unarmored Movement": "+20 ft."
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Diamond Soul"
+      ],
+      "columns": {
+        "Martial Arts": "1d8",
+        "Ki Points": 14,
+        "Unarmored Movement": "+25 ft."
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [
+        "Timeless Body"
+      ],
+      "columns": {
+        "Martial Arts": "1d8",
+        "Ki Points": 15,
+        "Unarmored Movement": "+25 ft."
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Martial Arts": "1d8",
+        "Ki Points": 16,
+        "Unarmored Movement": "+25 ft."
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Monastic Tradition feature"
+      ],
+      "columns": {
+        "Martial Arts": "1d10",
+        "Ki Points": 17,
+        "Unarmored Movement": "+25 ft."
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Empty Body"
+      ],
+      "columns": {
+        "Martial Arts": "1d10",
+        "Ki Points": 18,
+        "Unarmored Movement": "+30 ft."
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Martial Arts": "1d10",
+        "Ki Points": 19,
+        "Unarmored Movement": "+30 ft."
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Perfect Self"
+      ],
+      "columns": {
+        "Martial Arts": "1d10",
+        "Ki Points": 20,
+        "Unarmored Movement": "+30 ft."
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Unarmored Defense",
+      "level": 1,
+      "summary": "With no armor and no shield, AC = 10 + Dex modifier + Wis modifier."
+    },
+    {
+      "name": "Martial Arts",
+      "level": 1,
+      "summary": "Unarmed or with monk weapons (shortswords, simple melee weapons without two-handed/heavy) and no armor/shield: use Dex for attack and damage, use the Martial Arts die for damage, and make a bonus-action unarmed strike after attacking with the Attack action."
+    },
+    {
+      "name": "Ki",
+      "level": 2,
+      "summary": "Pool of ki points equal to the Ki Points column, regained on a short or long rest with 30 minutes of meditation. Ki save DC = 8 + prof + Wis. Grants Flurry of Blows, Patient Defense and Step of the Wind.",
+      "resource": {
+        "key": "ki",
+        "label": "Ki Points",
+        "max": "table:Ki Points",
+        "recharge": "short"
+      }
+    },
+    {
+      "name": "Flurry of Blows",
+      "level": 2,
+      "summary": "Right after the Attack action, spend 1 ki to make two unarmed strikes as a bonus action."
+    },
+    {
+      "name": "Patient Defense",
+      "level": 2,
+      "summary": "Spend 1 ki to Dodge as a bonus action on your turn."
+    },
+    {
+      "name": "Step of the Wind",
+      "level": 2,
+      "summary": "Spend 1 ki to Disengage or Dash as a bonus action; jump distance doubles for the turn."
+    },
+    {
+      "name": "Unarmored Movement",
+      "level": 2,
+      "summary": "Speed bonus per the Unarmored Movement column while unarmored and without a shield. From 9th level, you can run up vertical surfaces and across liquids during your move."
+    },
+    {
+      "name": "Monastic Tradition",
+      "level": 3,
+      "summary": "Choose Way of the Open Hand, Way of Shadow or Way of the Four Elements; features at 3rd, 6th, 11th and 17th level."
+    },
+    {
+      "name": "Deflect Missiles",
+      "level": 3,
+      "summary": "Reaction when hit by a ranged weapon attack: reduce damage by 1d10 + Dex modifier + monk level. If reduced to 0 and you have a free hand, catch it and may spend 1 ki to throw it back as a monk-weapon attack with proficiency."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th and 19th level: +2 to one ability score or +1 to two, to a maximum of 20."
+    },
+    {
+      "name": "Slow Fall",
+      "level": 4,
+      "summary": "Reaction while falling: reduce fall damage by 5 x monk level."
+    },
+    {
+      "name": "Extra Attack",
+      "level": 5,
+      "summary": "Attack twice when you take the Attack action."
+    },
+    {
+      "name": "Stunning Strike",
+      "level": 5,
+      "summary": "On a melee weapon hit, spend 1 ki: target makes a Con save or is stunned until the end of your next turn."
+    },
+    {
+      "name": "Ki-Empowered Strikes",
+      "level": 6,
+      "summary": "Unarmed strikes count as magical for overcoming resistance and immunity to nonmagical damage."
+    },
+    {
+      "name": "Evasion",
+      "level": 7,
+      "summary": "On a Dex save for half damage: no damage on a success, half on a failure."
+    },
+    {
+      "name": "Stillness of Mind",
+      "level": 7,
+      "summary": "Use your action to end one charmed or frightened effect on yourself."
+    },
+    {
+      "name": "Purity of Body",
+      "level": 10,
+      "summary": "Immune to disease and poison."
+    },
+    {
+      "name": "Tongue of the Sun and Moon",
+      "level": 13,
+      "summary": "Understand all spoken languages, and any creature that knows a language understands your speech."
+    },
+    {
+      "name": "Diamond Soul",
+      "level": 14,
+      "summary": "Proficiency in all saving throws; spend 1 ki to reroll a failed save and use the new result."
+    },
+    {
+      "name": "Timeless Body",
+      "level": 15,
+      "summary": "No frailty from old age, immune to magical aging, and no longer need food or water (can still die of old age)."
+    },
+    {
+      "name": "Empty Body",
+      "level": 18,
+      "summary": "Action + 4 ki: invisible for 1 minute with resistance to all damage except force. 8 ki: cast astral projection without material components, on yourself only."
+    },
+    {
+      "name": "Perfect Self",
+      "level": 20,
+      "summary": "When you roll initiative with 0 ki remaining, regain 4 ki."
+    }
+  ],
+  "options": [],
+  "subclasses": [
+    {
+      "id": "open-hand",
+      "name": "Open Hand",
+      "fullName": "Way of the Open Hand",
+      "features": [
+        {
+          "name": "Open Hand Technique",
+          "level": 3,
+          "summary": "Flurry of Blows hits can impose one effect: Dex save or prone, Str save or pushed up to 15 ft, or no reactions until the end of your next turn.",
+          "resource": null
+        },
+        {
+          "name": "Wholeness of Body",
+          "level": 6,
+          "summary": "Action: regain hit points equal to 3 x monk level. Once per long rest.",
+          "resource": {
+            "key": "wholeness-of-body",
+            "label": "Wholeness of Body",
+            "max": 1,
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Tranquility",
+          "level": 11,
+          "summary": "At the end of each long rest, gain a sanctuary effect lasting until your next long rest (save DC 8 + Wis + prof); ends early as the spell does.",
+          "resource": null
+        },
+        {
+          "name": "Quivering Palm",
+          "level": 17,
+          "summary": "On an unarmed hit, spend 3 ki to plant vibrations lasting monk-level days; later use an action (same plane) to force a Con save: fail drops it to 0 HP, success deals 10d10 necrotic. One target at a time.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": []
+    },
+    {
+      "id": "shadow",
+      "name": "Shadow",
+      "fullName": "Way of Shadow",
+      "features": [
+        {
+          "name": "Shadow Arts",
+          "level": 3,
+          "summary": "Action + 2 ki: cast darkness, darkvision, pass without trace or silence with no material components. Also learn the minor illusion cantrip if you lack it.",
+          "resource": null
+        },
+        {
+          "name": "Shadow Step",
+          "level": 6,
+          "summary": "In dim light or darkness, bonus action to teleport up to 60 ft to another dim or dark space you can see; advantage on your first melee attack before the end of the turn.",
+          "resource": null
+        },
+        {
+          "name": "Cloak of Shadows",
+          "level": 11,
+          "summary": "In dim light or darkness, use your action to become invisible until you attack, cast a spell, or enter bright light.",
+          "resource": null
+        },
+        {
+          "name": "Opportunist",
+          "level": 17,
+          "summary": "Reaction when a creature within 5 ft is hit by someone else's attack: make a melee attack against it.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": []
+    },
+    {
+      "id": "four-elements",
+      "name": "Four Elements",
+      "fullName": "Way of the Four Elements",
+      "features": [
+        {
+          "name": "Disciple of the Elements",
+          "level": 3,
+          "summary": "Know Elemental Attunement plus one other elemental discipline; learn one more at 6th, 11th and 17th level (may swap one each time). Discipline spells need no material components; from 5th level extra ki upcasts them, capped by the Spells and Ki Points table (3 ki at 5th-8th, 4 at 9th-12th, 5 at 13th-16th, 6 at 17th-20th).",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": [
+        {
+          "feature": "Disciple of the Elements",
+          "choices": [
+            {
+              "name": "Breath of Winter",
+              "summary": "6 ki: cast cone of cold.",
+              "prerequisite": "17th level; 6 ki"
+            },
+            {
+              "name": "Clench of the North Wind",
+              "summary": "3 ki: cast hold person.",
+              "prerequisite": "6th level; 3 ki"
+            },
+            {
+              "name": "Elemental Attunement",
+              "summary": "Action: minor elemental tricks - harmless sensory effect, light/snuff a small flame, chill or warm up to 1 lb for 1 hour, or shape a 1-foot cube of earth, fire, water or mist for 1 minute.",
+              "prerequisite": "Known automatically at 3rd level; 0 ki"
+            },
+            {
+              "name": "Eternal Mountain Defense",
+              "summary": "5 ki: cast stoneskin on yourself.",
+              "prerequisite": "11th level; 5 ki"
+            },
+            {
+              "name": "Fangs of the Fire Snake",
+              "summary": "1 ki when taking the Attack action: unarmed reach +10 ft for the turn and those hits deal fire damage; +1 ki on a hit for an extra 1d10 fire.",
+              "prerequisite": "1 ki (+1 ki per hit for extra damage)"
+            },
+            {
+              "name": "Fist of Four Thunders",
+              "summary": "2 ki: cast thunderwave.",
+              "prerequisite": "2 ki"
+            },
+            {
+              "name": "Fist of Unbroken Air",
+              "summary": "Action + 2 ki: creature within 30 ft makes a Str save or takes 3d10 bludgeoning (+1d10 per extra ki), is pushed up to 20 ft and knocked prone; half damage only on a success.",
+              "prerequisite": "2 ki (+1 ki per extra 1d10)"
+            },
+            {
+              "name": "Flames of the Phoenix",
+              "summary": "4 ki: cast fireball.",
+              "prerequisite": "11th level; 4 ki"
+            },
+            {
+              "name": "Gong of the Summit",
+              "summary": "3 ki: cast shatter.",
+              "prerequisite": "6th level; 3 ki"
+            },
+            {
+              "name": "Mist Stance",
+              "summary": "4 ki: cast gaseous form on yourself.",
+              "prerequisite": "11th level; 4 ki"
+            },
+            {
+              "name": "Ride the Wind",
+              "summary": "4 ki: cast fly on yourself.",
+              "prerequisite": "11th level; 4 ki"
+            },
+            {
+              "name": "River of Hungry Flame",
+              "summary": "5 ki: cast wall of fire.",
+              "prerequisite": "17th level; 5 ki"
+            },
+            {
+              "name": "Rush of the Gale Spirits",
+              "summary": "2 ki: cast gust of wind.",
+              "prerequisite": "2 ki"
+            },
+            {
+              "name": "Shape the Flowing River",
+              "summary": "Action + 1 ki: reshape ice or water in a cube up to 30 ft on a side within 120 ft - freeze/thaw, raise or lower elevation, dig trenches, raise walls or pillars (changes up to half the largest dimension; can't trap or harm creatures).",
+              "prerequisite": "1 ki"
+            },
+            {
+              "name": "Sweeping Cinder Strike",
+              "summary": "2 ki: cast burning hands.",
+              "prerequisite": "2 ki"
+            },
+            {
+              "name": "Water Whip",
+              "summary": "Bonus action + 2 ki: creature within 30 ft makes a Dex save or takes 3d10 bludgeoning (+1d10 per extra ki) and is knocked prone or pulled up to 25 ft closer; half damage only on a success.",
+              "prerequisite": "2 ki (+1 ki per extra 1d10)"
+            },
+            {
+              "name": "Wave of Rolling Earth",
+              "summary": "6 ki: cast wall of stone.",
+              "prerequisite": "17th level; 6 ki"
+            }
+          ]
+        }
+      ],
+      "maxKiPerSpell": {
+        "5": 3,
+        "9": 4,
+        "13": 5,
+        "17": 6
+      }
+    }
+  ],
+  "discrepancies": [
+    "Way of Shadow subclass has no features in the app (features: []). Missing: Shadow Arts (3), Shadow Step (6), Cloak of Shadows (11), Opportunist (17).",
+    "Way of the Four Elements subclass has no features in the app (features: []). Missing: Disciple of the Elements (3, with new disciplines at 6/11/17), all 17 elemental disciplines with ki costs and level requirements, and the Spells and Ki Points cap table (3/4/5/6 max ki per spell at 5/9/13/17).",
+    "Monk tool proficiency missing: book grants one type of artisan's tools or one musical instrument; app proficiencies list only 'Simple Weapons', 'Shortswords'.",
+    "Feature name typo: app uses 'Ki Empowered Strikes' (progression level 6 and features list); book prints 'Ki-Empowered Strikes'.",
+    "Level 9 table entry: book prints 'Unarmored Movement improvement'; app progression lists 'Unarmored Movement' again and duplicates the whole Unarmored Movement feature at level 9 instead of marking it as an improvement (vertical surfaces / liquids).",
+    "Level 2 progression row in the app lists 'Flurry of Blows', 'Patient Defense', 'Step of the Wind' as table features; the book table shows only 'Ki, Unarmored Movement' (the three are sub-features of Ki). Harmless but not as printed.",
+    "No limited-use resource definitions: Ki points (= monk level from 2nd, short rest) exist only as progression.special.ki_points without recharge info; Open Hand's Wholeness of Body (1/long rest) has no resource.",
+    "Deflect Missiles app text appends 'which has a normal range of 20 feet and a long range of 60 feet' (SRD/errata wording) not printed in this PHB.",
+    "Minor: level 1 Ki Points and Unarmored Movement are '—' in the book; app stores 0 (numerically equivalent). All other Martial Arts / Ki / Unarmored Movement values, hit die, saves, skills and Open Hand features match.",
+    "Monastic Tradition feature text in the app names only the Way of the Open Hand; book lists Open Hand, Shadow and Four Elements."
+  ]
+}

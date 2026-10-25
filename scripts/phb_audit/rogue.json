@@ -1,0 +1,655 @@
+{
+  "class": "rogue",
+  "pdfPages": "95-99",
+  "hitDie": 8,
+  "saves": [
+    "dex",
+    "int"
+  ],
+  "armor": [
+    "Light Armor"
+  ],
+  "weapons": [
+    "Simple Weapons",
+    "Hand Crossbows",
+    "Longswords",
+    "Rapiers",
+    "Shortswords"
+  ],
+  "tools": [
+    "Thieves' Tools"
+  ],
+  "skillChoice": {
+    "choose": 4,
+    "from": [
+      "acrobatics",
+      "athletics",
+      "deception",
+      "insight",
+      "intimidation",
+      "investigation",
+      "perception",
+      "performance",
+      "persuasion",
+      "sleight-of-hand",
+      "stealth"
+    ]
+  },
+  "spellcasting": null,
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Expertise",
+        "Sneak Attack",
+        "Thieves' Cant"
+      ],
+      "columns": {
+        "Sneak Attack": "1d6"
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Cunning Action"
+      ],
+      "columns": {
+        "Sneak Attack": "1d6"
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [
+        "Roguish Archetype"
+      ],
+      "columns": {
+        "Sneak Attack": "2d6"
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sneak Attack": "2d6"
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [
+        "Uncanny Dodge"
+      ],
+      "columns": {
+        "Sneak Attack": "3d6"
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Expertise"
+      ],
+      "columns": {
+        "Sneak Attack": "3d6"
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [
+        "Evasion"
+      ],
+      "columns": {
+        "Sneak Attack": "4d6"
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sneak Attack": "4d6"
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [
+        "Roguish Archetype feature"
+      ],
+      "columns": {
+        "Sneak Attack": "5d6"
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sneak Attack": "5d6"
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [
+        "Reliable Talent"
+      ],
+      "columns": {
+        "Sneak Attack": "6d6"
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sneak Attack": "6d6"
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [
+        "Roguish Archetype feature"
+      ],
+      "columns": {
+        "Sneak Attack": "7d6"
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Blindsense"
+      ],
+      "columns": {
+        "Sneak Attack": "7d6"
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [
+        "Slippery Mind"
+      ],
+      "columns": {
+        "Sneak Attack": "8d6"
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sneak Attack": "8d6"
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Roguish Archetype feature"
+      ],
+      "columns": {
+        "Sneak Attack": "9d6"
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Elusive"
+      ],
+      "columns": {
+        "Sneak Attack": "9d6"
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Sneak Attack": "10d6"
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Stroke of Luck"
+      ],
+      "columns": {
+        "Sneak Attack": "10d6"
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Expertise",
+      "level": 1,
+      "summary": "Pick two skill proficiencies (or one skill plus thieves' tools); your proficiency bonus is doubled for checks using them. Pick two more at 6th level."
+    },
+    {
+      "name": "Sneak Attack",
+      "level": 1,
+      "summary": "Once per turn, add the Sneak Attack dice to one finesse or ranged weapon hit if you have advantage, or if an active ally is within 5 ft. of the target and you lack disadvantage."
+    },
+    {
+      "name": "Thieves' Cant",
+      "level": 1,
+      "summary": "You know the secret rogue jargon for hiding messages in ordinary talk (takes four times as long) plus a set of signs and symbols for short coded messages."
+    },
+    {
+      "name": "Cunning Action",
+      "level": 2,
+      "summary": "Each turn in combat you may take a bonus action to Dash, Disengage, or Hide."
+    },
+    {
+      "name": "Roguish Archetype",
+      "level": 3,
+      "summary": "Choose Thief, Assassin, or Arcane Trickster; it grants features at 3rd, 9th, 13th, and 17th level."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 10th, 12th, 16th, and 19th level, raise one ability score by 2 or two scores by 1 (maximum 20)."
+    },
+    {
+      "name": "Uncanny Dodge",
+      "level": 5,
+      "summary": "Reaction: when an attacker you can see hits you, halve that attack's damage."
+    },
+    {
+      "name": "Evasion",
+      "level": 7,
+      "summary": "On a Dexterity save against an effect that deals half damage on success, you take none on a success and half on a failure."
+    },
+    {
+      "name": "Reliable Talent",
+      "level": 11,
+      "summary": "On any ability check that adds your proficiency bonus, a d20 roll of 9 or lower counts as 10."
+    },
+    {
+      "name": "Blindsense",
+      "level": 14,
+      "summary": "While you can hear, you know where any hidden or invisible creature within 10 ft. of you is."
+    },
+    {
+      "name": "Slippery Mind",
+      "level": 15,
+      "summary": "You become proficient in Wisdom saving throws."
+    },
+    {
+      "name": "Elusive",
+      "level": 18,
+      "summary": "Unless you are incapacitated, attack rolls against you can never have advantage."
+    },
+    {
+      "name": "Stroke of Luck",
+      "level": 20,
+      "summary": "Turn a missed attack against a target in range into a hit, or treat a failed ability check's d20 as a 20. Once per short or long rest.",
+      "resource": {
+        "key": "stroke-of-luck",
+        "label": "Stroke of Luck",
+        "max": 1,
+        "recharge": "short"
+      }
+    }
+  ],
+  "options": [],
+  "subclasses": [
+    {
+      "id": "thief",
+      "name": "Thief",
+      "fullName": "Thief",
+      "features": [
+        {
+          "name": "Fast Hands",
+          "level": 3,
+          "resource": null,
+          "summary": "Cunning Action's bonus action can also be a Sleight of Hand check, using thieves' tools on a trap or lock, or the Use an Object action."
+        },
+        {
+          "name": "Second-Story Work",
+          "level": 3,
+          "resource": null,
+          "summary": "Climbing costs no extra movement, and running jumps go farther by a number of feet equal to your Dexterity modifier."
+        },
+        {
+          "name": "Supreme Sneak",
+          "level": 9,
+          "resource": null,
+          "summary": "Advantage on Stealth checks on a turn in which you move no more than half your speed."
+        },
+        {
+          "name": "Use Magic Device",
+          "level": 13,
+          "resource": null,
+          "summary": "You disregard class, race, and level requirements when using magic items."
+        },
+        {
+          "name": "Thief's Reflexes",
+          "level": 17,
+          "resource": null,
+          "summary": "In the first round of combat you take two turns: one at your initiative and a second at initiative minus 10. Not usable when surprised."
+        }
+      ],
+      "spells": {},
+      "options": []
+    },
+    {
+      "id": "assassin",
+      "name": "Assassin",
+      "fullName": "Assassin",
+      "features": [
+        {
+          "name": "Bonus Proficiencies",
+          "level": 3,
+          "resource": null,
+          "summary": "Gain proficiency with the disguise kit and the poisoner's kit."
+        },
+        {
+          "name": "Assassinate",
+          "level": 3,
+          "resource": null,
+          "summary": "Advantage on attacks against creatures that have not yet acted in the combat; any hit against a surprised creature is a critical hit."
+        },
+        {
+          "name": "Infiltration Expertise",
+          "level": 9,
+          "resource": null,
+          "summary": "Spend 7 days and 25 gp to build a reliable false identity (not someone else's); while you use it, others accept it unless given clear reason to doubt."
+        },
+        {
+          "name": "Impostor",
+          "level": 13,
+          "resource": null,
+          "summary": "After 3 hours studying a person's speech, writing, and behaviour you can mimic them; casual observers are fooled and you get advantage on Deception checks to avoid detection."
+        },
+        {
+          "name": "Death Strike",
+          "level": 17,
+          "resource": null,
+          "summary": "When you hit a surprised creature, it makes a Con save (DC 8 + Dex mod + prof); on a failure the attack's damage is doubled."
+        }
+      ],
+      "spells": {},
+      "options": []
+    },
+    {
+      "id": "arcane-trickster",
+      "name": "Arcane Trickster",
+      "fullName": "Arcane Trickster",
+      "features": [
+        {
+          "name": "Spellcasting",
+          "level": 3,
+          "resource": null,
+          "summary": "Int-based wizard spellcasting per the Arcane Trickster table: mage hand plus two other cantrips; leveled spells mostly enchantment or illusion, except those learned at 3rd, 8th, 14th, and 20th level, which may be any school."
+        },
+        {
+          "name": "Mage Hand Legerdemain",
+          "level": 3,
+          "resource": null,
+          "summary": "Your mage hand can be invisible and can stow or retrieve items in containers others wear and use thieves' tools at range (Sleight of Hand vs. Perception to go unnoticed); control it with Cunning Action."
+        },
+        {
+          "name": "Magical Ambush",
+          "level": 9,
+          "resource": null,
+          "summary": "If you are hidden when you cast a spell on a creature, it has disadvantage on saves against that spell this turn."
+        },
+        {
+          "name": "Versatile Trickster",
+          "level": 13,
+          "resource": null,
+          "summary": "Bonus action: target a creature within 5 ft. of your mage hand to gain advantage on attacks against it until the end of the turn."
+        },
+        {
+          "name": "Spell Thief",
+          "level": 17,
+          "summary": "Reaction when a spell targets or includes you: caster saves with its spellcasting modifier vs. your DC; on a failure you negate it for you and, if it is 1st level or higher and castable by you, you know it for 8 hours while the caster cannot cast it.",
+          "resource": {
+            "key": "spell-thief",
+            "label": "Spell Thief",
+            "max": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "spells": {},
+      "options": [],
+      "spellcasting": {
+        "ability": "int",
+        "list": "wizard",
+        "table": [
+          {
+            "level": 3,
+            "cantrips": 3,
+            "known": 3,
+            "slots": [
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 4,
+            "cantrips": 3,
+            "known": 4,
+            "slots": [
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 5,
+            "cantrips": 3,
+            "known": 4,
+            "slots": [
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 6,
+            "cantrips": 3,
+            "known": 4,
+            "slots": [
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 7,
+            "cantrips": 3,
+            "known": 5,
+            "slots": [
+              4,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 8,
+            "cantrips": 3,
+            "known": 6,
+            "slots": [
+              4,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 9,
+            "cantrips": 3,
+            "known": 6,
+            "slots": [
+              4,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 10,
+            "cantrips": 4,
+            "known": 7,
+            "slots": [
+              4,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 11,
+            "cantrips": 4,
+            "known": 8,
+            "slots": [
+              4,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 12,
+            "cantrips": 4,
+            "known": 8,
+            "slots": [
+              4,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 13,
+            "cantrips": 4,
+            "known": 9,
+            "slots": [
+              4,
+              3,
+              2,
+              0
+            ]
+          },
+          {
+            "level": 14,
+            "cantrips": 4,
+            "known": 10,
+            "slots": [
+              4,
+              3,
+              2,
+              0
+            ]
+          },
+          {
+            "level": 15,
+            "cantrips": 4,
+            "known": 10,
+            "slots": [
+              4,
+              3,
+              2,
+              0
+            ]
+          },
+          {
+            "level": 16,
+            "cantrips": 4,
+            "known": 11,
+            "slots": [
+              4,
+              3,
+              3,
+              0
+            ]
+          },
+          {
+            "level": 17,
+            "cantrips": 4,
+            "known": 11,
+            "slots": [
+              4,
+              3,
+              3,
+              0
+            ]
+          },
+          {
+            "level": 18,
+            "cantrips": 4,
+            "known": 11,
+            "slots": [
+              4,
+              3,
+              3,
+              0
+            ]
+          },
+          {
+            "level": 19,
+            "cantrips": 4,
+            "known": 12,
+            "slots": [
+              4,
+              3,
+              3,
+              1
+            ]
+          },
+          {
+            "level": 20,
+            "cantrips": 4,
+            "known": 13,
+            "slots": [
+              4,
+              3,
+              3,
+              1
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "discrepancies": [
+    "Assassin subclass exists in the app (id 'assassin', srd false) but has an empty features list; PHB gives Bonus Proficiencies (3), Assassinate (3), Infiltration Expertise (9), Impostor (13), Death Strike (17).",
+    "Arcane Trickster subclass exists in the app (id 'arcane-trickster', srd false) but has an empty features list; PHB gives Spellcasting (3), Mage Hand Legerdemain (3), Magical Ambush (9), Versatile Trickster (13), Spell Thief (17).",
+    "Arcane Trickster spellcasting is not modelled at all: class spellAbility is null, every progression row has cantrips 0 / known 0 / all-zero slots, and the subclass has no override. PHB: Int caster on the wizard list, 3 cantrips at 3rd (4 at 10th), 3-13 spells known, slots up to 4th level (e.g. 4/3/3/1 at 20th).",
+    "No limited-use resources are tracked: Stroke of Luck (1 per short or long rest) and Arcane Trickster Spell Thief (1 per long rest) have no uses data in the app.",
+    "App features list contains generic 'Roguish Archetype feature' entries at 9, 13, 17 whose desc is a copy of the Roguish Archetype text; they are table placeholders rather than real features.",
+    "Proficiencies are a single merged list (armor, weapons, tools mixed). Content matches the book (light armor; simple weapons, hand crossbows, longswords, rapiers, shortswords; thieves' tools); only casing differs ('Hand crossbows').",
+    "Expertise at 6th level is a second app entry duplicating the 1st-level desc; fine, but it is the same feature gained again rather than a separate feature.",
+    "No mismatch found for hit die (d8), saves (Dex, Int), skill choice (4 from the 11-skill list), subclass level (3), proficiency bonus, Sneak Attack dice (1d6-10d6), core feature names/levels, or Thief subclass features/levels."
+  ]
+}

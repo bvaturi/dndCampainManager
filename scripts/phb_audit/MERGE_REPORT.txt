@@ -1,0 +1,74 @@
+60 changes:
+  + barbarian: removed SRD duplicates/placeholders ['Path feature']
+  + barbarian/totem-warrior: added 5 features (was empty)
+  + bard: removed SRD duplicates/placeholders ['Bard College feature']
+  + bard: proficiencies ['Light Armor', 'Simple Weapons', 'Longswords', 'Rapiers', 'Shortswords', 'Hand crossbows'] -> ['Light Armor', 'Simple Weapons', 'Hand Crossbows', 'Longswords', 'Rapiers', 'Shortswords', 'Three musical instruments of your choice']
+  + bard/valor: added 4 features (was empty)
+  + cleric: removed SRD duplicates/placeholders ['Divine Domain feature', 'Divine Intervention Improvement', 'Supreme Healing']
+  + cleric/knowledge: added 5 features (was empty)
+  + cleric/life: added 'Supreme Healing' (level 17)
+  + cleric/light: added 6 features (was empty)
+  + cleric/nature: added 6 features (was empty)
+  + cleric/tempest: added 6 features (was empty)
+  + cleric/trickery: added 5 features (was empty)
+  + cleric/war: added 6 features (was empty)
+  + druid: removed SRD duplicates/placeholders ['Druid Circle feature']
+  + druid/land: removed SRD duplicates/placeholders ['Circle of the Land', 'Circle of the Land: Arctic', 'Circle of the Land: Coast', 'Circle of the Land: Desert', 'Circle of the Land: Forest', 'Circle of the Land: Grassland', 'Circle of the Land: Mountain', 'Circle of the Land: Swamp']
+  + druid/moon: added 5 features (was empty)
+  + fighter: removed SRD duplicates/placeholders ['Martial Archetype feature']
+  + fighter: proficiencies ['All armor', 'Shields', 'Simple Weapons', 'Martial Weapons'] -> ['Light Armor', 'Medium Armor', 'Heavy Armor', 'Shields', 'Simple Weapons', 'Martial Weapons']
+  + fighter/battle-master: added 5 features (was empty)
+  + fighter/eldritch-knight: added 6 features (was empty)
+  + monk: removed SRD duplicates/placeholders ['Monastic Tradition feature']
+  + monk: proficiencies ['Simple Weapons', 'Shortswords'] -> ['Simple Weapons', 'Shortswords', "One type of artisan's tools or one musical instrument (choice)"]
+  + monk/shadow: added 4 features (was empty)
+  + monk/four-elements: added 1 features (was empty)
+  + paladin: removed SRD duplicates/placeholders ['Sacred Oath feature']
+  + paladin: proficiencies ['All armor', 'Shields', 'Simple Weapons', 'Martial Weapons'] -> ['Light Armor', 'Medium Armor', 'Heavy Armor', 'Shields', 'Simple Weapons', 'Martial Weapons']
+  + paladin/devotion: added 'Oath Spells' (level 3)
+  + paladin/devotion: added 'Sacred Weapon' (level 3)
+  + paladin/devotion: added 'Turn the Unholy' (level 3)
+  + paladin/devotion: removed SRD duplicates/placeholders ['Channel Divinity: Sacred Weapon', 'Channel Divinity: Turn the Unholy']
+  + paladin/ancients: added 6 features (was empty)
+  + paladin/vengeance: added 6 features (was empty)
+  + ranger: removed SRD duplicates/placeholders ['Ranger Archetype feature']
+  + ranger/hunter: removed SRD duplicates/placeholders ['Defensive Tactics: Escape the Horde', 'Defensive Tactics: Multiattack Defense', 'Defensive Tactics: Steel Will', "Hunter's Prey: Colossus Slayer", "Hunter's Prey: Giant Killer", "Hunter's Prey: Horde Breaker", 'Multiattack: Volley', 'Multiattack: Whirlwind Attack', "Superior Hunter's Defense: Evasion", "Superior Hunter's Defense: Stand Against the Tide", "Superior Hunter's Defense: Uncanny Dodge"]
+  + ranger/beast-master: added 4 features (was empty)
+  + rogue: removed SRD duplicates/placeholders ['Roguish Archetype feature']
+  + rogue: proficiencies ['Light Armor', 'Simple Weapons', 'Longswords', 'Rapiers', 'Shortswords', 'Hand crossbows', "Thieves' Tools"] -> ['Light Armor', 'Simple Weapons', 'Hand Crossbows', 'Longswords', 'Rapiers', 'Shortswords', "Thieves' Tools"]
+  + rogue/assassin: added 5 features (was empty)
+  + rogue/arcane-trickster: added 5 features (was empty)
+  + sorcerer: removed SRD duplicates/placeholders ['Flexible Casting: Converting Spell Slot', 'Flexible Casting: Creating Spell Slots', 'Metamagic: Twinned Spell', 'Sorcerous Origin feature']
+  + sorcerer: proficiencies ['Daggers', 'Darts', 'Slings', 'Quarterstaffs', 'Crossbows, light'] -> ['Daggers', 'Darts', 'Slings', 'Quarterstaffs', 'Light Crossbows']
+  + sorcerer/draconic: name 'Draconic' -> 'Draconic Bloodline' (book)
+  + sorcerer/draconic: removed SRD duplicates/placeholders ['Dragon Ancestor: Black - Acid Damage', 'Dragon Ancestor: Blue - Lightning Damage', 'Dragon Ancestor: Brass - Fire Damage', 'Dragon Ancestor: Bronze - Lightning Damage', 'Dragon Ancestor: Copper - Acid Damage', 'Dragon Ancestor: Gold - Fire Damage', 'Dragon Ancestor: Green - Poison Damage', 'Dragon Ancestor: Red - Fire Damage', 'Dragon Ancestor: Silver - Cold Damage', 'Dragon Ancestor: White - Cold Damage']
+  + sorcerer/wild-magic: added 5 features (was empty)
+  + warlock: 'Mystic Arcanum (7th level)' level 11 -> 13 (book)
+  + warlock: 'Mystic Arcanum (8th level)' level 11 -> 15 (book)
+  + warlock: 'Mystic Arcanum (9th level)' level 11 -> 17 (book)
+  + warlock: removed SRD duplicates/placeholders ['Otherworldly Patron feature']
+  + warlock/archfey: added 5 features (was empty)
+  + warlock/fiend: added 'Expanded Spell List' (level 1)
+  + warlock/great-old-one: added 5 features (was empty)
+  + wizard: removed SRD duplicates/placeholders ['Arcane Tradition feature']
+  + wizard: proficiencies ['Daggers', 'Darts', 'Slings', 'Quarterstaffs', 'Crossbows, light'] -> ['Daggers', 'Darts', 'Slings', 'Quarterstaffs', 'Light Crossbows']
+  + wizard/abjuration: added 5 features (was empty)
+  + wizard/conjuration: added 5 features (was empty)
+  + wizard/divination: added 5 features (was empty)
+  + wizard/enchantment: added 5 features (was empty)
+  + wizard/illusion: added 5 features (was empty)
+  + wizard/necromancy: added 5 features (was empty)
+  + wizard/transmutation: added 5 features (was empty)
+0 problems:
+barbarian  features  14 | subclasses 2 (9 features) | resources 1
+bard       features  11 | subclasses 2 (8 features) | resources 1
+cleric     features   8 | subclasses 7 (40 features) | resources 6
+druid      features   8 | subclasses 2 (11 features) | resources 2
+fighter    features   7 | subclasses 3 (16 features) | resources 4
+monk       features  22 | subclasses 3 (9 features) | resources 2
+paladin    features  16 | subclasses 3 (18 features) | resources 8
+ranger     features  13 | subclasses 2 (8 features) | resources 0
+rogue      features  13 | subclasses 3 (15 features) | resources 2
+sorcerer   features   6 | subclasses 2 (10 features) | resources 2
+warlock    features  10 | subclasses 3 (15 features) | resources 12
+wizard     features   6 | subclasses 8 (40 features) | resources 10

@@ -1,0 +1,881 @@
+{
+  "class": "wizard",
+  "pdfPages": "113-121",
+  "hitDie": 6,
+  "saves": [
+    "int",
+    "wis"
+  ],
+  "armor": [],
+  "weapons": [
+    "Daggers",
+    "Darts",
+    "Slings",
+    "Quarterstaffs",
+    "Light Crossbows"
+  ],
+  "tools": [],
+  "skillChoice": {
+    "choose": 2,
+    "from": [
+      "arcana",
+      "history",
+      "insight",
+      "investigation",
+      "medicine",
+      "religion"
+    ]
+  },
+  "spellcasting": {
+    "ability": "int",
+    "startsAt": 1
+  },
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Spellcasting",
+        "Arcane Recovery"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "1st": 2,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Arcane Tradition"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "1st": 3,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 3,
+        "1st": 4,
+        "2nd": 2,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 2,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Arcane Tradition feature"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 1,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 2,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 1,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Arcane Tradition feature"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Arcane Tradition feature"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Spell Mastery"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Signature Spell"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 2,
+        "8th": 1,
+        "9th": 1
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Spellcasting",
+      "level": 1,
+      "summary": "Intelligence-based prepared casting from a spellbook (starts with six 1st-level spells, +2 free spells per level). Prepare Int mod + wizard level spells after a long rest; ritual-cast spellbook rituals unprepared; arcane focus allowed."
+    },
+    {
+      "name": "Arcane Recovery",
+      "level": 1,
+      "summary": "Once per day after a short rest, recover expended slots whose combined level is at most half your wizard level rounded up; none may be 6th level or higher.",
+      "resource": {
+        "key": "arcane-recovery",
+        "label": "Arcane Recovery",
+        "max": 1,
+        "recharge": "long"
+      }
+    },
+    {
+      "name": "Arcane Tradition",
+      "level": 2,
+      "summary": "Choose one of eight schools (Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy, Transmutation); it grants features at 2nd, 6th, 10th, and 14th level."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th, and 19th level raise one ability by 2 or two abilities by 1 (max 20)."
+    },
+    {
+      "name": "Spell Mastery",
+      "level": 18,
+      "summary": "Pick one 1st-level and one 2nd-level spellbook spell; while prepared, cast them at their base level without a slot. Swap choices with 8 hours of study."
+    },
+    {
+      "name": "Signature Spell",
+      "level": 20,
+      "summary": "(Section heading prints 'Signature Spells'.) Two chosen 3rd-level spellbook spells are always prepared, don't count against prepared spells, and each can be cast once at 3rd level without a slot per short or long rest.",
+      "resource": {
+        "key": "signature-spells",
+        "label": "Signature spell free casts (one per spell)",
+        "max": 2,
+        "recharge": "short"
+      }
+    }
+  ],
+  "options": [],
+  "subclasses": [
+    {
+      "id": "abjuration",
+      "name": "Abjuration",
+      "fullName": "School of Abjuration",
+      "features": [
+        {
+          "name": "Abjuration Savant",
+          "level": 2,
+          "summary": "Copying abjuration spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Arcane Ward",
+          "level": 2,
+          "summary": "Casting a 1st+ level abjuration spell can create a ward on you (once per long rest) with HP 2 x wizard level + Int mod that absorbs damage to you; later abjuration spells restore 2 x spell level HP to it.",
+          "resource": {
+            "key": "arcane-ward",
+            "label": "Arcane Ward hit points",
+            "max": "2*level+int",
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Projected Ward",
+          "level": 6,
+          "summary": "Reaction: when a creature you can see within 30 feet takes damage, your Arcane Ward absorbs it instead; overflow goes to that creature.",
+          "resource": null
+        },
+        {
+          "name": "Improved Abjuration",
+          "level": 10,
+          "summary": "Add your proficiency bonus to ability checks made as part of casting abjuration spells (e.g. counterspell, dispel magic).",
+          "resource": null
+        },
+        {
+          "name": "Spell Resistance",
+          "level": 14,
+          "summary": "Advantage on saving throws against spells and resistance to spell damage.",
+          "resource": null
+        }
+      ],
+      "options": []
+    },
+    {
+      "id": "conjuration",
+      "name": "Conjuration",
+      "fullName": "School of Conjuration",
+      "features": [
+        {
+          "name": "Conjuration Savant",
+          "level": 2,
+          "summary": "Copying conjuration spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Minor Conjuration",
+          "level": 2,
+          "summary": "Action: create a nonmagical-looking, faintly glowing object (max 3 ft per side, 10 lb) within 10 feet for 1 hour; ends early if damaged or reused.",
+          "resource": null
+        },
+        {
+          "name": "Benign Transposition",
+          "level": 6,
+          "summary": "Action: teleport up to 30 feet, or swap places with a willing Small/Medium creature. Recharges on a long rest or when you cast a 1st+ level conjuration spell.",
+          "resource": {
+            "key": "benign-transposition",
+            "label": "Benign Transposition",
+            "max": 1,
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Focused Conjuration",
+          "level": 10,
+          "summary": "Taking damage can't break your concentration on a conjuration spell.",
+          "resource": null
+        },
+        {
+          "name": "Durable Summons",
+          "level": 14,
+          "summary": "Creatures you summon or create with conjuration spells gain 30 temporary hit points.",
+          "resource": null
+        }
+      ],
+      "options": []
+    },
+    {
+      "id": "divination",
+      "name": "Divination",
+      "fullName": "School of Divination",
+      "features": [
+        {
+          "name": "Divination Savant",
+          "level": 2,
+          "summary": "Copying divination spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Portent",
+          "level": 2,
+          "summary": "After each long rest roll two d20s and keep them; once per turn replace an attack roll, save, or ability check by you or a visible creature with one, decided before rolling. Unused rolls are lost on the next long rest.",
+          "resource": {
+            "key": "portent",
+            "label": "Portent dice",
+            "byLevel": {
+              "2": 2,
+              "14": 3
+            },
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Expert Divination",
+          "level": 6,
+          "summary": "Casting a divination spell of 2nd level or higher with a slot regains one expended slot of a lower level (5th level max).",
+          "resource": null
+        },
+        {
+          "name": "The Third Eye",
+          "level": 10,
+          "summary": "Action: gain one chosen sense benefit until incapacitated or you take a short or long rest; reusable after a rest.",
+          "resource": {
+            "key": "the-third-eye",
+            "label": "The Third Eye",
+            "max": 1,
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Greater Portent",
+          "level": 14,
+          "summary": "Portent gives you three d20s per long rest instead of two.",
+          "resource": null
+        }
+      ],
+      "options": [
+        {
+          "feature": "The Third Eye",
+          "choices": [
+            {
+              "name": "Darkvision",
+              "summary": "Darkvision to 60 feet.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Ethereal Sight",
+              "summary": "See into the Ethereal Plane within 60 feet.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Greater Comprehension",
+              "summary": "Read any language.",
+              "prerequisite": ""
+            },
+            {
+              "name": "See Invisibility",
+              "summary": "See invisible creatures and objects within 10 feet in line of sight.",
+              "prerequisite": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "enchantment",
+      "name": "Enchantment",
+      "fullName": "School of Enchantment",
+      "features": [
+        {
+          "name": "Enchantment Savant",
+          "level": 2,
+          "summary": "Copying enchantment spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Hypnotic Gaze",
+          "level": 2,
+          "summary": "Action: a creature within 5 feet that can see or hear you makes a Wisdom save or is charmed, speed 0 and incapacitated until your next turn ends; sustain with an action each turn. On a save or end, can't target it again until a long rest.",
+          "resource": null
+        },
+        {
+          "name": "Instinctive Charm",
+          "level": 6,
+          "summary": "Reaction: an attacker within 30 feet makes a Wisdom save or must redirect its attack to the nearest other creature in range; on a success you can't use this on it until a long rest.",
+          "resource": null
+        },
+        {
+          "name": "Split Enchantment",
+          "level": 10,
+          "summary": "A 1st+ level enchantment spell that targets only one creature can target a second creature.",
+          "resource": null
+        },
+        {
+          "name": "Alter Memories",
+          "level": 14,
+          "summary": "When you charm creatures with an enchantment spell, one stays unaware it was charmed; before the spell ends, an action can make it lose up to 1 + Cha mod hours of memory on a failed Int save.",
+          "resource": null
+        }
+      ],
+      "options": []
+    },
+    {
+      "id": "evocation",
+      "name": "Evocation",
+      "fullName": "School of Evocation",
+      "features": [
+        {
+          "name": "Evocation Savant",
+          "level": 2,
+          "summary": "Copying evocation spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Sculpt Spells",
+          "level": 2,
+          "summary": "When casting an evocation spell, choose up to 1 + spell level visible creatures; they automatically succeed on its saves and take no damage where a save would halve it.",
+          "resource": null
+        },
+        {
+          "name": "Potent Cantrip",
+          "level": 6,
+          "summary": "Creatures that succeed on a save against your cantrip still take half its damage, without other effects.",
+          "resource": null
+        },
+        {
+          "name": "Empowered Evocation",
+          "level": 10,
+          "summary": "Add your Intelligence modifier to the damage roll of wizard evocation spells you cast.",
+          "resource": null
+        },
+        {
+          "name": "Overchannel",
+          "level": 14,
+          "summary": "Deal maximum damage with a damaging wizard spell of 5th level or lower. Free once per long rest; each further use before resting deals you 2d12 necrotic per spell level, +1d12 per level each time, ignoring resistance and immunity.",
+          "resource": {
+            "key": "overchannel",
+            "label": "Overchannel (safe use)",
+            "max": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "options": []
+    },
+    {
+      "id": "illusion",
+      "name": "Illusion",
+      "fullName": "School of Illusion",
+      "features": [
+        {
+          "name": "Illusion Savant",
+          "level": 2,
+          "summary": "Copying illusion spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Improved Minor Illusion",
+          "level": 2,
+          "summary": "Learn minor illusion (or another wizard cantrip if known) without it counting against cantrips known; your minor illusion can make both a sound and an image.",
+          "resource": null
+        },
+        {
+          "name": "Malleable Illusions",
+          "level": 6,
+          "summary": "Action: reshape an active illusion spell of yours with duration 1 minute or longer, within that spell's parameters, while you can see it.",
+          "resource": null
+        },
+        {
+          "name": "Illusory Self",
+          "level": 10,
+          "summary": "Reaction to an attack roll against you: an illusory double makes the attack miss automatically.",
+          "resource": {
+            "key": "illusory-self",
+            "label": "Illusory Self",
+            "max": 1,
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Illusory Reality",
+          "level": 14,
+          "summary": "While a 1st+ level illusion spell lasts, bonus action: make one inanimate, nonmagical object in it real for 1 minute; it can't deal damage or directly harm anyone.",
+          "resource": null
+        }
+      ],
+      "options": []
+    },
+    {
+      "id": "necromancy",
+      "name": "Necromancy",
+      "fullName": "School of Necromancy",
+      "features": [
+        {
+          "name": "Necromancy Savant",
+          "level": 2,
+          "summary": "Copying necromancy spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Grim Harvest",
+          "level": 2,
+          "summary": "Once per turn, killing creatures with a 1st+ level spell heals you 2 x spell level (3 x for necromancy spells); not for constructs or undead.",
+          "resource": null
+        },
+        {
+          "name": "Undead Thralls",
+          "level": 6,
+          "summary": "Gain animate dead in your spellbook; it raises one extra corpse. Undead you create with necromancy get extra max HP equal to your wizard level and add your proficiency bonus to weapon damage.",
+          "resource": null
+        },
+        {
+          "name": "Inured to Undeath",
+          "level": 10,
+          "summary": "Resistance to necrotic damage, and your hit point maximum can't be reduced.",
+          "resource": null
+        },
+        {
+          "name": "Command Undead",
+          "level": 14,
+          "summary": "Action: an undead within 60 feet makes a Charisma save or becomes friendly and obeys you until you use this again; smart undead (Int 8+) get advantage, Int 12+ can re-save each turn. A success makes it permanently immune to this feature.",
+          "resource": null
+        }
+      ],
+      "options": []
+    },
+    {
+      "id": "transmutation",
+      "name": "Transmutation",
+      "fullName": "School of Transmutation",
+      "features": [
+        {
+          "name": "Transmutation Savant",
+          "level": 2,
+          "summary": "Copying transmutation spells into your spellbook costs half the usual gold and time.",
+          "resource": null
+        },
+        {
+          "name": "Minor Alchemy",
+          "level": 2,
+          "summary": "Spend 10 minutes per cubic foot (up to 1 cubic foot) to turn wood, stone (not gems), iron, copper, or silver into another of those for 1 hour or until your concentration breaks.",
+          "resource": null
+        },
+        {
+          "name": "Transmuter's Stone",
+          "level": 6,
+          "summary": "Spend 8 hours to craft a stone granting its bearer one chosen benefit; casting a 1st+ level transmutation spell lets you change the benefit. Making a new stone ends the old one.",
+          "resource": null
+        },
+        {
+          "name": "Shapechanger",
+          "level": 10,
+          "summary": "Add polymorph to your spellbook; once per short or long rest cast it without a slot on yourself only, becoming a beast of CR 1 or lower.",
+          "resource": {
+            "key": "shapechanger",
+            "label": "Shapechanger (free polymorph)",
+            "max": 1,
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Master Transmuter",
+          "level": 14,
+          "summary": "Action: destroy your transmuter's stone to produce one major effect; the stone can't be remade until a long rest.",
+          "resource": {
+            "key": "master-transmuter",
+            "label": "Master Transmuter",
+            "max": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "options": [
+        {
+          "feature": "Transmuter's Stone",
+          "choices": [
+            {
+              "name": "Darkvision",
+              "summary": "Darkvision to 60 feet.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Speed",
+              "summary": "+10 feet speed while unencumbered.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Constitution saves",
+              "summary": "Proficiency in Constitution saving throws.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Energy resistance",
+              "summary": "Resistance to acid, cold, fire, lightning, or thunder damage (chosen each time this benefit is picked).",
+              "prerequisite": ""
+            }
+          ]
+        },
+        {
+          "feature": "Master Transmuter",
+          "choices": [
+            {
+              "name": "Major Transformation",
+              "summary": "Over 10 minutes, turn a nonmagical object up to a 5-foot cube into another nonmagical object of similar size and mass and equal or lower value.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Panacea",
+              "summary": "Touched creature is cured of all curses, diseases, and poisons and regains all hit points.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Restore Life",
+              "summary": "Cast raise dead by touch with no slot and no need to have it in your spellbook.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Restore Youth",
+              "summary": "A willing touched creature's apparent age drops by 3d10 years (minimum 13); lifespan is not extended.",
+              "prerequisite": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "discrepancies": [
+    "Seven of the eight PHB Arcane Traditions have no features in the app: abjuration, conjuration, divination, enchantment, illusion, necromancy, and transmutation each have an empty features array (only evocation is filled). That is 35 missing subclass features, e.g. Arcane Ward, Portent, Benign Transposition, Hypnotic Gaze, Grim Harvest, Minor Alchemy.",
+    "Class feature name: app uses 'Spellcasting: Wizard' (in progression and features); the PHB table and heading print 'Spellcasting'. The app's Spellcasting desc is a one-sentence stub (no spellbook of six spells, preparation formula Int mod + level, ritual casting, or 2 free spells per level).",
+    "Option lists missing: The Third Eye (Darkvision, Ethereal Sight, Greater Comprehension, See Invisibility), Transmuter's Stone benefits (darkvision, +10 ft speed, Con save proficiency, energy resistance), and Master Transmuter effects (Major Transformation, Panacea, Restore Life, Restore Youth) are not in the app (their subclasses are empty).",
+    "Limited-use resources not modelled: Arcane Recovery (1/day on a short rest; app only stores slot-level budget in progression.special.arcane_recovery_levels, which correctly equals ceil(level/2)), Signature Spell (each of two spells free once per short rest), Overchannel (free once per long rest), Portent dice (2, 3 from 14th), Arcane Ward HP (2 x level + Int), Benign Transposition, The Third Eye, Illusory Self, Shapechanger, Master Transmuter.",
+    "Evocation text differs from the printed PHB: app's Empowered Evocation says 'one damage roll' and Overchannel says '1st through 5th level' - these are later errata/SRD wording; the 2014 PHB print says 'the damage roll' and '5th level or lower'. Mention only if the app should match the original print.",
+    "Signature Spell: the class table prints 'Signature Spell' but the feature heading prints 'Signature Spells'; app uses the table form (acceptable).",
+    "Arcane Tradition feature desc names only Evocation ('such as Evocation'); the PHB lists all eight schools.",
+    "Matches the PHB: hit die d6, saves Int/Wis, no armor, weapons (daggers, darts, slings, quarterstaffs, light crossbows), no tools, 2 skills from Arcana/History/Insight/Investigation/Medicine/Religion, Int casting, tradition at 2nd level with features at 6/10/14, cantrips known and all spell slot columns at all 20 levels, ASI levels, Spell Mastery 18, Signature Spell 20."
+  ]
+}

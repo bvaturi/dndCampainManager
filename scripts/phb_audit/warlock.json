@@ -1,0 +1,805 @@
+{
+  "class": "warlock",
+  "pdfPages": "106-112",
+  "hitDie": 8,
+  "saves": [
+    "wis",
+    "cha"
+  ],
+  "armor": [
+    "Light Armor"
+  ],
+  "weapons": [
+    "Simple Weapons"
+  ],
+  "tools": [],
+  "skillChoice": {
+    "choose": 2,
+    "from": [
+      "arcana",
+      "deception",
+      "history",
+      "intimidation",
+      "investigation",
+      "nature",
+      "religion"
+    ]
+  },
+  "spellcasting": {
+    "ability": "cha",
+    "startsAt": 1
+  },
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Otherworldly Patron",
+        "Pact Magic"
+      ],
+      "columns": {
+        "Cantrips Known": 2,
+        "Spells Known": 2,
+        "Spell Slots": 1,
+        "Slot Level": "1st",
+        "Invocations Known": 0
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Eldritch Invocations"
+      ],
+      "columns": {
+        "Cantrips Known": 2,
+        "Spells Known": 3,
+        "Spell Slots": 2,
+        "Slot Level": "1st",
+        "Invocations Known": 2
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [
+        "Pact Boon"
+      ],
+      "columns": {
+        "Cantrips Known": 2,
+        "Spells Known": 4,
+        "Spell Slots": 2,
+        "Slot Level": "2nd",
+        "Invocations Known": 2
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 5,
+        "Spell Slots": 2,
+        "Slot Level": "2nd",
+        "Invocations Known": 2
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 6,
+        "Spell Slots": 2,
+        "Slot Level": "3rd",
+        "Invocations Known": 3
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Otherworldly Patron feature"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 7,
+        "Spell Slots": 2,
+        "Slot Level": "3rd",
+        "Invocations Known": 3
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 8,
+        "Spell Slots": 2,
+        "Slot Level": "4th",
+        "Invocations Known": 4
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 9,
+        "Spell Slots": 2,
+        "Slot Level": "4th",
+        "Invocations Known": 4
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 10,
+        "Spell Slots": 2,
+        "Slot Level": "5th",
+        "Invocations Known": 5
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Otherworldly Patron feature"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 10,
+        "Spell Slots": 2,
+        "Slot Level": "5th",
+        "Invocations Known": 5
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [
+        "Mystic Arcanum (6th level)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 11,
+        "Spell Slots": 3,
+        "Slot Level": "5th",
+        "Invocations Known": 5
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 11,
+        "Spell Slots": 3,
+        "Slot Level": "5th",
+        "Invocations Known": 6
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [
+        "Mystic Arcanum (7th level)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 12,
+        "Spell Slots": 3,
+        "Slot Level": "5th",
+        "Invocations Known": 6
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Otherworldly Patron feature"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 12,
+        "Spell Slots": 3,
+        "Slot Level": "5th",
+        "Invocations Known": 6
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [
+        "Mystic Arcanum (8th level)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 13,
+        "Spell Slots": 3,
+        "Slot Level": "5th",
+        "Invocations Known": 7
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 13,
+        "Spell Slots": 3,
+        "Slot Level": "5th",
+        "Invocations Known": 7
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Mystic Arcanum (9th level)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 14,
+        "Spell Slots": 4,
+        "Slot Level": "5th",
+        "Invocations Known": 7
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 14,
+        "Spell Slots": 4,
+        "Slot Level": "5th",
+        "Invocations Known": 8
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 15,
+        "Spell Slots": 4,
+        "Slot Level": "5th",
+        "Invocations Known": 8
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Eldritch Master"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 15,
+        "Spell Slots": 4,
+        "Slot Level": "5th",
+        "Invocations Known": 8
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Otherworldly Patron",
+      "level": 1,
+      "summary": "Choose a patron (Archfey, Fiend, or Great Old One); it grants features at 1st, 6th, 10th, and 14th level and an expanded spell list."
+    },
+    {
+      "name": "Pact Magic",
+      "level": 1,
+      "summary": "Charisma-based casting from the warlock list. Few slots, all cast at the table's Slot Level; every slot returns on a short or long rest. Spells known can be swapped on level-up; arcane focus allowed.",
+      "resource": {
+        "key": "pact-slots",
+        "label": "Pact Magic slots",
+        "max": "table:Spell Slots",
+        "recharge": "short"
+      }
+    },
+    {
+      "name": "Eldritch Invocations",
+      "level": 2,
+      "summary": "Learn two invocations at 2nd level, more per the Invocations Known column; on each warlock level-up one known invocation may be replaced with another you qualify for."
+    },
+    {
+      "name": "Pact Boon",
+      "level": 3,
+      "summary": "Your patron grants one boon of your choice: Pact of the Chain, Pact of the Blade, or Pact of the Tome."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th, and 19th level raise one ability by 2 or two abilities by 1 (max 20)."
+    },
+    {
+      "name": "Mystic Arcanum (6th level)",
+      "level": 11,
+      "summary": "Pick one 6th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest. Granted first at 11th level.",
+      "resource": {
+        "key": "mystic-arcanum-6",
+        "label": "Mystic Arcanum (6th)",
+        "max": 1,
+        "recharge": "long"
+      }
+    },
+    {
+      "name": "Mystic Arcanum (7th level)",
+      "level": 13,
+      "summary": "Pick one 7th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest.",
+      "resource": {
+        "key": "mystic-arcanum-7",
+        "label": "Mystic Arcanum (7th)",
+        "max": 1,
+        "recharge": "long"
+      }
+    },
+    {
+      "name": "Mystic Arcanum (8th level)",
+      "level": 15,
+      "summary": "Pick one 8th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest.",
+      "resource": {
+        "key": "mystic-arcanum-8",
+        "label": "Mystic Arcanum (8th)",
+        "max": 1,
+        "recharge": "long"
+      }
+    },
+    {
+      "name": "Mystic Arcanum (9th level)",
+      "level": 17,
+      "summary": "Pick one 9th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest.",
+      "resource": {
+        "key": "mystic-arcanum-9",
+        "label": "Mystic Arcanum (9th)",
+        "max": 1,
+        "recharge": "long"
+      }
+    },
+    {
+      "name": "Eldritch Master",
+      "level": 20,
+      "summary": "Spend 1 minute pleading with your patron to recover every expended Pact Magic slot; usable once per long rest.",
+      "resource": {
+        "key": "eldritch-master",
+        "label": "Eldritch Master",
+        "max": 1,
+        "recharge": "long"
+      }
+    }
+  ],
+  "options": [
+    {
+      "feature": "Eldritch Invocations",
+      "choices": [
+        {
+          "name": "Agonizing Blast",
+          "summary": "Add your Charisma modifier to the damage of each eldritch blast hit.",
+          "prerequisite": "eldritch blast cantrip"
+        },
+        {
+          "name": "Armor of Shadows",
+          "summary": "Cast mage armor on yourself at will with no slot or material components.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Ascendant Step",
+          "summary": "Cast levitate on yourself at will with no slot or material components.",
+          "prerequisite": "9th level"
+        },
+        {
+          "name": "Beast Speech",
+          "summary": "Cast speak with animals at will without a spell slot.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Beguiling Influence",
+          "summary": "Gain proficiency in Deception and Persuasion.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Bewitching Whispers",
+          "summary": "Cast compulsion once with a warlock slot; regain on a long rest.",
+          "prerequisite": "7th level"
+        },
+        {
+          "name": "Book of Ancient Secrets",
+          "summary": "Add two 1st-level ritual spells from any class to your Book of Shadows and cast them as rituals; copy more rituals up to half your warlock level (rounded up) at 2 hours and 50 gp per spell level. Also cast known warlock rituals as rituals.",
+          "prerequisite": "Pact of the Tome feature"
+        },
+        {
+          "name": "Chains of Carceri",
+          "summary": "Cast hold monster at will on a celestial, fiend, or elemental with no slot or material components; once per creature per long rest.",
+          "prerequisite": "15th level, Pact of the Chain feature"
+        },
+        {
+          "name": "Devil's Sight",
+          "summary": "See normally in magical and nonmagical darkness out to 120 feet.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Dreadful Word",
+          "summary": "Cast confusion once with a warlock slot; regain on a long rest.",
+          "prerequisite": "7th level"
+        },
+        {
+          "name": "Eldritch Sight",
+          "summary": "Cast detect magic at will without a spell slot.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Eldritch Spear",
+          "summary": "Eldritch blast's range becomes 300 feet.",
+          "prerequisite": "eldritch blast cantrip"
+        },
+        {
+          "name": "Eyes of the Rune Keeper",
+          "summary": "You can read any writing.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Fiendish Vigor",
+          "summary": "Cast false life on yourself at will as a 1st-level spell, with no slot or material components.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Gaze of Two Minds",
+          "summary": "Action: touch a willing humanoid and use its senses until the end of your next turn (extendable each turn with an action while on the same plane); you are blind and deaf to your own surroundings meanwhile.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Lifedrinker",
+          "summary": "Pact weapon hits deal extra necrotic damage equal to your Charisma modifier (minimum 1).",
+          "prerequisite": "12th level, Pact of the Blade feature"
+        },
+        {
+          "name": "Mask of Many Faces",
+          "summary": "Cast disguise self at will without a spell slot.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Master of Myriad Forms",
+          "summary": "Cast alter self at will without a spell slot.",
+          "prerequisite": "15th level"
+        },
+        {
+          "name": "Minions of Chaos",
+          "summary": "Cast conjure elemental once with a warlock slot; regain on a long rest.",
+          "prerequisite": "9th level"
+        },
+        {
+          "name": "Mire the Mind",
+          "summary": "Cast slow once with a warlock slot; regain on a long rest.",
+          "prerequisite": "5th level"
+        },
+        {
+          "name": "Misty Visions",
+          "summary": "Cast silent image at will with no slot or material components.",
+          "prerequisite": ""
+        },
+        {
+          "name": "One with Shadows",
+          "summary": "In dim light or darkness, use an action to turn invisible until you move or take an action or reaction.",
+          "prerequisite": "5th level"
+        },
+        {
+          "name": "Otherworldly Leap",
+          "summary": "Cast jump on yourself at will with no slot or material components.",
+          "prerequisite": "9th level"
+        },
+        {
+          "name": "Repelling Blast",
+          "summary": "Each eldritch blast hit can shove the target up to 10 feet straight away from you.",
+          "prerequisite": "eldritch blast cantrip"
+        },
+        {
+          "name": "Sculptor of Flesh",
+          "summary": "Cast polymorph once with a warlock slot; regain on a long rest.",
+          "prerequisite": "7th level"
+        },
+        {
+          "name": "Sign of Ill Omen",
+          "summary": "Cast bestow curse once with a warlock slot; regain on a long rest.",
+          "prerequisite": "5th level"
+        },
+        {
+          "name": "Thief of Five Fates",
+          "summary": "Cast bane once with a warlock slot; regain on a long rest.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Thirsting Blade",
+          "summary": "Attack twice with your pact weapon when you take the Attack action.",
+          "prerequisite": "5th level, Pact of the Blade feature"
+        },
+        {
+          "name": "Visions of Distant Realms",
+          "summary": "Cast arcane eye at will without a spell slot.",
+          "prerequisite": "15th level"
+        },
+        {
+          "name": "Voice of the Chain Master",
+          "summary": "Communicate telepathically with your familiar, perceive through its senses, and speak through it in your own voice while on the same plane.",
+          "prerequisite": "Pact of the Chain feature"
+        },
+        {
+          "name": "Whispers of the Grave",
+          "summary": "Cast speak with dead at will without a spell slot.",
+          "prerequisite": "9th level"
+        },
+        {
+          "name": "Witch Sight",
+          "summary": "See the true form of shapechangers and of creatures hidden by illusion or transmutation magic within 30 feet and in line of sight.",
+          "prerequisite": "15th level"
+        }
+      ]
+    },
+    {
+      "feature": "Pact Boon",
+      "choices": [
+        {
+          "name": "Pact of the Chain",
+          "prerequisite": "",
+          "summary": "Learn find familiar, cast as a ritual and not counted against spells known; familiar may also be an imp, pseudodragon, quasit, or sprite, and can make one attack when you forgo one of yours during the Attack action."
+        },
+        {
+          "name": "Pact of the Blade",
+          "prerequisite": "",
+          "summary": "Action: summon a melee pact weapon of any form, proficient and magical for overcoming resistance. Can bind one magic weapon (non-artifact, non-sentient) via a 1-hour ritual to summon instead. Vanishes if more than 5 ft away for 1 minute."
+        },
+        {
+          "name": "Pact of the Tome",
+          "prerequisite": "",
+          "summary": "Receive a Book of Shadows holding three cantrips from any class list, castable at will while you carry it and not counted against cantrips known; a lost book can be replaced with a 1-hour ceremony."
+        }
+      ]
+    }
+  ],
+  "subclasses": [
+    {
+      "id": "archfey",
+      "name": "Archfey",
+      "fullName": "The Archfey",
+      "features": [
+        {
+          "name": "Expanded Spell List",
+          "level": 1,
+          "summary": "The Archfey adds its expanded spells (see spells) to the warlock list for you when you learn warlock spells.",
+          "resource": null
+        },
+        {
+          "name": "Fey Presence",
+          "level": 1,
+          "summary": "Action: every creature in a 10-foot cube from you makes a Wisdom save vs your spell DC or is charmed or frightened (your pick) until the end of your next turn.",
+          "resource": {
+            "key": "fey-presence",
+            "label": "Fey Presence",
+            "max": 1,
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Misty Escape",
+          "level": 6,
+          "summary": "Reaction when you take damage: become invisible and teleport up to 60 feet to a visible spot; invisibility lasts until your next turn starts or you attack or cast.",
+          "resource": {
+            "key": "misty-escape",
+            "label": "Misty Escape",
+            "max": 1,
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Beguiling Defenses",
+          "level": 10,
+          "summary": "Immune to being charmed; when someone tries to charm you, your reaction can force a Wisdom save or that creature is charmed by you for 1 minute or until damaged.",
+          "resource": null
+        },
+        {
+          "name": "Dark Delirium",
+          "level": 14,
+          "summary": "Action: a creature within 60 feet makes a Wisdom save or is charmed or frightened for up to 1 minute (concentration), lost in an illusory realm; ends if it takes damage.",
+          "resource": {
+            "key": "dark-delirium",
+            "label": "Dark Delirium",
+            "max": 1,
+            "recharge": "short"
+          }
+        }
+      ],
+      "spells": {
+        "1": [
+          "Faerie Fire",
+          "Sleep"
+        ],
+        "2": [
+          "Calm Emotions",
+          "Phantasmal Force"
+        ],
+        "3": [
+          "Blink",
+          "Plant Growth"
+        ],
+        "4": [
+          "Dominate Beast",
+          "Greater Invisibility"
+        ],
+        "5": [
+          "Dominate Person",
+          "Seeming"
+        ]
+      },
+      "options": []
+    },
+    {
+      "id": "fiend",
+      "name": "Fiend",
+      "fullName": "The Fiend",
+      "features": [
+        {
+          "name": "Expanded Spell List",
+          "level": 1,
+          "summary": "The Fiend adds its expanded spells (see spells) to the warlock list for you when you learn warlock spells.",
+          "resource": null
+        },
+        {
+          "name": "Dark One's Blessing",
+          "level": 1,
+          "summary": "When you drop a hostile creature to 0 HP, gain temporary HP equal to Charisma modifier + warlock level (minimum 1).",
+          "resource": null
+        },
+        {
+          "name": "Dark One's Own Luck",
+          "level": 6,
+          "summary": "Add a d10 to an ability check or saving throw after seeing the roll but before its effects apply.",
+          "resource": {
+            "key": "dark-ones-own-luck",
+            "label": "Dark One's Own Luck",
+            "max": 1,
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Fiendish Resilience",
+          "level": 10,
+          "summary": "After a short or long rest pick a damage type to resist until you pick another; magical and silvered weapon damage bypasses it.",
+          "resource": null
+        },
+        {
+          "name": "Hurl Through Hell",
+          "level": 14,
+          "summary": "On a hit, banish the target through the lower planes until the end of your next turn; when it returns, a non-fiend takes 10d10 psychic damage.",
+          "resource": {
+            "key": "hurl-through-hell",
+            "label": "Hurl Through Hell",
+            "max": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "spells": {
+        "1": [
+          "Burning Hands",
+          "Command"
+        ],
+        "2": [
+          "Blindness/Deafness",
+          "Scorching Ray"
+        ],
+        "3": [
+          "Fireball",
+          "Stinking Cloud"
+        ],
+        "4": [
+          "Fire Shield",
+          "Wall of Fire"
+        ],
+        "5": [
+          "Flame Strike",
+          "Hallow"
+        ]
+      },
+      "options": []
+    },
+    {
+      "id": "great-old-one",
+      "name": "Great Old One",
+      "fullName": "The Great Old One",
+      "features": [
+        {
+          "name": "Expanded Spell List",
+          "level": 1,
+          "summary": "The Great Old One adds its expanded spells (see spells) to the warlock list for you when you learn warlock spells.",
+          "resource": null
+        },
+        {
+          "name": "Awakened Mind",
+          "level": 1,
+          "summary": "Speak telepathically with any creature within 30 feet that knows at least one language, no shared language required.",
+          "resource": null
+        },
+        {
+          "name": "Entropic Ward",
+          "level": 6,
+          "summary": "Reaction: impose disadvantage on an attack roll against you; if it misses, you have advantage on your next attack against that creature before the end of your next turn.",
+          "resource": {
+            "key": "entropic-ward",
+            "label": "Entropic Ward",
+            "max": 1,
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Thought Shield",
+          "level": 10,
+          "summary": "Your mind can't be read unless you allow it; resistance to psychic damage, and creatures that deal psychic damage to you take the same amount.",
+          "resource": null
+        },
+        {
+          "name": "Create Thrall",
+          "level": 14,
+          "summary": "Action: touch an incapacitated humanoid to charm it until remove curse, the charm ends, or you use this again; you can talk to it telepathically on the same plane.",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "1": [
+          "Dissonant Whispers",
+          "Tasha's Hideous Laughter"
+        ],
+        "2": [
+          "Detect Thoughts",
+          "Phantasmal Force"
+        ],
+        "3": [
+          "Clairvoyance",
+          "Sending"
+        ],
+        "4": [
+          "Dominate Beast",
+          "Evard's Black Tentacles"
+        ],
+        "5": [
+          "Dominate Person",
+          "Telekinesis"
+        ]
+      },
+      "options": []
+    }
+  ],
+  "discrepancies": [
+    "Invocations Known column wrong at two levels: app has 3 at 4th level (PHB: 2) and 4 at 6th level (PHB: 3). All other levels match (PHB: -,2,2,2,3,3,4,4,5,5,5,6,6,6,7,7,7,8,8,8).",
+    "No Eldritch Invocation options exist anywhere in the app: all 32 PHB invocations (with prerequisites such as eldritch blast cantrip, 5th/7th/9th/12th/15th level, Pact of the Chain/Blade/Tome) are missing, so a player cannot pick invocations.",
+    "No Pact Boon choices in the app: Pact of the Chain, Pact of the Blade, and Pact of the Tome are absent; the 'Pact Boon' feature desc stops at 'gain one of the following features of your choice' with nothing following.",
+    "PHB patron 'archfey' (The Archfey) has no features in the app: missing Expanded Spell List (1), Fey Presence (1), Misty Escape (6), Beguiling Defenses (10), Dark Delirium (14).",
+    "PHB patron 'great-old-one' (The Great Old One) has no features in the app: missing Expanded Spell List (1), Awakened Mind (1), Entropic Ward (6), Thought Shield (10), Create Thrall (14).",
+    "No patron has its expanded spell list: Fiend, Archfey, and Great Old One spell lists (two spells each for spell levels 1-5) are absent; the Fiend subclass also lacks an 'Expanded Spell List' feature entry.",
+    "Limited-use resources are not modelled as features/resources: Pact Magic slots recharge on a short rest (Pact Magic desc is truncated and never says so), Eldritch Master (1/long rest), Fey Presence/Misty Escape/Dark Delirium/Dark One's Own Luck/Entropic Ward (1/short rest), Hurl Through Hell (1/long rest). Mystic Arcanum uses are only tracked as 0/1 counters in progression.special.",
+    "Otherworldly Patron feature desc names only the Fiend ('such as the Fiend'); the PHB offers Archfey, Fiend, and Great Old One.",
+    "Matches the PHB: hit die d8, saves Wis/Cha, Light Armor + Simple Weapons, no tools, 2 skills from Arcana/Deception/History/Intimidation/Investigation/Nature/Religion, Charisma casting, patron at 1st level, cantrips known, spells known, slot count and slot level (encoded by slot position) at all 20 levels, and all class feature levels."
+  ]
+}

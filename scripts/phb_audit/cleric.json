@@ -1,0 +1,967 @@
+{
+  "class": "cleric",
+  "pdfPages": "57-64",
+  "hitDie": 8,
+  "saves": [
+    "wis",
+    "cha"
+  ],
+  "armor": [
+    "Light Armor",
+    "Medium Armor",
+    "Shields"
+  ],
+  "weapons": [
+    "Simple Weapons"
+  ],
+  "tools": [],
+  "skillChoice": {
+    "choose": 2,
+    "from": [
+      "history",
+      "insight",
+      "medicine",
+      "persuasion",
+      "religion"
+    ]
+  },
+  "spellcasting": {
+    "ability": "wis",
+    "startsAt": 1
+  },
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Spellcasting",
+        "Divine Domain"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "1st": 2,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Channel Divinity (1/rest)",
+        "Divine Domain feature"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "1st": 3,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 3,
+        "1st": 4,
+        "2nd": 2,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [
+        "Destroy Undead (CR 1/2)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 2,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Channel Divinity (2/rest)",
+        "Divine Domain feature"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 1,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement",
+        "Destroy Undead (CR 1)",
+        "Divine Domain feature"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 2,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 4,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 1,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Divine Intervention"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [
+        "Destroy Undead (CR 2)"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Destroy Undead (CR 3)"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Destroy Undead (CR 4)",
+        "Divine Domain feature"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Channel Divinity (3/rest)"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Divine Intervention improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 5,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 2,
+        "8th": 1,
+        "9th": 1
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Spellcasting",
+      "level": 1,
+      "summary": "Full Wisdom caster that prepares spells daily from the whole cleric list (Wis mod + cleric level, min 1). Can ritual-cast prepared ritual spells; holy symbol works as focus."
+    },
+    {
+      "name": "Divine Domain",
+      "level": 1,
+      "summary": "Pick a domain tied to your deity (Knowledge, Life, Light, Nature, Tempest, Trickery, War). It grants features at 1st, 2nd (Channel Divinity option), 6th, 8th and 17th level."
+    },
+    {
+      "name": "Domain Spells",
+      "level": 1,
+      "summary": "Your domain adds two spells at cleric levels 1, 3, 5, 7 and 9. They are always prepared, don't count toward your prepared total, and count as cleric spells for you."
+    },
+    {
+      "name": "Channel Divinity",
+      "level": 2,
+      "summary": "Spend a use to create one divine effect: Turn Undead or your domain's option(s). Save DCs use your cleric spell save DC. Uses return on a short or long rest; 2 uses at 6th, 3 at 18th.",
+      "resource": {
+        "key": "channel-divinity",
+        "label": "Channel Divinity",
+        "byLevel": {
+          "2": 1,
+          "6": 2,
+          "18": 3
+        },
+        "recharge": "short"
+      }
+    },
+    {
+      "name": "Channel Divinity: Turn Undead",
+      "level": 2,
+      "summary": "Action: undead within 30 ft. that see or hear you make a Wis save; on a failure each is turned for 1 minute or until damaged, fleeing you and unable to take reactions."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th and 19th level, add +2 to one ability or +1 to two abilities (max 20)."
+    },
+    {
+      "name": "Destroy Undead",
+      "level": 5,
+      "summary": "Undead that fail the save against your Turn Undead are destroyed outright if their CR is at or below the threshold: 1/2 at 5th, 1 at 8th, 2 at 11th, 3 at 14th, 4 at 17th."
+    },
+    {
+      "name": "Divine Intervention",
+      "level": 10,
+      "summary": "Action: ask your god for help and roll d100; if the roll is no higher than your cleric level the DM grants aid. Success locks it for 7 days, failure until a long rest. Auto-succeeds at 20th.",
+      "resource": {
+        "key": "divine-intervention",
+        "label": "Divine Intervention",
+        "max": 1,
+        "recharge": "long"
+      }
+    }
+  ],
+  "options": [],
+  "subclasses": [
+    {
+      "id": "knowledge",
+      "name": "Knowledge",
+      "fullName": "Knowledge Domain",
+      "features": [
+        {
+          "name": "Blessings of Knowledge",
+          "level": 1,
+          "summary": "Learn two languages and gain proficiency in two of Arcana, History, Nature or Religion; your proficiency bonus is doubled for checks with those two skills.",
+          "resource": null
+        },
+        {
+          "name": "Channel Divinity: Knowledge of the Ages",
+          "level": 2,
+          "summary": "Action: choose one skill or tool and be proficient with it for 10 minutes.",
+          "resource": null
+        },
+        {
+          "name": "Channel Divinity: Read Thoughts",
+          "level": 6,
+          "summary": "Action: a creature within 60 ft. makes a Wis save. On a failure you read its surface thoughts for 1 minute and may end it to cast suggestion on it (no slot, auto-fail). If it saves, you can't retry this until a long rest.",
+          "resource": null
+        },
+        {
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "summary": "Add your Wisdom modifier to damage dealt by your cleric cantrips.",
+          "resource": null
+        },
+        {
+          "name": "Visions of the Past",
+          "level": 17,
+          "summary": "Meditate (concentration, up to Wis-score minutes) to see past events: Object Reading reveals an item's previous owner(s); Area Reading reveals significant events nearby going back Wis-score days.",
+          "resource": {
+            "key": "visions-of-the-past",
+            "label": "Visions of the Past",
+            "max": 1,
+            "recharge": "short"
+          }
+        }
+      ],
+      "spells": {
+        "1": [
+          "Command",
+          "Identify"
+        ],
+        "3": [
+          "Augury",
+          "Suggestion"
+        ],
+        "5": [
+          "Nondetection",
+          "Speak with Dead"
+        ],
+        "7": [
+          "Arcane Eye",
+          "Confusion"
+        ],
+        "9": [
+          "Legend Lore",
+          "Scrying"
+        ]
+      },
+      "options": [
+        {
+          "feature": "Visions of the Past",
+          "choices": [
+            {
+              "name": "Object Reading",
+              "summary": "After 1 minute holding an object, learn how its owner got and lost it and the latest notable event involving them; extra minutes reveal earlier recent owners.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Area Reading",
+              "summary": "Each minute of meditation reveals one significant event in the surrounding area (up to a 50-ft. cube), newest first, going back up to Wis-score days.",
+              "prerequisite": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "life",
+      "name": "Life",
+      "fullName": "Life Domain",
+      "features": [
+        {
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "summary": "Gain heavy armor proficiency.",
+          "resource": null
+        },
+        {
+          "name": "Disciple of Life",
+          "level": 1,
+          "summary": "Healing spells of 1st level or higher restore an extra 2 + spell level hit points to each creature they heal.",
+          "resource": null
+        },
+        {
+          "name": "Channel Divinity: Preserve Life",
+          "level": 2,
+          "summary": "Action: split 5 x cleric level hit points of healing among creatures within 30 ft., raising none above half its max HP. No effect on undead or constructs.",
+          "resource": null
+        },
+        {
+          "name": "Blessed Healer",
+          "level": 6,
+          "summary": "When a 1st-level-or-higher spell of yours heals someone other than you, you also regain 2 + spell level hit points.",
+          "resource": null
+        },
+        {
+          "name": "Divine Strike",
+          "level": 8,
+          "summary": "Once per turn on a weapon hit, add 1d8 radiant damage (2d8 from 14th level).",
+          "resource": null
+        },
+        {
+          "name": "Supreme Healing",
+          "level": 17,
+          "summary": "Healing spell dice are not rolled; each die counts as its maximum value.",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "1": [
+          "Bless",
+          "Cure Wounds"
+        ],
+        "3": [
+          "Lesser Restoration",
+          "Spiritual Weapon"
+        ],
+        "5": [
+          "Beacon of Hope",
+          "Revivify"
+        ],
+        "7": [
+          "Death Ward",
+          "Guardian of Faith"
+        ],
+        "9": [
+          "Mass Cure Wounds",
+          "Raise Dead"
+        ]
+      },
+      "options": []
+    },
+    {
+      "id": "light",
+      "name": "Light",
+      "fullName": "Light Domain",
+      "features": [
+        {
+          "name": "Bonus Cantrip",
+          "level": 1,
+          "summary": "Learn the light cantrip if you don't already know it.",
+          "resource": null
+        },
+        {
+          "name": "Warding Flare",
+          "level": 1,
+          "summary": "Reaction when a creature within 30 ft. you can see attacks you: impose disadvantage on that attack (creatures immune to blindness are unaffected).",
+          "resource": {
+            "key": "warding-flare",
+            "label": "Warding Flare",
+            "max": "max(1,wis)",
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Channel Divinity: Radiance of the Dawn",
+          "level": 2,
+          "summary": "Action: dispel magical darkness within 30 ft.; hostile creatures there make a Con save, taking 2d10 + cleric level radiant damage (half on success). Total cover protects.",
+          "resource": null
+        },
+        {
+          "name": "Improved Flare",
+          "level": 6,
+          "summary": "Warding Flare can also protect another creature attacked within 30 ft. of you.",
+          "resource": null
+        },
+        {
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "summary": "Add your Wisdom modifier to damage dealt by your cleric cantrips.",
+          "resource": null
+        },
+        {
+          "name": "Corona of Light",
+          "level": 17,
+          "summary": "Action: emit sunlight (60 ft. bright, 30 ft. more dim) for 1 minute; enemies in the bright light have disadvantage on saves against fire or radiant spells.",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "1": [
+          "Burning Hands",
+          "Faerie Fire"
+        ],
+        "3": [
+          "Flaming Sphere",
+          "Scorching Ray"
+        ],
+        "5": [
+          "Daylight",
+          "Fireball"
+        ],
+        "7": [
+          "Guardian of Faith",
+          "Wall of Fire"
+        ],
+        "9": [
+          "Flame Strike",
+          "Scrying"
+        ]
+      },
+      "options": []
+    },
+    {
+      "id": "nature",
+      "name": "Nature",
+      "fullName": "Nature Domain",
+      "features": [
+        {
+          "name": "Acolyte of Nature",
+          "level": 1,
+          "summary": "Learn one druid cantrip and gain proficiency in Animal Handling, Nature or Survival (pick one).",
+          "resource": null
+        },
+        {
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "summary": "Gain heavy armor proficiency.",
+          "resource": null
+        },
+        {
+          "name": "Channel Divinity: Charm Animals and Plants",
+          "level": 2,
+          "summary": "Action: beasts and plant creatures within 30 ft. that see you make a Wis save or are charmed (friendly to you and allies) for 1 minute or until damaged.",
+          "resource": null
+        },
+        {
+          "name": "Dampen Elements",
+          "level": 6,
+          "summary": "Reaction: give yourself or a creature within 30 ft. resistance against one instance of acid, cold, fire, lightning or thunder damage.",
+          "resource": null
+        },
+        {
+          "name": "Divine Strike",
+          "level": 8,
+          "summary": "Once per turn on a weapon hit, add 1d8 cold, fire or lightning damage (your pick); 2d8 from 14th level.",
+          "resource": null
+        },
+        {
+          "name": "Master of Nature",
+          "level": 17,
+          "summary": "Bonus action: command creatures charmed by your Charm Animals and Plants what to do on their next turn.",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "1": [
+          "Animal Friendship",
+          "Speak with Animals"
+        ],
+        "3": [
+          "Barkskin",
+          "Spike Growth"
+        ],
+        "5": [
+          "Plant Growth",
+          "Wind Wall"
+        ],
+        "7": [
+          "Dominate Beast",
+          "Grasping Vine"
+        ],
+        "9": [
+          "Insect Plague",
+          "Tree Stride"
+        ]
+      },
+      "options": []
+    },
+    {
+      "id": "tempest",
+      "name": "Tempest",
+      "fullName": "Tempest Domain",
+      "features": [
+        {
+          "name": "Bonus Proficiencies",
+          "level": 1,
+          "summary": "Gain martial weapon and heavy armor proficiency.",
+          "resource": null
+        },
+        {
+          "name": "Wrath of the Storm",
+          "level": 1,
+          "summary": "Reaction when a creature within 5 ft. that you can see hits you: it makes a Dex save, taking 2d8 lightning or thunder damage (half on success).",
+          "resource": {
+            "key": "wrath-of-the-storm",
+            "label": "Wrath of the Storm",
+            "max": "max(1,wis)",
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Channel Divinity: Destructive Wrath",
+          "level": 2,
+          "summary": "When you roll lightning or thunder damage, spend Channel Divinity to deal the maximum instead of rolling.",
+          "resource": null
+        },
+        {
+          "name": "Thunderbolt Strike",
+          "level": 6,
+          "summary": "When you deal lightning damage to a Large or smaller creature, you can also push it up to 10 ft. away.",
+          "resource": null
+        },
+        {
+          "name": "Divine Strike",
+          "level": 8,
+          "summary": "Once per turn on a weapon hit, add 1d8 thunder damage (2d8 from 14th level).",
+          "resource": null
+        },
+        {
+          "name": "Stormborn",
+          "level": 17,
+          "summary": "Gain a flying speed equal to your walking speed while not underground or indoors.",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "1": [
+          "Fog Cloud",
+          "Thunderwave"
+        ],
+        "3": [
+          "Gust of Wind",
+          "Shatter"
+        ],
+        "5": [
+          "Call Lightning",
+          "Sleet Storm"
+        ],
+        "7": [
+          "Control Water",
+          "Ice Storm"
+        ],
+        "9": [
+          "Destructive Wave",
+          "Insect Plague"
+        ]
+      },
+      "options": []
+    },
+    {
+      "id": "trickery",
+      "name": "Trickery",
+      "fullName": "Trickery Domain",
+      "features": [
+        {
+          "name": "Blessing of the Trickster",
+          "level": 1,
+          "summary": "Action: touch a willing creature other than you to give it advantage on Dex (Stealth) checks for 1 hour or until you use this again.",
+          "resource": null
+        },
+        {
+          "name": "Channel Divinity: Invoke Duplicity",
+          "level": 2,
+          "summary": "Action: create an illusory double within 30 ft. for 1 minute (concentration). Bonus action moves it 30 ft. (stay within 120 ft.); you may cast spells from its space and gain advantage on attacks vs. creatures adjacent to both of you.",
+          "resource": null
+        },
+        {
+          "name": "Channel Divinity: Cloak of Shadows",
+          "level": 6,
+          "summary": "Action: become invisible until the end of your next turn; attacking or casting a spell ends it.",
+          "resource": null
+        },
+        {
+          "name": "Divine Strike",
+          "level": 8,
+          "summary": "Once per turn on a weapon hit, add 1d8 poison damage (2d8 from 14th level).",
+          "resource": null
+        },
+        {
+          "name": "Improved Duplicity",
+          "level": 17,
+          "summary": "Invoke Duplicity creates up to four duplicates; one bonus action moves any of them up to 30 ft. each (within 120 ft.).",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "1": [
+          "Charm Person",
+          "Disguise Self"
+        ],
+        "3": [
+          "Mirror Image",
+          "Pass without Trace"
+        ],
+        "5": [
+          "Blink",
+          "Dispel Magic"
+        ],
+        "7": [
+          "Dimension Door",
+          "Polymorph"
+        ],
+        "9": [
+          "Dominate Person",
+          "Modify Memory"
+        ]
+      },
+      "options": []
+    },
+    {
+      "id": "war",
+      "name": "War",
+      "fullName": "War Domain",
+      "features": [
+        {
+          "name": "Bonus Proficiencies",
+          "level": 1,
+          "summary": "Gain martial weapon and heavy armor proficiency.",
+          "resource": null
+        },
+        {
+          "name": "War Priest",
+          "level": 1,
+          "summary": "When you take the Attack action, you can make one extra weapon attack as a bonus action.",
+          "resource": {
+            "key": "war-priest",
+            "label": "War Priest",
+            "max": "max(1,wis)",
+            "recharge": "long"
+          }
+        },
+        {
+          "name": "Channel Divinity: Guided Strike",
+          "level": 2,
+          "summary": "After seeing your attack roll but before the result is declared, spend Channel Divinity for +10 to that roll.",
+          "resource": null
+        },
+        {
+          "name": "Channel Divinity: War God's Blessing",
+          "level": 6,
+          "summary": "Reaction: spend Channel Divinity to give +10 to an attack roll made by a creature within 30 ft. (decide after the roll, before the result).",
+          "resource": null
+        },
+        {
+          "name": "Divine Strike",
+          "level": 8,
+          "summary": "Once per turn on a weapon hit, add 1d8 damage of the weapon's damage type (2d8 from 14th level).",
+          "resource": null
+        },
+        {
+          "name": "Avatar of Battle",
+          "level": 17,
+          "summary": "Gain resistance to bludgeoning, piercing and slashing damage from nonmagical weapons.",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "1": [
+          "Divine Favor",
+          "Shield of Faith"
+        ],
+        "3": [
+          "Magic Weapon",
+          "Spiritual Weapon"
+        ],
+        "5": [
+          "Crusader's Mantle",
+          "Spirit Guardians"
+        ],
+        "7": [
+          "Freedom of Movement",
+          "Stoneskin"
+        ],
+        "9": [
+          "Flame Strike",
+          "Hold Monster"
+        ]
+      },
+      "options": []
+    }
+  ],
+  "discrepancies": [
+    "Subclasses: 6 of the 7 PHB domains (Knowledge, Light, Nature, Tempest, Trickery, War) exist in the app with an EMPTY features array - every domain feature listed in this audit is missing for them (Knowledge 5, Light 6, Nature 6, Tempest 6, Trickery 5, War 6 features).",
+    "Domain spells: no subclass in the app (including Life) has a domain spell list; the PHB gives each domain 10 always-prepared spells at cleric levels 1/3/5/7/9 (see `spells` on each subclass here).",
+    "Supreme Healing (Life Domain, 17th level) is wrongly listed in the generic cleric `features` array at level 17, so every cleric would get it; it is also missing from the Life subclass's own features (app Life stops at Divine Strike 8).",
+    "Limited-use resources are not modeled anywhere in the app data: Channel Divinity (1 use at 2nd, 2 at 6th, 3 at 18th, short rest), Divine Intervention (1/long rest, 7-day lockout on success), Warding Flare / Wrath of the Storm / War Priest (Wis mod, min 1, per long rest), Visions of the Past (1/short rest). The progression `special.channel_divinity_charges` exists but no recharge info.",
+    "Feature naming differs from the book: app uses 'Spellcasting: Cleric' (book: 'Spellcasting'), 'Destroy Undead (CR 1/2 or below)' etc. (book table: 'Destroy Undead (CR 1/2)'), 'Divine Intervention Improvement' (book: 'Divine Intervention improvement', which is part of Divine Intervention, not a separate feature). 'Channel Divinity' appears as three separate features '(1/rest)', '(2/rest)', '(3/rest)' instead of one feature with scaling uses.",
+    "Progression rows list 'Domain Spells' at levels 1, 3, 5, 7 and 9 and 'Channel Divinity: Turn Undead' at 2; the book's class table does not list these (they are sub-features of Divine Domain / Channel Divinity) - harmless but not book-accurate.",
+    "Life Domain 'Divine Strike' in the app is a single level-8 entry; the 14th-level increase to 2d8 is only in the text (same for all domains) - fine, but no level-14 marker exists for any domain.",
+    "Verified matching the book: hit die d8, saves Wis/Cha, armor (light, medium, shields), simple weapons, no tools, skill list (History, Insight, Medicine, Persuasion, Religion; choose 2), spellcasting ability Wis, subclassLevel 1, proficiency bonus, cantrips known (3/4/5 at 1/4/10) and all spell slot counts for levels 1-20, Destroy Undead CR thresholds (1/2, 1, 2, 3, 4 at 5/8/11/14/17)."
+  ]
+}

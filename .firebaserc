@@ -1,1 +1,5 @@
-{"projects":{"default":"stormkeep-barakv01"}}
+{
+  "projects": {
+    "default": "campaign-codex-barakv01"
+  }
+}

@@ -1,7 +1,15 @@
 {
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
     "public": "dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
@@ -13,53 +21,28 @@
         "source": "**",
         "headers": [
           {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          },
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/assets/**",
+        "headers": [
           {
-            "key": "Referrer-Policy",
-            "value": "strict-origin-when-cross-origin"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "DENY"
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
           }
         ]
       }
     ]
   },
-  "firestore": {
-    "database": "campaigns",
-    "edition": "enterprise",
-    "location": "me-west1",
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json",
-    "dataAccessMode": "FIRESTORE_NATIVE"
-  },
-  "auth": {
-    "authorizedDomains": [
-      "localhost",
-      "stormkeep-barakv01.web.app",
-      "stormkeep-barakv01.firebaseapp.com"
-    ],
-    "providers": {
-      "googleSignIn": {
-        "oAuthBrandDisplayName": "Stormkeep Campaign Manager",
-        "supportEmail": "barakv01@gmail.com"
-      }
-    }
-  },
   "emulators": {
     "firestore": {
-      "port": 8085,
-      "edition": "enterprise"
-    },
-    "auth": {
-      "port": 9099
+      "port": 8181
     },
     "ui": {
       "enabled": false
-    },
-    "singleProjectMode": true
+    }
   }
 }

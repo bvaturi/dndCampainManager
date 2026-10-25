@@ -1,0 +1,599 @@
+{
+  "class": "bard",
+  "pdfPages": "52-56",
+  "hitDie": 8,
+  "saves": [
+    "dex",
+    "cha"
+  ],
+  "armor": [
+    "Light Armor"
+  ],
+  "weapons": [
+    "Simple Weapons",
+    "Hand Crossbows",
+    "Longswords",
+    "Rapiers",
+    "Shortswords"
+  ],
+  "tools": [
+    "Three musical instruments of your choice"
+  ],
+  "skillChoice": {
+    "choose": 3,
+    "from": [
+      "acrobatics",
+      "animal-handling",
+      "arcana",
+      "athletics",
+      "deception",
+      "history",
+      "insight",
+      "intimidation",
+      "investigation",
+      "medicine",
+      "nature",
+      "perception",
+      "performance",
+      "persuasion",
+      "religion",
+      "sleight-of-hand",
+      "stealth",
+      "survival"
+    ]
+  },
+  "spellcasting": {
+    "ability": "cha",
+    "startsAt": 1
+  },
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Spellcasting",
+        "Bardic Inspiration (d6)"
+      ],
+      "columns": {
+        "Cantrips Known": 2,
+        "Spells Known": 4,
+        "1st": 2,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Jack of All Trades",
+        "Song of Rest (d6)"
+      ],
+      "columns": {
+        "Cantrips Known": 2,
+        "Spells Known": 5,
+        "1st": 3,
+        "2nd": 0,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [
+        "Bard College",
+        "Expertise"
+      ],
+      "columns": {
+        "Cantrips Known": 2,
+        "Spells Known": 6,
+        "1st": 4,
+        "2nd": 2,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 7,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 0,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [
+        "Bardic Inspiration (d8)",
+        "Font of Inspiration"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 8,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 2,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Countercharm",
+        "Bard College feature"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 9,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 0,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 10,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 1,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 11,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 2,
+        "5th": 0,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [
+        "Song of Rest (d8)"
+      ],
+      "columns": {
+        "Cantrips Known": 3,
+        "Spells Known": 12,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 1,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Bardic Inspiration (d10)",
+        "Expertise",
+        "Magical Secrets"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 14,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 0,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 15,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 15,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 0,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [
+        "Song of Rest (d10)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 16,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Magical Secrets",
+        "Bard College feature"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 18,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 0,
+        "9th": 0
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [
+        "Bardic Inspiration (d12)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 19,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 19,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 0
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Song of Rest (d12)"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 20,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 2,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Magical Secrets"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 22,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 1,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 22,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 1,
+        "8th": 1,
+        "9th": 1
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Superior Inspiration"
+      ],
+      "columns": {
+        "Cantrips Known": 4,
+        "Spells Known": 22,
+        "1st": 4,
+        "2nd": 3,
+        "3rd": 3,
+        "4th": 3,
+        "5th": 3,
+        "6th": 2,
+        "7th": 2,
+        "8th": 1,
+        "9th": 1
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Spellcasting",
+      "level": 1,
+      "summary": "Known-spells Cha caster from the bard list (cantrips and spells known per table); swap one known spell on level-up; can ritual-cast known ritual spells; musical instrument as focus. Save DC 8 + prof + Cha."
+    },
+    {
+      "name": "Bardic Inspiration",
+      "level": 1,
+      "summary": "Bonus action: give a creature (not you) within 60 ft. that can hear you an inspiration die (d6, d8 at 5th, d10 at 10th, d12 at 15th) to add to one ability check, attack, or save within 10 minutes. One die per creature.",
+      "resource": {
+        "key": "bardic-inspiration",
+        "label": "Bardic Inspiration",
+        "max": "max(1,cha)",
+        "recharge": "long",
+        "shortRestFrom": 5
+      }
+    },
+    {
+      "name": "Jack of All Trades",
+      "level": 2,
+      "summary": "Add half proficiency bonus (rounded down) to any ability check that doesn't already use your proficiency bonus."
+    },
+    {
+      "name": "Song of Rest",
+      "level": 2,
+      "summary": "During a short rest, you and friendly listeners who spend Hit Dice regain extra 1d6 HP (1d8 at 9th, 1d10 at 13th, 1d12 at 17th)."
+    },
+    {
+      "name": "Bard College",
+      "level": 3,
+      "summary": "Choose College of Lore or College of Valor, granting features at 3rd, 6th, and 14th level."
+    },
+    {
+      "name": "Expertise",
+      "level": 3,
+      "summary": "Double proficiency bonus for two chosen skill proficiencies; pick two more at 10th level."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th, and 19th level, add +2 to one ability or +1 to two abilities, max 20."
+    },
+    {
+      "name": "Font of Inspiration",
+      "level": 5,
+      "summary": "Bardic Inspiration uses now recover on a short or long rest."
+    },
+    {
+      "name": "Countercharm",
+      "level": 6,
+      "summary": "Action: perform until end of next turn; you and friendly creatures within 30 ft. that can hear you have advantage on saves against frightened and charmed. Ends if incapacitated, silenced, or you stop."
+    },
+    {
+      "name": "Magical Secrets",
+      "level": 10,
+      "summary": "Learn two spells of any class (of a level you can cast, or cantrips); they count as bard spells and toward Spells Known. Two more at 14th and 18th."
+    },
+    {
+      "name": "Superior Inspiration",
+      "level": 20,
+      "summary": "When you roll initiative with no Bardic Inspiration uses left, regain one use."
+    }
+  ],
+  "options": [],
+  "subclasses": [
+    {
+      "id": "lore",
+      "name": "Lore",
+      "fullName": "College of Lore",
+      "features": [
+        {
+          "name": "Bonus Proficiencies",
+          "level": 3,
+          "summary": "Gain proficiency in three skills of your choice.",
+          "resource": null
+        },
+        {
+          "name": "Cutting Words",
+          "level": 3,
+          "summary": "Reaction: when a creature within 60 ft. you can see makes an attack roll, ability check, or damage roll, spend a Bardic Inspiration use and subtract the die from its roll. Creatures that can't hear you or can't be charmed are immune.",
+          "resource": null
+        },
+        {
+          "name": "Additional Magical Secrets",
+          "level": 6,
+          "summary": "Learn two spells from any class (castable level or cantrip); they count as bard spells but not against Spells Known.",
+          "resource": null
+        },
+        {
+          "name": "Peerless Skill",
+          "level": 14,
+          "summary": "Spend a Bardic Inspiration use to add the die to your own ability check, deciding after the roll but before the outcome is known.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": []
+    },
+    {
+      "id": "valor",
+      "name": "Valor",
+      "fullName": "College of Valor",
+      "features": [
+        {
+          "name": "Bonus Proficiencies",
+          "level": 3,
+          "summary": "Gain proficiency with medium armor, shields, and martial weapons.",
+          "resource": null
+        },
+        {
+          "name": "Combat Inspiration",
+          "level": 3,
+          "summary": "A creature holding your Bardic Inspiration die may add it to a weapon damage roll it just made, or use its reaction to add it to AC against an attack after seeing the roll.",
+          "resource": null
+        },
+        {
+          "name": "Extra Attack",
+          "level": 6,
+          "summary": "Make two attacks instead of one when taking the Attack action.",
+          "resource": null
+        },
+        {
+          "name": "Battle Magic",
+          "level": 14,
+          "summary": "After using your action to cast a bard spell, make one weapon attack as a bonus action.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": []
+    }
+  ],
+  "discrepancies": [
+    "Subclass 'valor' (College of Valor) has an empty features array in classes.json; PHB grants Bonus Proficiencies (3: medium armor, shields, martial weapons), Combat Inspiration (3), Extra Attack (6), Battle Magic (14). A Valor bard currently gets no college features (including no Extra Attack or extra proficiencies).",
+    "Tool proficiency missing: PHB gives proficiency with three musical instruments of the player's choice; classes.json 'proficiencies' lists only armor/weapons and has no tools entry.",
+    "Feature name mismatch: book table and heading say 'Spellcasting' (level 1); classes.json uses 'Spellcasting: Bard'. Its desc is only the flavor paragraph - no mechanics (cantrips/spells known, swap-on-level-up, ritual casting of known ritual spells, instrument as focus, save DC/attack).",
+    "classes.json duplicates scaling features as separate entries: 'Bardic Inspiration (d6/d8/d10/d12)' at 1/5/10/15 and 'Song of Rest (d6/d8/d10/d12)' at 2/9/13/17, each repeating the full base text (so the d8/d10/d12 entries still say 'a d6' and 'long rest'). Book has one 'Bardic Inspiration' (1) and one 'Song of Rest' (2) feature that scale; table labels themselves match.",
+    "Bardic Inspiration resource (uses = max(1, Cha mod), long rest, short rest from 5th via Font of Inspiration) is only described in text; no structured uses/recharge in classes.json.",
+    "'Bard College' desc in classes.json says 'such as the College of Lore' (SRD wording); PHB offers College of Lore or College of Valor. 'Bard College feature' placeholder entries at 6 and 14 in features[] duplicate the Bard College text.",
+    "progression.special keys (bardic_inspiration_die, song_of_rest_die, magical_secrets_max_5/_7/_9) are app-derived, not book columns; values are consistent with the book (Magical Secrets 2 spells each at 10/14/18), but the key names suggest spell-level caps (5th/7th/9th) rather than the acquisition level - worth confirming intent.",
+    "Hit die d8, saves Dex/Cha, armor (light), weapons (simple, hand crossbows, longswords, rapiers, shortswords), skills (any three), spellAbility cha, subclassLevel 3, proficiency bonus, Cantrips Known, Spells Known, and all 1st-9th spell slots for levels 1-20 match the book exactly.",
+    "College of Lore features (Bonus Proficiencies 3, Cutting Words 3, Additional Magical Secrets 6, Peerless Skill 14) match the book."
+  ]
+}

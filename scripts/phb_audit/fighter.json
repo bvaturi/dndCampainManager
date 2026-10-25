@@ -1,0 +1,732 @@
+{
+  "class": "fighter",
+  "pdfPages": "71-76",
+  "hitDie": 10,
+  "saves": [
+    "str",
+    "con"
+  ],
+  "armor": [
+    "Light Armor",
+    "Medium Armor",
+    "Heavy Armor",
+    "Shields"
+  ],
+  "weapons": [
+    "Simple Weapons",
+    "Martial Weapons"
+  ],
+  "tools": [],
+  "skillChoice": {
+    "choose": 2,
+    "from": [
+      "acrobatics",
+      "animal-handling",
+      "athletics",
+      "history",
+      "insight",
+      "intimidation",
+      "perception",
+      "survival"
+    ]
+  },
+  "spellcasting": null,
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Fighting Style",
+        "Second Wind"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Action Surge (one use)"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [
+        "Martial Archetype"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [
+        "Extra Attack"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [
+        "Martial Archetype feature"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [
+        "Indomitable (one use)"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Martial Archetype feature"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [
+        "Extra Attack (2)"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [
+        "Indomitable (two uses)"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [
+        "Martial Archetype feature"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Action Surge (two uses)",
+        "Indomitable (three uses)"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Martial Archetype feature"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {}
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Extra Attack (3)"
+      ],
+      "columns": {}
+    }
+  ],
+  "features": [
+    {
+      "name": "Fighting Style",
+      "level": 1,
+      "summary": "Pick one fighting style option (see options); the same style can never be taken twice, even when another choice is granted later."
+    },
+    {
+      "name": "Second Wind",
+      "level": 1,
+      "summary": "Bonus action on your turn: heal 1d10 + fighter level hit points. Usable once per short or long rest.",
+      "resource": {
+        "key": "second-wind",
+        "label": "Second Wind",
+        "max": 1,
+        "recharge": "short"
+      }
+    },
+    {
+      "name": "Action Surge",
+      "level": 2,
+      "summary": "On your turn, take one extra action. Recharges on a short or long rest; from 17th level two uses per rest, but never twice in one turn.",
+      "resource": {
+        "key": "action-surge",
+        "label": "Action Surge",
+        "byLevel": {
+          "2": 1,
+          "17": 2
+        },
+        "recharge": "short"
+      }
+    },
+    {
+      "name": "Martial Archetype",
+      "level": 3,
+      "summary": "Choose Champion, Battle Master or Eldritch Knight; the archetype grants features at 3rd, 7th, 10th, 15th and 18th level."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 6th, 8th, 12th, 14th, 16th and 19th level: +2 to one ability score or +1 to two, to a maximum of 20."
+    },
+    {
+      "name": "Extra Attack",
+      "level": 5,
+      "summary": "The Attack action lets you attack twice; three attacks from 11th fighter level and four from 20th."
+    },
+    {
+      "name": "Indomitable",
+      "level": 9,
+      "summary": "Reroll a failed saving throw and keep the new result. Once per long rest; twice from 13th level, three times from 17th.",
+      "resource": {
+        "key": "indomitable",
+        "label": "Indomitable",
+        "byLevel": {
+          "9": 1,
+          "13": 2,
+          "17": 3
+        },
+        "recharge": "long"
+      }
+    }
+  ],
+  "options": [
+    {
+      "feature": "Fighting Style",
+      "choices": [
+        {
+          "name": "Archery",
+          "summary": "+2 to attack rolls with ranged weapons.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Defense",
+          "summary": "+1 AC while wearing armor.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Dueling",
+          "summary": "+2 damage with a melee weapon held in one hand when you wield no other weapon.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Great Weapon Fighting",
+          "summary": "Reroll 1s and 2s on damage dice for two-handed melee attacks with a two-handed or versatile weapon; the reroll stands.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Protection",
+          "summary": "While holding a shield, use your reaction to give disadvantage to an attack against another creature within 5 feet of you that you can see.",
+          "prerequisite": ""
+        },
+        {
+          "name": "Two-Weapon Fighting",
+          "summary": "Add your ability modifier to the damage of the off-hand attack when two-weapon fighting.",
+          "prerequisite": ""
+        }
+      ]
+    }
+  ],
+  "subclasses": [
+    {
+      "id": "champion",
+      "name": "Champion",
+      "fullName": "Champion",
+      "features": [
+        {
+          "name": "Improved Critical",
+          "level": 3,
+          "summary": "Weapon attacks crit on a 19 or 20.",
+          "resource": null
+        },
+        {
+          "name": "Remarkable Athlete",
+          "level": 7,
+          "summary": "Add half proficiency bonus (rounded up) to Str, Dex and Con checks that don't already use proficiency; running long jumps gain feet equal to your Strength modifier.",
+          "resource": null
+        },
+        {
+          "name": "Additional Fighting Style",
+          "level": 10,
+          "summary": "Choose a second Fighting Style option.",
+          "resource": null
+        },
+        {
+          "name": "Superior Critical",
+          "level": 15,
+          "summary": "Weapon attacks crit on 18-20.",
+          "resource": null
+        },
+        {
+          "name": "Survivor",
+          "level": 18,
+          "summary": "At the start of each turn, if at or below half hit points (but above 0), regain 5 + Constitution modifier hit points.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": []
+    },
+    {
+      "id": "battle-master",
+      "name": "Battle Master",
+      "fullName": "Battle Master",
+      "features": [
+        {
+          "name": "Combat Superiority",
+          "level": 3,
+          "summary": "Learn 3 maneuvers (2 more at 7th, 10th and 15th; may swap one each time) fueled by superiority dice: 4d8, +1 die at 7th and 15th, regained on a short or long rest. One maneuver per attack; save DC 8 + prof + Str or Dex modifier.",
+          "resource": {
+            "key": "superiority-dice",
+            "label": "Superiority Dice (d8; d10 at 10th, d12 at 18th)",
+            "byLevel": {
+              "3": 4,
+              "7": 5,
+              "15": 6
+            },
+            "recharge": "short"
+          }
+        },
+        {
+          "name": "Student of War",
+          "level": 3,
+          "summary": "Gain proficiency with one type of artisan's tools of your choice.",
+          "resource": null
+        },
+        {
+          "name": "Know Your Enemy",
+          "level": 7,
+          "summary": "After 1 minute observing or interacting with a creature out of combat, learn whether it is your equal, superior or inferior in two chosen traits (Str, Dex, Con, AC, current HP, total class levels, fighter levels).",
+          "resource": null
+        },
+        {
+          "name": "Improved Combat Superiority",
+          "level": 10,
+          "summary": "Superiority dice become d10s; at 18th level they become d12s.",
+          "resource": null
+        },
+        {
+          "name": "Relentless",
+          "level": 15,
+          "summary": "When you roll initiative with no superiority dice left, regain one.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": [
+        {
+          "feature": "Combat Superiority",
+          "choices": [
+            {
+              "name": "Commander's Strike",
+              "summary": "Give up one of your Attack-action attacks and use a bonus action plus a die: an ally who can see or hear you uses its reaction to make a weapon attack, adding the die to damage.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Disarming Attack",
+              "summary": "On a weapon hit, add the die to damage; target makes a Strength save or drops an item of your choice at its feet.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Distracting Strike",
+              "summary": "On a weapon hit, add the die to damage; the next attack by someone other than you against that target before your next turn has advantage.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Evasive Footwork",
+              "summary": "While moving, spend a die and add the roll to your AC until you stop moving.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Feinting Attack",
+              "summary": "Bonus action plus a die to feint a creature within 5 feet: advantage on your next attack against it this turn, adding the die to damage if it hits.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Goading Attack",
+              "summary": "On a weapon hit, add the die to damage; target makes a Wisdom save or has disadvantage on attacks against anyone but you until the end of your next turn.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Lunging Attack",
+              "summary": "On a melee weapon attack on your turn, spend a die to gain 5 extra feet of reach for that attack; add the die to damage on a hit.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Maneuvering Attack",
+              "summary": "On a weapon hit, add the die to damage; an ally who can see or hear you may use its reaction to move half its speed without provoking opportunity attacks from the target.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Menacing Attack",
+              "summary": "On a weapon hit, add the die to damage; target makes a Wisdom save or is frightened of you until the end of your next turn.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Parry",
+              "summary": "Reaction when a melee attack damages you: reduce the damage by the die roll + your Dexterity modifier.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Precision Attack",
+              "summary": "Add the die to a weapon attack roll, before or after rolling but before effects are applied.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Pushing Attack",
+              "summary": "On a weapon hit, add the die to damage; a Large or smaller target makes a Strength save or is pushed up to 15 feet away.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Rally",
+              "summary": "Bonus action plus a die: an ally who can see or hear you gains temporary hit points equal to the die roll + your Charisma modifier.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Riposte",
+              "summary": "Reaction when a creature misses you with a melee attack: make one melee weapon attack against it, adding the die to damage on a hit.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Sweeping Attack",
+              "summary": "On a melee weapon hit, choose a second creature within 5 feet of the target and within reach; if the original roll would hit it, it takes the die roll as damage of the same type.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Trip Attack",
+              "summary": "On a weapon hit, add the die to damage; a Large or smaller target makes a Strength save or is knocked prone.",
+              "prerequisite": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eldritch-knight",
+      "name": "Eldritch Knight",
+      "fullName": "Eldritch Knight",
+      "features": [
+        {
+          "name": "Spellcasting",
+          "level": 3,
+          "summary": "Cast wizard spells using Intelligence (see spellcasting table). Spells known must be abjuration or evocation, except the ones learned at 3rd (one of the first three), 8th, 14th and 20th level; slots regained on a long rest.",
+          "resource": null
+        },
+        {
+          "name": "Weapon Bond",
+          "level": 3,
+          "summary": "A 1-hour ritual bonds up to two weapons to you; a bonded weapon can't be disarmed unless you are incapacitated and can be summoned to your hand as a bonus action on the same plane.",
+          "resource": null
+        },
+        {
+          "name": "War Magic",
+          "level": 7,
+          "summary": "After using your action to cast a cantrip, you may make one weapon attack as a bonus action.",
+          "resource": null
+        },
+        {
+          "name": "Eldritch Strike",
+          "level": 10,
+          "summary": "A creature you hit with a weapon attack has disadvantage on its next save against a spell you cast before the end of your next turn.",
+          "resource": null
+        },
+        {
+          "name": "Arcane Charge",
+          "level": 15,
+          "summary": "When you use Action Surge, you may teleport up to 30 feet to an unoccupied space you can see, before or after the extra action.",
+          "resource": null
+        },
+        {
+          "name": "Improved War Magic",
+          "level": 18,
+          "summary": "After using your action to cast any spell, you may make one weapon attack as a bonus action.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": [],
+      "spellcasting": {
+        "ability": "int",
+        "list": "wizard",
+        "table": [
+          {
+            "level": 3,
+            "cantrips": 2,
+            "known": 3,
+            "slots": [
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 4,
+            "cantrips": 2,
+            "known": 4,
+            "slots": [
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 5,
+            "cantrips": 2,
+            "known": 4,
+            "slots": [
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 6,
+            "cantrips": 2,
+            "known": 4,
+            "slots": [
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 7,
+            "cantrips": 2,
+            "known": 5,
+            "slots": [
+              4,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 8,
+            "cantrips": 2,
+            "known": 6,
+            "slots": [
+              4,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 9,
+            "cantrips": 2,
+            "known": 6,
+            "slots": [
+              4,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 10,
+            "cantrips": 3,
+            "known": 7,
+            "slots": [
+              4,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 11,
+            "cantrips": 3,
+            "known": 8,
+            "slots": [
+              4,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 12,
+            "cantrips": 3,
+            "known": 8,
+            "slots": [
+              4,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "level": 13,
+            "cantrips": 3,
+            "known": 9,
+            "slots": [
+              4,
+              3,
+              2,
+              0
+            ]
+          },
+          {
+            "level": 14,
+            "cantrips": 3,
+            "known": 10,
+            "slots": [
+              4,
+              3,
+              2,
+              0
+            ]
+          },
+          {
+            "level": 15,
+            "cantrips": 3,
+            "known": 10,
+            "slots": [
+              4,
+              3,
+              2,
+              0
+            ]
+          },
+          {
+            "level": 16,
+            "cantrips": 3,
+            "known": 11,
+            "slots": [
+              4,
+              3,
+              3,
+              0
+            ]
+          },
+          {
+            "level": 17,
+            "cantrips": 3,
+            "known": 11,
+            "slots": [
+              4,
+              3,
+              3,
+              0
+            ]
+          },
+          {
+            "level": 18,
+            "cantrips": 3,
+            "known": 11,
+            "slots": [
+              4,
+              3,
+              3,
+              0
+            ]
+          },
+          {
+            "level": 19,
+            "cantrips": 3,
+            "known": 12,
+            "slots": [
+              4,
+              3,
+              3,
+              1
+            ]
+          },
+          {
+            "level": 20,
+            "cantrips": 3,
+            "known": 13,
+            "slots": [
+              4,
+              3,
+              3,
+              1
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "discrepancies": [
+    "Battle Master subclass has no features in the app (features: []). Missing: Combat Superiority (3), Student of War (3), Know Your Enemy (7), Improved Combat Superiority (10), Relentless (15), plus the superiority-dice resource (4/5/6 dice, d8->d10->d12) and all 16 maneuvers.",
+    "Eldritch Knight subclass has no features in the app (features: []). Missing: Spellcasting (3), Weapon Bond (3), War Magic (7), Eldritch Strike (10), Arcane Charge (15), Improved War Magic (18).",
+    "Eldritch Knight spellcasting is not modeled at all: fighter progression has cantrips/known/slots = 0 at every level, so an EK never gets its 2-3 cantrips, 3-13 spells known or 1st-4th level slots (Int, wizard list). spellAbility is null for the class with no per-subclass override.",
+    "Fighting Style feature text says 'choose one of the following options' but none of the six options (Archery, Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) exist anywhere in the app data; Champion's Additional Fighting Style (10) therefore also has nothing to pick from.",
+    "No limited-use resource tracking: Second Wind (1/short rest), Action Surge (1, 2 from 17th, short rest) and Indomitable (1/2/3 at 9/13/17, long rest) are only in progression.special counters (action_surges, indomitable_uses) with no recharge info; Second Wind has no counter at all.",
+    "Feature names differ from the book table: app uses 'Action Surge (1 use)', 'Action Surge (2 uses)', 'Indomitable (1 use)', 'Indomitable (2 uses)', 'Indomitable (3 uses)'; book prints 'Action Surge (one use)', 'Action Surge (two uses)', 'Indomitable (one use)', 'Indomitable (two uses)', 'Indomitable (three uses)'. The underlying feature names are just 'Action Surge' and 'Indomitable'.",
+    "App features list stores the same feature multiple times (Ability Score Improvement x7, Martial Archetype feature x4, Action Surge/Indomitable/Extra Attack per count) with copied full descriptions instead of one entry per feature at the level first gained.",
+    "Martial Archetype feature description in the app names only Champion; book lists Champion, Battle Master and Eldritch Knight.",
+    "Champion subclass app desc for Additional Fighting Style etc. is correct, but the app's subclass list marks Battle Master and Eldritch Knight srd:false with empty features, so a player choosing either at 3rd level gets nothing at 3/7/10/15/18 ('Martial Archetype feature' rows resolve to no features)."
+  ]
+}

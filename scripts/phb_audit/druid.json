@@ -1,0 +1,810 @@
+{
+ "class": "druid",
+ "pdfPages": "65-70",
+ "hitDie": 8,
+ "saves": [
+  "int",
+  "wis"
+ ],
+ "armor": [
+  "Light Armor",
+  "Medium Armor",
+  "Shields"
+ ],
+ "armorNote": "Druids refuse to wear armor or use shields made of metal.",
+ "weapons": [
+  "Clubs",
+  "Daggers",
+  "Darts",
+  "Javelins",
+  "Maces",
+  "Quarterstaffs",
+  "Scimitars",
+  "Sickles",
+  "Slings",
+  "Spears"
+ ],
+ "tools": [
+  "Herbalism Kit"
+ ],
+ "skillChoice": {
+  "choose": 2,
+  "from": [
+   "arcana",
+   "animal-handling",
+   "insight",
+   "medicine",
+   "nature",
+   "perception",
+   "religion",
+   "survival"
+  ]
+ },
+ "spellcasting": {
+  "ability": "wis",
+  "startsAt": 1
+ },
+ "table": [
+  {
+   "level": 1,
+   "prof": 2,
+   "features": [
+    "Druidic",
+    "Spellcasting"
+   ],
+   "columns": {
+    "Cantrips Known": 2,
+    "1st": 2,
+    "2nd": 0,
+    "3rd": 0,
+    "4th": 0,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 2,
+   "prof": 2,
+   "features": [
+    "Wild Shape",
+    "Druid Circle"
+   ],
+   "columns": {
+    "Cantrips Known": 2,
+    "1st": 3,
+    "2nd": 0,
+    "3rd": 0,
+    "4th": 0,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 3,
+   "prof": 2,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 2,
+    "1st": 4,
+    "2nd": 2,
+    "3rd": 0,
+    "4th": 0,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 4,
+   "prof": 2,
+   "features": [
+    "Wild Shape improvement",
+    "Ability Score Improvement"
+   ],
+   "columns": {
+    "Cantrips Known": 3,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 0,
+    "4th": 0,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 5,
+   "prof": 3,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 3,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 2,
+    "4th": 0,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 6,
+   "prof": 3,
+   "features": [
+    "Druid Circle feature"
+   ],
+   "columns": {
+    "Cantrips Known": 3,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 0,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 7,
+   "prof": 3,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 3,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 1,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 8,
+   "prof": 3,
+   "features": [
+    "Wild Shape improvement",
+    "Ability Score Improvement"
+   ],
+   "columns": {
+    "Cantrips Known": 3,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 2,
+    "5th": 0,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 9,
+   "prof": 4,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 3,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 1,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 10,
+   "prof": 4,
+   "features": [
+    "Druid Circle feature"
+   ],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 0,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 11,
+   "prof": 4,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 12,
+   "prof": 4,
+   "features": [
+    "Ability Score Improvement"
+   ],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 0,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 13,
+   "prof": 5,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 14,
+   "prof": 5,
+   "features": [
+    "Druid Circle feature"
+   ],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 0,
+    "9th": 0
+   }
+  },
+  {
+   "level": 15,
+   "prof": 5,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 0
+   }
+  },
+  {
+   "level": 16,
+   "prof": 5,
+   "features": [
+    "Ability Score Improvement"
+   ],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 0
+   }
+  },
+  {
+   "level": 17,
+   "prof": 6,
+   "features": [],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1
+   }
+  },
+  {
+   "level": 18,
+   "prof": 6,
+   "features": [
+    "Timeless Body",
+    "Beast Spells"
+   ],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 3,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1
+   }
+  },
+  {
+   "level": 19,
+   "prof": 6,
+   "features": [
+    "Ability Score Improvement"
+   ],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 3,
+    "6th": 2,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1
+   }
+  },
+  {
+   "level": 20,
+   "prof": 6,
+   "features": [
+    "Archdruid"
+   ],
+   "columns": {
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 3,
+    "6th": 2,
+    "7th": 2,
+    "8th": 1,
+    "9th": 1
+   }
+  }
+ ],
+ "features": [
+  {
+   "name": "Druidic",
+   "level": 1,
+   "summary": "You know the secret druid language and can leave hidden messages in it; others notice such a message with a DC 15 Wis (Perception) check but can't read it without magic."
+  },
+  {
+   "name": "Spellcasting",
+   "level": 1,
+   "summary": "Full Wisdom caster preparing Wis mod + druid level (min 1) spells daily from the druid list; ritual casting for prepared rituals; druidic focus as spellcasting focus."
+  },
+  {
+   "name": "Wild Shape",
+   "level": 2,
+   "summary": "Action: turn into a beast you have seen, for up to half your druid level in hours. Max CR 1/4 with no fly/swim speed at 2nd; CR 1/2, no fly at 4th; CR 1 at 8th. You take the beast's HP and stats but keep mental scores and can't cast spells.",
+   "resource": {
+    "key": "wild-shape",
+    "label": "Wild Shape",
+    "recharge": "short",
+    "byLevel": {
+     "2": 2,
+     "20": 999
+    }
+   }
+  },
+  {
+   "name": "Druid Circle",
+   "level": 2,
+   "summary": "Join the Circle of the Land or the Circle of the Moon; the circle grants features at 2nd, 6th, 10th and 14th level."
+  },
+  {
+   "name": "Ability Score Improvement",
+   "level": 4,
+   "summary": "At 4th, 8th, 12th, 16th and 19th level, add +2 to one ability or +1 to two abilities (max 20)."
+  },
+  {
+   "name": "Timeless Body",
+   "level": 18,
+   "summary": "You age only one year for every ten that pass."
+  },
+  {
+   "name": "Beast Spells",
+   "level": 18,
+   "summary": "You can cast druid spells while in Wild Shape, supplying verbal and somatic components but not material ones."
+  },
+  {
+   "name": "Archdruid",
+   "level": 20,
+   "summary": "Wild Shape uses become unlimited, and you can skip verbal, somatic and costless non-consumed material components of druid spells in any form."
+  }
+ ],
+ "options": [
+  {
+   "feature": "Wild Shape",
+   "choices": [
+    {
+     "name": "Beast Shapes: 2nd level",
+     "summary": "Max CR 1/4; no flying or swimming speed (e.g. wolf).",
+     "prerequisite": "Druid level 2"
+    },
+    {
+     "name": "Beast Shapes: 4th level",
+     "summary": "Max CR 1/2; no flying speed (e.g. crocodile).",
+     "prerequisite": "Druid level 4"
+    },
+    {
+     "name": "Beast Shapes: 8th level",
+     "summary": "Max CR 1; no movement restriction (e.g. giant eagle).",
+     "prerequisite": "Druid level 8"
+    }
+   ]
+  }
+ ],
+ "beastShapes": [
+  {
+   "level": 2,
+   "maxCR": "1/4",
+   "limitations": "No flying or swimming speed",
+   "example": "Wolf"
+  },
+  {
+   "level": 4,
+   "maxCR": "1/2",
+   "limitations": "No flying speed",
+   "example": "Crocodile"
+  },
+  {
+   "level": 8,
+   "maxCR": "1",
+   "limitations": "None",
+   "example": "Giant eagle"
+  }
+ ],
+ "subclasses": [
+  {
+   "id": "land",
+   "name": "Land",
+   "fullName": "Circle of the Land",
+   "features": [
+    {
+     "name": "Bonus Cantrip",
+     "level": 2,
+     "summary": "Learn one extra druid cantrip of your choice.",
+     "resource": null
+    },
+    {
+     "name": "Natural Recovery",
+     "level": 2,
+     "summary": "During a short rest, recover expended spell slots with a combined level up to half your druid level (rounded up); no slot of 6th level or higher.",
+     "resource": {
+      "key": "natural-recovery",
+      "label": "Natural Recovery",
+      "max": 1,
+      "recharge": "long"
+     }
+    },
+    {
+     "name": "Circle Spells",
+     "level": 3,
+     "summary": "Choose the land you were initiated in; gain its two circle spells at druid levels 3, 5, 7 and 9. They are always prepared, don't count against prepared spells and count as druid spells.",
+     "resource": null
+    },
+    {
+     "name": "Land's Stride",
+     "level": 6,
+     "summary": "Nonmagical difficult terrain costs no extra movement; pass through nonmagical plants unslowed and unharmed; advantage on saves against magical plants that hinder movement (e.g. entangle).",
+     "resource": null
+    },
+    {
+     "name": "Nature's Ward",
+     "level": 10,
+     "summary": "Elementals and fey can't charm or frighten you, and you are immune to poison and disease.",
+     "resource": null
+    },
+    {
+     "name": "Nature's Sanctuary",
+     "level": 14,
+     "summary": "A beast or plant attacking you must pass a Wis save vs. your spell DC or pick another target (or miss). On a success it is immune for 24 hours; it knows of this effect beforehand.",
+     "resource": null
+    }
+   ],
+   "options": [
+    {
+     "feature": "Circle Spells",
+     "choices": [
+      {
+       "name": "Arctic",
+       "summary": "3: Hold Person, Spike Growth; 5: Sleet Storm, Slow; 7: Freedom of Movement, Ice Storm; 9: Commune with Nature, Cone of Cold",
+       "prerequisite": ""
+      },
+      {
+       "name": "Coast",
+       "summary": "3: Mirror Image, Misty Step; 5: Water Breathing, Water Walk; 7: Control Water, Freedom of Movement; 9: Conjure Elemental, Scrying",
+       "prerequisite": ""
+      },
+      {
+       "name": "Desert",
+       "summary": "3: Blur, Silence; 5: Create Food and Water, Protection from Energy; 7: Blight, Hallucinatory Terrain; 9: Insect Plague, Wall of Stone",
+       "prerequisite": ""
+      },
+      {
+       "name": "Forest",
+       "summary": "3: Barkskin, Spider Climb; 5: Call Lightning, Plant Growth; 7: Divination, Freedom of Movement; 9: Commune with Nature, Tree Stride",
+       "prerequisite": ""
+      },
+      {
+       "name": "Grassland",
+       "summary": "3: Invisibility, Pass without Trace; 5: Daylight, Haste; 7: Divination, Freedom of Movement; 9: Dream, Insect Plague",
+       "prerequisite": ""
+      },
+      {
+       "name": "Mountain",
+       "summary": "3: Spider Climb, Spike Growth; 5: Lightning Bolt, Meld into Stone; 7: Stone Shape, Stoneskin; 9: Passwall, Wall of Stone",
+       "prerequisite": ""
+      },
+      {
+       "name": "Swamp",
+       "summary": "3: Darkness, Melf's Acid Arrow; 5: Water Walk, Stinking Cloud; 7: Freedom of Movement, Locate Creature; 9: Insect Plague, Scrying",
+       "prerequisite": ""
+      },
+      {
+       "name": "Underdark",
+       "summary": "3: Spider Climb, Web; 5: Gaseous Form, Stinking Cloud; 7: Greater Invisibility, Stone Shape; 9: Cloudkill, Insect Plague",
+       "prerequisite": ""
+      }
+     ]
+    }
+   ],
+   "spellsByTerrain": {
+    "Arctic": {
+     "3": [
+      "Hold Person",
+      "Spike Growth"
+     ],
+     "5": [
+      "Sleet Storm",
+      "Slow"
+     ],
+     "7": [
+      "Freedom of Movement",
+      "Ice Storm"
+     ],
+     "9": [
+      "Commune with Nature",
+      "Cone of Cold"
+     ]
+    },
+    "Coast": {
+     "3": [
+      "Mirror Image",
+      "Misty Step"
+     ],
+     "5": [
+      "Water Breathing",
+      "Water Walk"
+     ],
+     "7": [
+      "Control Water",
+      "Freedom of Movement"
+     ],
+     "9": [
+      "Conjure Elemental",
+      "Scrying"
+     ]
+    },
+    "Desert": {
+     "3": [
+      "Blur",
+      "Silence"
+     ],
+     "5": [
+      "Create Food and Water",
+      "Protection from Energy"
+     ],
+     "7": [
+      "Blight",
+      "Hallucinatory Terrain"
+     ],
+     "9": [
+      "Insect Plague",
+      "Wall of Stone"
+     ]
+    },
+    "Forest": {
+     "3": [
+      "Barkskin",
+      "Spider Climb"
+     ],
+     "5": [
+      "Call Lightning",
+      "Plant Growth"
+     ],
+     "7": [
+      "Divination",
+      "Freedom of Movement"
+     ],
+     "9": [
+      "Commune with Nature",
+      "Tree Stride"
+     ]
+    },
+    "Grassland": {
+     "3": [
+      "Invisibility",
+      "Pass without Trace"
+     ],
+     "5": [
+      "Daylight",
+      "Haste"
+     ],
+     "7": [
+      "Divination",
+      "Freedom of Movement"
+     ],
+     "9": [
+      "Dream",
+      "Insect Plague"
+     ]
+    },
+    "Mountain": {
+     "3": [
+      "Spider Climb",
+      "Spike Growth"
+     ],
+     "5": [
+      "Lightning Bolt",
+      "Meld into Stone"
+     ],
+     "7": [
+      "Stone Shape",
+      "Stoneskin"
+     ],
+     "9": [
+      "Passwall",
+      "Wall of Stone"
+     ]
+    },
+    "Swamp": {
+     "3": [
+      "Darkness",
+      "Melf's Acid Arrow"
+     ],
+     "5": [
+      "Water Walk",
+      "Stinking Cloud"
+     ],
+     "7": [
+      "Freedom of Movement",
+      "Locate Creature"
+     ],
+     "9": [
+      "Insect Plague",
+      "Scrying"
+     ]
+    },
+    "Underdark": {
+     "3": [
+      "Spider Climb",
+      "Web"
+     ],
+     "5": [
+      "Gaseous Form",
+      "Stinking Cloud"
+     ],
+     "7": [
+      "Greater Invisibility",
+      "Stone Shape"
+     ],
+     "9": [
+      "Cloudkill",
+      "Insect Plague"
+     ]
+    }
+   }
+  },
+  {
+   "id": "moon",
+   "name": "Moon",
+   "fullName": "Circle of the Moon",
+   "features": [
+    {
+     "name": "Combat Wild Shape",
+     "level": 2,
+     "summary": "Wild Shape takes a bonus action instead of an action. While transformed, bonus action: spend a spell slot to regain 1d8 HP per slot level.",
+     "resource": null
+    },
+    {
+     "name": "Circle Forms",
+     "level": 2,
+     "summary": "Wild Shape max CR becomes 1 at 2nd level (ignore the Beast Shapes CR column but keep its movement limits), and druid level / 3 (rounded down) from 6th level.",
+     "resource": null
+    },
+    {
+     "name": "Primal Strike",
+     "level": 6,
+     "summary": "Your beast-form attacks count as magical for overcoming resistance and immunity to nonmagical attacks and damage.",
+     "resource": null
+    },
+    {
+     "name": "Elemental Wild Shape",
+     "level": 10,
+     "summary": "Spend two Wild Shape uses at once to become an air, earth, fire or water elemental.",
+     "resource": null
+    },
+    {
+     "name": "Thousand Forms",
+     "level": 14,
+     "summary": "Cast alter self at will.",
+     "resource": null
+    }
+   ],
+   "circleFormsMaxCR": {
+    "2": 1,
+    "6": 2,
+    "9": 3,
+    "12": 4,
+    "15": 5,
+    "18": 6
+   },
+   "options": []
+  }
+ ],
+ "discrepancies": [
+  "Circle of the Moon has an EMPTY features array in the app; all five PHB features are missing: Combat Wild Shape (2), Circle Forms (2; max CR 1 at 2nd, then druid level / 3 from 6th: 2/3/4/5/6 at 6/9/12/15/18), Primal Strike (6), Elemental Wild Shape (10), Thousand Forms (14).",
+  "Circle of the Land: the app has 7 level-2 placeholder features 'Circle of the Land: Arctic/Coast/Desert/Forest/Grassland/Mountain/Swamp' that all just repeat the circle's flavor text and contain NO circle spell lists; 'Circle Spells' is repeated at 3/5/7/9 with identical generic text. The terrain spell lists (2 spells at each of druid levels 3/5/7/9) are missing entirely, and the 'Circle of the Land' flavor paragraph is itself listed as a level-2 feature.",
+  "Circle of the Land: this PHB printing includes an 8th terrain, Underdark (Spider Climb, Web / Gaseous Form, Stinking Cloud / Greater Invisibility, Stone Shape / Cloudkill, Insect Plague), and the Circle Spells text names it among the choices; the app has no Underdark option.",
+  "Progression `special.wild_shape_max_cr` is 1 at level 7, but the book's Beast Shapes table only allows CR 1 from 8th level (level 7 should be 0.5). Also no Moon override (CR 1 at 2nd, up to 6 at 18th) is modeled.",
+  "Limited-use resources are not modeled: Wild Shape (2 uses, recharge on short or long rest; unlimited at 20th via Archdruid), Natural Recovery (once per long rest, slot levels up to ceil(level/2), none 6th+), Moon's Elemental Wild Shape costing 2 Wild Shape uses.",
+  "Feature naming differs from the book: app splits Wild Shape into 'Wild Shape (CR 1/4 or below, no flying or swim speed)' / '(CR 1/2 or below, no flying speed)' / '(CR 1 or below)' where the book table says 'Wild Shape' at 2nd and 'Wild Shape improvement' at 4th and 8th; app uses 'Spellcasting: Druid' (book: 'Spellcasting').",
+  "Proficiencies: app omits the book's restriction that druids won't wear metal armor or use metal shields (minor, flavor/rules note).",
+  "Verified matching the book: hit die d8, saves Int/Wis, armor (light, medium, shields), weapons (club, dagger, dart, javelin, mace, quarterstaff, scimitar, sickle, sling, spear), Herbalism Kit, skill list (Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, Survival; choose 2), Wis casting, subclassLevel 2, proficiency bonus, cantrips known (2/3/4 at 1/4/10), and all spell slot counts for levels 1-20; Land features Bonus Cantrip, Natural Recovery, Land's Stride, Nature's Ward, Nature's Sanctuary are present at the correct levels."
+ ]
+}

@@ -1,0 +1,172 @@
+{
+  "_note": "Races beyond the SRD and race skill grants. Mechanics only; trait descriptions are short summaries in our own words. Merged into src/data/races.json (and Hebrew names into src/data/he.json) by scripts/merge_races.py.",
+  "skills": {
+    "elf": {
+      "skills": [
+        "perception"
+      ],
+      "trait": "keen-senses"
+    },
+    "half-orc": {
+      "skills": [
+        "intimidation"
+      ],
+      "trait": "menacing"
+    },
+    "half-elf": {
+      "skillChoice": {
+        "choose": 2,
+        "from": "any"
+      },
+      "trait": "skill-versatility"
+    }
+  },
+  "races": [
+    {
+      "id": "goliath",
+      "name": "Goliath",
+      "source": "VGM",
+      "speed": 30,
+      "size": "Medium",
+      "bonuses": {
+        "str": 2,
+        "con": 1
+      },
+      "languages": [
+        "Common",
+        "Giant"
+      ],
+      "extraLanguages": 0,
+      "skills": [
+        "athletics"
+      ],
+      "traits": [
+        {
+          "id": "natural-athlete",
+          "name": "Natural Athlete",
+          "desc": "You are proficient in the Athletics skill."
+        },
+        {
+          "id": "stones-endurance",
+          "name": "Stone's Endurance",
+          "desc": "When you take damage, you can use your reaction to roll a d12, add your Constitution modifier, and reduce the damage by that total. Once used, it recharges on a short or long rest."
+        },
+        {
+          "id": "powerful-build",
+          "name": "Powerful Build",
+          "desc": "You count as one size larger for carrying capacity and for the weight you can push, drag or lift."
+        },
+        {
+          "id": "mountain-born",
+          "name": "Mountain Born",
+          "desc": "You are acclimated to high altitude (above 20,000 feet) and naturally adapted to cold climates."
+        }
+      ],
+      "subraces": [],
+      "he": {
+        "name": "גוליית",
+        "traits": {
+          "natural-athlete": "ספורטאי מלידה",
+          "stones-endurance": "סיבולת האבן",
+          "powerful-build": "מבנה גוף אדיר",
+          "mountain-born": "יליד ההרים"
+        },
+        "languages": {
+          "Giant": "ענקית"
+        }
+      }
+    },
+    {
+      "id": "changeling",
+      "name": "Changeling",
+      "source": "ERLW",
+      "speed": 30,
+      "size": "Medium",
+      "bonuses": {
+        "cha": 2
+      },
+      "bonusChoice": {
+        "choose": 1,
+        "amount": 1,
+        "from": [
+          "str",
+          "dex",
+          "con",
+          "int",
+          "wis"
+        ]
+      },
+      "languages": [
+        "Common"
+      ],
+      "extraLanguages": 2,
+      "skillChoice": {
+        "choose": 2,
+        "from": [
+          "deception",
+          "insight",
+          "intimidation",
+          "persuasion"
+        ]
+      },
+      "traits": [
+        {
+          "id": "shapechanger",
+          "name": "Shapechanger",
+          "desc": "As an action you can change your appearance and voice: coloration, hair, sex, height and weight (without changing size), even to look like another race. Your game statistics don't change, you can't copy someone you've never seen, and your limbs must stay the same. You keep the form until you use an action to revert or you die."
+        },
+        {
+          "id": "changeling-instincts",
+          "name": "Changeling Instincts",
+          "desc": "You gain proficiency in two of these skills of your choice: Deception, Insight, Intimidation and Persuasion."
+        }
+      ],
+      "subraces": [],
+      "he": {
+        "name": "משנה-צורה",
+        "traits": {
+          "shapechanger": "משנה צורה",
+          "changeling-instincts": "אינסטינקטים של משנה-צורה"
+        }
+      }
+    },
+    {
+      "id": "orc",
+      "name": "Orc",
+      "source": "PHB24",
+      "speed": 30,
+      "size": "Medium",
+      "bonuses": {},
+      "flexibleBonus": true,
+      "languages": [
+        "Common"
+      ],
+      "extraLanguages": 2,
+      "traits": [
+        {
+          "id": "adrenaline-rush",
+          "name": "Adrenaline Rush",
+          "desc": "Dash as a bonus action; when you do, gain temporary hit points equal to your proficiency bonus. Uses equal your proficiency bonus, all regained on a short or long rest."
+        },
+        {
+          "id": "orc-darkvision",
+          "name": "Darkvision (120 ft.)",
+          "desc": "You can see in dim light within 120 feet as if it were bright light, and in darkness as if it were dim light (shades of gray only)."
+        },
+        {
+          "id": "relentless-endurance",
+          "name": "Relentless Endurance",
+          "desc": "When you drop to 0 hit points but aren't killed outright, you can drop to 1 hit point instead. Once per long rest."
+        }
+      ],
+      "subraces": [],
+      "he": {
+        "name": "אורק",
+        "traits": {
+          "adrenaline-rush": "פרץ אדרנלין",
+          "orc-darkvision": "ראיית חושך (120 רגל)"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,487 @@
+{
+  "class": "barbarian",
+  "pdfPages": "47-51",
+  "hitDie": 12,
+  "saves": [
+    "str",
+    "con"
+  ],
+  "armor": [
+    "Light Armor",
+    "Medium Armor",
+    "Shields"
+  ],
+  "weapons": [
+    "Simple Weapons",
+    "Martial Weapons"
+  ],
+  "tools": [],
+  "skillChoice": {
+    "choose": 2,
+    "from": [
+      "animal-handling",
+      "athletics",
+      "intimidation",
+      "nature",
+      "perception",
+      "survival"
+    ]
+  },
+  "spellcasting": null,
+  "table": [
+    {
+      "level": 1,
+      "prof": 2,
+      "features": [
+        "Rage",
+        "Unarmored Defense"
+      ],
+      "columns": {
+        "Rages": 2,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 2,
+      "prof": 2,
+      "features": [
+        "Reckless Attack",
+        "Danger Sense"
+      ],
+      "columns": {
+        "Rages": 2,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 3,
+      "prof": 2,
+      "features": [
+        "Primal Path"
+      ],
+      "columns": {
+        "Rages": 3,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 4,
+      "prof": 2,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Rages": 3,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 5,
+      "prof": 3,
+      "features": [
+        "Extra Attack",
+        "Fast Movement"
+      ],
+      "columns": {
+        "Rages": 3,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 6,
+      "prof": 3,
+      "features": [
+        "Path feature"
+      ],
+      "columns": {
+        "Rages": 4,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 7,
+      "prof": 3,
+      "features": [
+        "Feral Instinct"
+      ],
+      "columns": {
+        "Rages": 4,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 8,
+      "prof": 3,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Rages": 4,
+        "Rage Damage": 2
+      }
+    },
+    {
+      "level": 9,
+      "prof": 4,
+      "features": [
+        "Brutal Critical (1 die)"
+      ],
+      "columns": {
+        "Rages": 4,
+        "Rage Damage": 3
+      }
+    },
+    {
+      "level": 10,
+      "prof": 4,
+      "features": [
+        "Path feature"
+      ],
+      "columns": {
+        "Rages": 4,
+        "Rage Damage": 3
+      }
+    },
+    {
+      "level": 11,
+      "prof": 4,
+      "features": [
+        "Relentless Rage"
+      ],
+      "columns": {
+        "Rages": 4,
+        "Rage Damage": 3
+      }
+    },
+    {
+      "level": 12,
+      "prof": 4,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Rages": 5,
+        "Rage Damage": 3
+      }
+    },
+    {
+      "level": 13,
+      "prof": 5,
+      "features": [
+        "Brutal Critical (2 dice)"
+      ],
+      "columns": {
+        "Rages": 5,
+        "Rage Damage": 3
+      }
+    },
+    {
+      "level": 14,
+      "prof": 5,
+      "features": [
+        "Path feature"
+      ],
+      "columns": {
+        "Rages": 5,
+        "Rage Damage": 3
+      }
+    },
+    {
+      "level": 15,
+      "prof": 5,
+      "features": [
+        "Persistent Rage"
+      ],
+      "columns": {
+        "Rages": 5,
+        "Rage Damage": 3
+      }
+    },
+    {
+      "level": 16,
+      "prof": 5,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Rages": 5,
+        "Rage Damage": 4
+      }
+    },
+    {
+      "level": 17,
+      "prof": 6,
+      "features": [
+        "Brutal Critical (3 dice)"
+      ],
+      "columns": {
+        "Rages": 6,
+        "Rage Damage": 4
+      }
+    },
+    {
+      "level": 18,
+      "prof": 6,
+      "features": [
+        "Indomitable Might"
+      ],
+      "columns": {
+        "Rages": 6,
+        "Rage Damage": 4
+      }
+    },
+    {
+      "level": 19,
+      "prof": 6,
+      "features": [
+        "Ability Score Improvement"
+      ],
+      "columns": {
+        "Rages": 6,
+        "Rage Damage": 4
+      }
+    },
+    {
+      "level": 20,
+      "prof": 6,
+      "features": [
+        "Primal Champion"
+      ],
+      "columns": {
+        "Rages": "Unlimited",
+        "Rage Damage": 4
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "Rage",
+      "level": 1,
+      "summary": "Bonus action to rage for 1 minute unless in heavy armor: advantage on Str checks/saves, bonus melee Str damage per Rage Damage column, resistance to bludgeoning/piercing/slashing. No spellcasting or concentration. Ends early if unconscious or no attack/damage since last turn.",
+      "resource": {
+        "key": "rage",
+        "label": "Rages",
+        "max": "table:Rages",
+        "recharge": "long"
+      }
+    },
+    {
+      "name": "Unarmored Defense",
+      "level": 1,
+      "summary": "With no armor worn, AC is 10 + Dex mod + Con mod; a shield may still be used."
+    },
+    {
+      "name": "Reckless Attack",
+      "level": 2,
+      "summary": "On your first attack of the turn, choose to gain advantage on Str-based melee weapon attacks this turn; attacks against you have advantage until your next turn."
+    },
+    {
+      "name": "Danger Sense",
+      "level": 2,
+      "summary": "Advantage on Dex saves against effects you can see (traps, spells), provided you are not blinded, deafened, or incapacitated."
+    },
+    {
+      "name": "Primal Path",
+      "level": 3,
+      "summary": "Pick a path (Berserker or Totem Warrior) that grants features at 3rd, 6th, 10th, and 14th level."
+    },
+    {
+      "name": "Ability Score Improvement",
+      "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th, and 19th level, add +2 to one ability or +1 to two abilities, max 20."
+    },
+    {
+      "name": "Extra Attack",
+      "level": 5,
+      "summary": "Make two attacks instead of one when taking the Attack action."
+    },
+    {
+      "name": "Fast Movement",
+      "level": 5,
+      "summary": "+10 ft. walking speed while not in heavy armor."
+    },
+    {
+      "name": "Feral Instinct",
+      "level": 7,
+      "summary": "Advantage on initiative. If surprised and not incapacitated, you may act on your first turn as long as you rage before doing anything else."
+    },
+    {
+      "name": "Brutal Critical",
+      "level": 9,
+      "summary": "Roll one extra weapon damage die on melee critical hits; two extra dice at 13th level, three at 17th."
+    },
+    {
+      "name": "Relentless Rage",
+      "level": 11,
+      "summary": "When dropped to 0 HP while raging (not killed outright), DC 10 Con save to stay at 1 HP instead. DC rises by 5 per later use; resets on a short or long rest."
+    },
+    {
+      "name": "Persistent Rage",
+      "level": 15,
+      "summary": "Rage only ends early if you fall unconscious or choose to end it."
+    },
+    {
+      "name": "Indomitable Might",
+      "level": 18,
+      "summary": "If a Strength check total is below your Strength score, use the score instead."
+    },
+    {
+      "name": "Primal Champion",
+      "level": 20,
+      "summary": "Strength and Constitution each rise by 4, and their maximum becomes 24."
+    }
+  ],
+  "options": [],
+  "subclasses": [
+    {
+      "id": "berserker",
+      "name": "Berserker",
+      "fullName": "Path of the Berserker",
+      "features": [
+        {
+          "name": "Frenzy",
+          "level": 3,
+          "summary": "When you rage you may frenzy: one melee weapon attack as a bonus action each turn after this one; gain one level of exhaustion when the rage ends.",
+          "resource": null
+        },
+        {
+          "name": "Mindless Rage",
+          "level": 6,
+          "summary": "Immune to charmed and frightened while raging; such existing effects are suspended during the rage.",
+          "resource": null
+        },
+        {
+          "name": "Intimidating Presence",
+          "level": 10,
+          "summary": "Action: one creature within 30 ft. that can see/hear you makes a Wis save (DC 8 + prof + Cha) or is frightened until end of your next turn; extend with your action each turn. Ends beyond 60 ft. or out of sight. On a success, that creature is immune for 24 hours.",
+          "resource": null
+        },
+        {
+          "name": "Retaliation",
+          "level": 14,
+          "summary": "Reaction when a creature within 5 ft. damages you: make one melee weapon attack against it.",
+          "resource": null
+        }
+      ],
+      "spells": {},
+      "options": []
+    },
+    {
+      "id": "totem-warrior",
+      "name": "Totem Warrior",
+      "fullName": "Path of the Totem Warrior",
+      "features": [
+        {
+          "name": "Spirit Seeker",
+          "level": 3,
+          "summary": "Can cast beast sense and speak with animals, but only as rituals.",
+          "resource": null
+        },
+        {
+          "name": "Totem Spirit",
+          "level": 3,
+          "summary": "Choose a totem animal (Bear, Eagle, or Wolf) and gain its rage benefit; requires a physical totem object incorporating parts of that animal.",
+          "resource": null
+        },
+        {
+          "name": "Aspect of the Beast",
+          "level": 6,
+          "summary": "Choose a totem animal (same or different) and gain its always-on benefit: Bear, Eagle, or Wolf.",
+          "resource": null
+        },
+        {
+          "name": "Spirit Walker",
+          "level": 10,
+          "summary": "Can cast commune with nature, but only as a ritual; a spirit of one of your chosen totem animals delivers the information.",
+          "resource": null
+        },
+        {
+          "name": "Totemic Attunement",
+          "level": 14,
+          "summary": "Choose a totem animal (same or different) and gain its rage benefit: Bear, Eagle, or Wolf.",
+          "resource": null
+        }
+      ],
+      "spells": {
+        "3": [
+          "Beast Sense",
+          "Speak with Animals"
+        ],
+        "10": [
+          "Commune with Nature"
+        ]
+      },
+      "options": [
+        {
+          "feature": "Totem Spirit",
+          "choices": [
+            {
+              "name": "Bear",
+              "summary": "While raging, resistance to every damage type except psychic.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Eagle",
+              "summary": "While raging and not in heavy armor, opportunity attacks against you have disadvantage and you can Dash as a bonus action.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Wolf",
+              "summary": "While raging, allies have advantage on melee attacks against hostile creatures within 5 ft. of you.",
+              "prerequisite": ""
+            }
+          ]
+        },
+        {
+          "feature": "Aspect of the Beast",
+          "choices": [
+            {
+              "name": "Bear",
+              "summary": "Carrying capacity (incl. max load and lift) doubled; advantage on Str checks to push, pull, lift, or break.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Eagle",
+              "summary": "See up to 1 mile clearly, discerning fine detail as if within 100 ft.; dim light does not impose disadvantage on Wisdom (Perception) checks.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Wolf",
+              "summary": "Track creatures while traveling at a fast pace, and move stealthily at a normal pace.",
+              "prerequisite": ""
+            }
+          ]
+        },
+        {
+          "feature": "Totemic Attunement",
+          "choices": [
+            {
+              "name": "Bear",
+              "summary": "While raging, hostile creatures within 5 ft. have disadvantage on attacks against anyone but you or others with this feature (unless they can't see/hear you or can't be frightened).",
+              "prerequisite": ""
+            },
+            {
+              "name": "Eagle",
+              "summary": "While raging, gain a flying speed equal to walking speed, but you fall if you end your turn airborne with nothing holding you up.",
+              "prerequisite": ""
+            },
+            {
+              "name": "Wolf",
+              "summary": "While raging, when you hit a Large or smaller creature with a melee weapon attack, bonus action to knock it prone.",
+              "prerequisite": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "discrepancies": [
+    "Subclass 'totem-warrior' (Path of the Totem Warrior) has an empty features array in classes.json; PHB grants Spirit Seeker (3), Totem Spirit (3, Bear/Eagle/Wolf), Aspect of the Beast (6, Bear/Eagle/Wolf), Spirit Walker (10), Totemic Attunement (14, Bear/Eagle/Wolf), plus ritual-only spells beast sense, speak with animals (3) and commune with nature (10). A Totem Warrior PC currently gets no path features.",
+    "classes.json 'features' contains placeholder entries named 'Path feature' at 6, 10, 14 (with the Primal Path text copied in); these are table placeholders, not real class features, and duplicate the Primal Path description.",
+    "classes.json splits Brutal Critical into three features 'Brutal Critical (1 die)'/'(2 dice)'/'(3 dice)' (9/13/17), each repeating the full text; the book has a single feature 'Brutal Critical' gained at 9th whose dice scale (table labels match the book, the feature heading does not). The extra dice counts in special.brutal_critical_dice (1/2/3) are correct.",
+    "Rage feature text in classes.json lists rage counts (2/3/4/5/6) but omits that rages become Unlimited at 20th; progression special.rage_count uses 9999 at 20 to represent 'Unlimited' (numerically OK but not the book value). No rage resource/recharge (long rest) is modeled explicitly.",
+    "classes.json has no separate armor/weapons/tools split; 'proficiencies' merges them (Light Armor, Medium Armor, Shields, Simple Weapons, Martial Weapons) - contents match the book; tools none - OK.",
+    "Hit die (d12), saves (Str, Con), skill choice (2 of Animal Handling, Athletics, Intimidation, Nature, Perception, Survival), subclassLevel 3, proficiency bonus, Rages and Rage Damage per level all match the book.",
+    "Berserker features (Frenzy 3, Mindless Rage 6, Intimidating Presence 10, Retaliation 14) match the book in names and levels."
+  ]
+}

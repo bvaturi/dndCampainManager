@@ -1,0 +1,145 @@
+{
+  "class": "ranger",
+  "pdfPages": "90-94",
+  "hitDie": 10,
+  "saves": ["str", "dex"],
+  "armor": ["Light Armor", "Medium Armor", "Shields"],
+  "weapons": ["Simple Weapons", "Martial Weapons"],
+  "tools": [],
+  "skillChoice": { "choose": 3, "from": ["animal-handling", "athletics", "insight", "investigation", "nature", "perception", "stealth", "survival"] },
+  "spellcasting": { "ability": "wis", "startsAt": 2 },
+  "table": [
+    { "level": 1,  "prof": 2, "features": ["Favored Enemy", "Natural Explorer"],                               "columns": { "Spells Known": 0,  "1st": 0, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 2,  "prof": 2, "features": ["Fighting Style", "Spellcasting"],                                  "columns": { "Spells Known": 2,  "1st": 2, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 3,  "prof": 2, "features": ["Ranger Archetype", "Primeval Awareness"],                          "columns": { "Spells Known": 3,  "1st": 3, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 4,  "prof": 2, "features": ["Ability Score Improvement"],                                       "columns": { "Spells Known": 3,  "1st": 3, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 5,  "prof": 3, "features": ["Extra Attack"],                                                    "columns": { "Spells Known": 4,  "1st": 4, "2nd": 2, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 6,  "prof": 3, "features": ["Favored Enemy improvement", "Natural Explorer improvement"],        "columns": { "Spells Known": 4,  "1st": 4, "2nd": 2, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 7,  "prof": 3, "features": ["Ranger Archetype feature"],                                        "columns": { "Spells Known": 5,  "1st": 4, "2nd": 3, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 8,  "prof": 3, "features": ["Ability Score Improvement", "Land's Stride"],                      "columns": { "Spells Known": 5,  "1st": 4, "2nd": 3, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 9,  "prof": 4, "features": [],                                                                  "columns": { "Spells Known": 6,  "1st": 4, "2nd": 3, "3rd": 2, "4th": 0, "5th": 0 } },
+    { "level": 10, "prof": 4, "features": ["Natural Explorer improvement", "Hide in Plain Sight"],             "columns": { "Spells Known": 6,  "1st": 4, "2nd": 3, "3rd": 2, "4th": 0, "5th": 0 } },
+    { "level": 11, "prof": 4, "features": ["Ranger Archetype feature"],                                        "columns": { "Spells Known": 7,  "1st": 4, "2nd": 3, "3rd": 3, "4th": 0, "5th": 0 } },
+    { "level": 12, "prof": 4, "features": ["Ability Score Improvement"],                                       "columns": { "Spells Known": 7,  "1st": 4, "2nd": 3, "3rd": 3, "4th": 0, "5th": 0 } },
+    { "level": 13, "prof": 5, "features": [],                                                                  "columns": { "Spells Known": 8,  "1st": 4, "2nd": 3, "3rd": 3, "4th": 1, "5th": 0 } },
+    { "level": 14, "prof": 5, "features": ["Favored Enemy improvement", "Vanish"],                             "columns": { "Spells Known": 8,  "1st": 4, "2nd": 3, "3rd": 3, "4th": 1, "5th": 0 } },
+    { "level": 15, "prof": 5, "features": ["Ranger Archetype feature"],                                        "columns": { "Spells Known": 9,  "1st": 4, "2nd": 3, "3rd": 3, "4th": 2, "5th": 0 } },
+    { "level": 16, "prof": 5, "features": ["Ability Score Improvement"],                                       "columns": { "Spells Known": 9,  "1st": 4, "2nd": 3, "3rd": 3, "4th": 2, "5th": 0 } },
+    { "level": 17, "prof": 6, "features": [],                                                                  "columns": { "Spells Known": 10, "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 1 } },
+    { "level": 18, "prof": 6, "features": ["Feral Senses"],                                                    "columns": { "Spells Known": 10, "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 1 } },
+    { "level": 19, "prof": 6, "features": ["Ability Score Improvement"],                                       "columns": { "Spells Known": 11, "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 } },
+    { "level": 20, "prof": 6, "features": ["Foe Slayer"],                                                      "columns": { "Spells Known": 11, "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 } }
+  ],
+  "features": [
+    { "name": "Favored Enemy", "level": 1,
+      "summary": "Pick a creature type (or two humanoid races). Advantage on WIS (Survival) to track them and INT checks to recall lore about them; learn one of their languages. Extra choice (and language) at 6th and 14th level." },
+    { "name": "Natural Explorer", "level": 1,
+      "summary": "Pick a favored terrain: double proficiency on proficient INT/WIS checks about it, and travel perks there (no slowdown from difficult terrain, can't get lost, double forage, etc.). Extra terrain at 6th and 10th level." },
+    { "name": "Fighting Style", "level": 2,
+      "summary": "Pick one fighting style from the ranger list (Archery, Defense, Dueling, Two-Weapon Fighting). The same style can never be taken twice." },
+    { "name": "Spellcasting", "level": 2,
+      "summary": "Half-caster using Wisdom with a fixed number of known spells (Spells Known column); can swap one known spell on each ranger level-up. Slots per the class table, regained on a long rest." },
+    { "name": "Ranger Archetype", "level": 3,
+      "summary": "Choose Hunter or Beast Master; the archetype grants features at 3rd, 7th, 11th and 15th level." },
+    { "name": "Primeval Awareness", "level": 3,
+      "summary": "Action + one ranger spell slot: for 1 minute per slot level, sense whether aberrations, celestials, dragons, elementals, fey, fiends or undead are within 1 mile (6 miles in favored terrain); no location or count." },
+    { "name": "Ability Score Improvement", "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th and 19th level: +2 to one ability score or +1 to two, max 20." },
+    { "name": "Extra Attack", "level": 5,
+      "summary": "When you take the Attack action, you make two attacks instead of one." },
+    { "name": "Land's Stride", "level": 8,
+      "summary": "Nonmagical difficult terrain costs no extra movement; pass through nonmagical plants unhindered and unharmed by thorns; advantage on saves vs. magical plants that impede movement (e.g. entangle)." },
+    { "name": "Hide in Plain Sight", "level": 10,
+      "summary": "Spend 1 minute camouflaging with natural materials; while pressed against a solid surface at least your size and not moving or acting, gain +10 to DEX (Stealth). Moving or acting ends it." },
+    { "name": "Vanish", "level": 14,
+      "summary": "Take the Hide action as a bonus action; you can't be tracked by nonmagical means unless you choose to leave a trail." },
+    { "name": "Feral Senses", "level": 18,
+      "summary": "Not seeing a creature doesn't give you disadvantage on attacks against it; you know where invisible creatures within 30 ft. are if they aren't hidden and you aren't blinded or deafened." },
+    { "name": "Foe Slayer", "level": 20,
+      "summary": "Once per turn, add your WIS modifier to the attack roll or damage roll of an attack against a favored enemy, choosing before or after the roll but before effects apply." }
+  ],
+  "options": [
+    { "feature": "Fighting Style", "choices": [
+      { "name": "Archery", "summary": "+2 to attack rolls with ranged weapons.", "prerequisite": "" },
+      { "name": "Defense", "summary": "+1 AC while you wear armor.", "prerequisite": "" },
+      { "name": "Dueling", "summary": "+2 damage with a melee weapon held in one hand when you hold no other weapon.", "prerequisite": "" },
+      { "name": "Two-Weapon Fighting", "summary": "Add your ability modifier to the damage of the off-hand attack when two-weapon fighting.", "prerequisite": "" }
+    ] },
+    { "feature": "Favored Enemy", "choices": [
+      { "name": "Aberrations", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Beasts", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Celestials", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Constructs", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Dragons", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Elementals", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Fey", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Fiends", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Giants", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Monstrosities", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Oozes", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Plants", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Undead", "summary": "Creature type.", "prerequisite": "" },
+      { "name": "Two humanoid races", "summary": "Instead of a creature type, pick two humanoid races (e.g. gnolls and orcs).", "prerequisite": "" }
+    ] },
+    { "feature": "Natural Explorer", "choices": [
+      { "name": "Arctic", "summary": "Favored terrain.", "prerequisite": "" },
+      { "name": "Coast", "summary": "Favored terrain.", "prerequisite": "" },
+      { "name": "Desert", "summary": "Favored terrain.", "prerequisite": "" },
+      { "name": "Forest", "summary": "Favored terrain.", "prerequisite": "" },
+      { "name": "Grassland", "summary": "Favored terrain.", "prerequisite": "" },
+      { "name": "Mountain", "summary": "Favored terrain.", "prerequisite": "" },
+      { "name": "Swamp", "summary": "Favored terrain.", "prerequisite": "" },
+      { "name": "Underdark", "summary": "Favored terrain.", "prerequisite": "" }
+    ] }
+  ],
+  "subclasses": [
+    { "id": "hunter", "name": "Hunter", "fullName": "Hunter",
+      "features": [
+        { "name": "Hunter's Prey", "level": 3, "summary": "Choose one: Colossus Slayer, Giant Killer, or Horde Breaker.", "resource": null },
+        { "name": "Defensive Tactics", "level": 7, "summary": "Choose one: Escape the Horde, Multiattack Defense, or Steel Will.", "resource": null },
+        { "name": "Multiattack", "level": 11, "summary": "Choose one: Volley or Whirlwind Attack.", "resource": null },
+        { "name": "Superior Hunter's Defense", "level": 15, "summary": "Choose one: Evasion, Stand Against the Tide, or Uncanny Dodge.", "resource": null }
+      ],
+      "options": [
+        { "feature": "Hunter's Prey", "choices": [
+          { "name": "Colossus Slayer", "summary": "Once per turn, a weapon hit on a creature below its HP maximum deals an extra 1d8 damage.", "prerequisite": "" },
+          { "name": "Giant Killer", "summary": "Reaction: when a Large or larger creature within 5 ft. hits or misses you, attack it right after, if you can see it.", "prerequisite": "" },
+          { "name": "Horde Breaker", "summary": "Once per turn, after a weapon attack, make another attack with the same weapon against a different creature within 5 ft. of the first target and in range.", "prerequisite": "" }
+        ] },
+        { "feature": "Defensive Tactics", "choices": [
+          { "name": "Escape the Horde", "summary": "Opportunity attacks against you have disadvantage.", "prerequisite": "" },
+          { "name": "Multiattack Defense", "summary": "After a creature hits you, you get +4 AC against its later attacks this turn.", "prerequisite": "" },
+          { "name": "Steel Will", "summary": "Advantage on saving throws against being frightened.", "prerequisite": "" }
+        ] },
+        { "feature": "Multiattack", "choices": [
+          { "name": "Volley", "summary": "Action: ranged attack against any number of creatures within 10 ft. of a point in range; ammo and a separate roll per target.", "prerequisite": "" },
+          { "name": "Whirlwind Attack", "summary": "Action: melee attack against any number of creatures within 5 ft. of you, separate roll for each.", "prerequisite": "" }
+        ] },
+        { "feature": "Superior Hunter's Defense", "choices": [
+          { "name": "Evasion", "summary": "On a DEX save for half damage, take none on a success and half on a failure.", "prerequisite": "" },
+          { "name": "Stand Against the Tide", "summary": "Reaction: when a hostile creature misses you with a melee attack, make it repeat the attack against another creature of your choice.", "prerequisite": "" },
+          { "name": "Uncanny Dodge", "summary": "Reaction: halve the damage of an attack that hits you from an attacker you can see.", "prerequisite": "" }
+        ] }
+      ]
+    },
+    { "id": "beast-master", "name": "Beast Master", "fullName": "Beast Master",
+      "features": [
+        { "name": "Ranger's Companion", "level": 3, "summary": "Gain a beast companion (Medium or smaller, CR 1/4 or lower). Add proficiency bonus to its AC, attacks, damage, and proficient saves/skills; HP max is the greater of normal or 4 x ranger level. It acts on your initiative only when commanded: your action orders Attack, Dash, Disengage, Dodge or Help. Replace it with 8 hours of bonding.", "resource": null },
+        { "name": "Exceptional Training", "level": 7, "summary": "On a turn your companion doesn't attack, a bonus action can command it to Dash, Disengage, Dodge, or Help.", "resource": null },
+        { "name": "Bestial Fury", "level": 11, "summary": "Your companion makes two attacks when commanded to take the Attack action.", "resource": null },
+        { "name": "Share Spells", "level": 15, "summary": "A spell you cast targeting yourself can also affect your companion if it is within 30 ft.", "resource": null }
+      ],
+      "options": []
+    }
+  ],
+  "discrepancies": [
+    "Beast Master (id 'beast-master') has NO features in the app: missing Ranger's Companion (3rd), Exceptional Training (7th), Bestial Fury (11th), Share Spells (15th). A Beast Master ranger gets nothing from its archetype.",
+    "Natural Explorer terrain list in the app desc omits Underdark (it uses the SRD list arctic, coast, desert, forest, grassland, mountain, swamp); the PHB adds Underdark as an eighth choice.",
+    "No option lists in the app for Fighting Style (PHB ranger: Archery, Defense, Dueling, Two-Weapon Fighting), Favored Enemy (13 creature types or two humanoid races) or Natural Explorer terrains; descs stop at 'Choose one of the following options'.",
+    "Favored Enemy / Natural Explorer are split into separately named features 'Favored Enemy (1 type)', 'Favored Enemy (2 types)', 'Favored Enemy (3 enemies)', 'Natural Explorer (1 terrain type)', '(2 terrain types)', '(3 terrain types)', each repeating the full 1st-level text. The book has single features 'Favored Enemy' and 'Natural Explorer' with improvements at 6th/14th and 6th/10th; naming is also inconsistent ('3 enemies' vs '2 types').",
+    "Hunter: the app models each choice as its own always-granted feature (e.g. 'Hunter's Prey: Colossus Slayer', 'Hunter's Prey: Giant Killer', 'Hunter's Prey: Horde Breaker' all at 3rd), so a Hunter appears to gain all 3/3/2/3 options instead of one per tier. Levels (3/7/11/15) and option names match the book.",
+    "App feature 'Spellcasting: Ranger' is printed as 'Spellcasting' in the book; the app desc is only the flavor sentence (no Spells Known rule, no swap-on-level-up rule, no WIS save DC/attack formulas).",
+    "No limited-use resources needed for ranger core features (Primeval Awareness spends spell slots; Colossus Slayer/Horde Breaker/Foe Slayer are once per turn, not per rest), so no rest-based resource gaps here.",
+    "Matches the book: hit die d10, saves STR/DEX, armor/weapon proficiencies, skill choice (3 of 8), spell ability WIS, subclass level 3, all 20 proficiency bonuses, Spells Known column (2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11 from 2nd level), and all spell slot numbers; feature levels for Land's Stride, Hide in Plain Sight, Vanish, Feral Senses, Foe Slayer are correct."
+  ]
+}

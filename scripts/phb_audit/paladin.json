@@ -1,0 +1,168 @@
+{
+  "class": "paladin",
+  "pdfPages": "83-89",
+  "hitDie": 10,
+  "saves": ["wis", "cha"],
+  "armor": ["Light Armor", "Medium Armor", "Heavy Armor", "Shields"],
+  "weapons": ["Simple Weapons", "Martial Weapons"],
+  "tools": [],
+  "skillChoice": { "choose": 2, "from": ["athletics", "insight", "intimidation", "medicine", "persuasion", "religion"] },
+  "spellcasting": { "ability": "cha", "startsAt": 2 },
+  "table": [
+    { "level": 1,  "prof": 2, "features": ["Divine Sense", "Lay on Hands"],                       "columns": { "1st": 0, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 2,  "prof": 2, "features": ["Fighting Style", "Spellcasting", "Divine Smite"],      "columns": { "1st": 2, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 3,  "prof": 2, "features": ["Divine Health", "Sacred Oath"],                        "columns": { "1st": 3, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 4,  "prof": 2, "features": ["Ability Score Improvement"],                           "columns": { "1st": 3, "2nd": 0, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 5,  "prof": 3, "features": ["Extra Attack"],                                        "columns": { "1st": 4, "2nd": 2, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 6,  "prof": 3, "features": ["Aura of Protection"],                                  "columns": { "1st": 4, "2nd": 2, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 7,  "prof": 3, "features": ["Sacred Oath feature"],                                 "columns": { "1st": 4, "2nd": 3, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 8,  "prof": 3, "features": ["Ability Score Improvement"],                           "columns": { "1st": 4, "2nd": 3, "3rd": 0, "4th": 0, "5th": 0 } },
+    { "level": 9,  "prof": 4, "features": [],                                                      "columns": { "1st": 4, "2nd": 3, "3rd": 2, "4th": 0, "5th": 0 } },
+    { "level": 10, "prof": 4, "features": ["Aura of Courage"],                                     "columns": { "1st": 4, "2nd": 3, "3rd": 2, "4th": 0, "5th": 0 } },
+    { "level": 11, "prof": 4, "features": ["Improved Divine Smite"],                               "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 0, "5th": 0 } },
+    { "level": 12, "prof": 4, "features": ["Ability Score Improvement"],                           "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 0, "5th": 0 } },
+    { "level": 13, "prof": 5, "features": [],                                                      "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 1, "5th": 0 } },
+    { "level": 14, "prof": 5, "features": ["Cleansing Touch"],                                     "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 1, "5th": 0 } },
+    { "level": 15, "prof": 5, "features": ["Sacred Oath feature"],                                 "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 2, "5th": 0 } },
+    { "level": 16, "prof": 5, "features": ["Ability Score Improvement"],                           "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 2, "5th": 0 } },
+    { "level": 17, "prof": 6, "features": [],                                                      "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 1 } },
+    { "level": 18, "prof": 6, "features": ["Aura improvements"],                                   "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 1 } },
+    { "level": 19, "prof": 6, "features": ["Ability Score Improvement"],                           "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 } },
+    { "level": 20, "prof": 6, "features": ["Sacred Oath feature"],                                 "columns": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 } }
+  ],
+  "features": [
+    { "name": "Divine Sense", "level": 1,
+      "summary": "Action: until the end of your next turn, learn the location and type (celestial, fiend, undead) of such creatures within 60 ft. not behind total cover, plus consecrated/desecrated places or objects.",
+      "resource": { "key": "divine-sense", "label": "Divine Sense", "max": "1+cha", "recharge": "long" } },
+    { "name": "Lay on Hands", "level": 1,
+      "summary": "Healing pool of 5 x paladin level HP. Action, touch: restore any amount of HP from the pool, or spend 5 points per disease cured / poison neutralized. No effect on undead or constructs.",
+      "resource": { "key": "lay-on-hands", "label": "Healing pool (HP)", "max": "5*level", "recharge": "long" } },
+    { "name": "Fighting Style", "level": 2,
+      "summary": "Pick one fighting style from the paladin list (Defense, Dueling, Great Weapon Fighting, Protection). The same style can never be taken twice." },
+    { "name": "Spellcasting", "level": 2,
+      "summary": "Half-caster using Charisma. Prepare CHA mod + half paladin level (round down, min 1) spells from the paladin list after a long rest; slots per the class table. Holy symbol can be a focus." },
+    { "name": "Divine Smite", "level": 2,
+      "summary": "On a melee weapon hit, spend a paladin spell slot for extra radiant damage: 2d8 for 1st level, +1d8 per slot level above 1st (max 5d8), +1d8 more vs. undead or fiends." },
+    { "name": "Divine Health", "level": 3,
+      "summary": "You are immune to disease." },
+    { "name": "Sacred Oath", "level": 3,
+      "summary": "Swear an oath (Devotion, Ancients, or Vengeance). It grants features at 3rd, 7th, 15th, and 20th level, including oath spells and Channel Divinity options." },
+    { "name": "Oath Spells", "level": 3,
+      "summary": "Part of Sacred Oath. Each oath lists spells gained at paladin levels 3/5/9/13/17; they are always prepared, don't count against your prepared total, and count as paladin spells." },
+    { "name": "Channel Divinity", "level": 3,
+      "summary": "Part of Sacred Oath. Use one Channel Divinity option granted by your oath; then you must finish a short or long rest before using it again. Save DC = your paladin spell save DC.",
+      "resource": { "key": "channel-divinity", "label": "Channel Divinity", "max": 1, "recharge": "short" } },
+    { "name": "Ability Score Improvement", "level": 4,
+      "summary": "At 4th, 8th, 12th, 16th and 19th level: +2 to one ability score or +1 to two, max 20." },
+    { "name": "Extra Attack", "level": 5,
+      "summary": "When you take the Attack action, you make two attacks instead of one." },
+    { "name": "Aura of Protection", "level": 6,
+      "summary": "While you are conscious, you and friendly creatures within 10 ft. add your Charisma modifier (minimum +1) to all saving throws. Range becomes 30 ft. at 18th level." },
+    { "name": "Aura of Courage", "level": 10,
+      "summary": "While you are conscious, you and friendly creatures within 10 ft. can't be frightened. Range becomes 30 ft. at 18th level." },
+    { "name": "Improved Divine Smite", "level": 11,
+      "summary": "Every melee weapon hit deals an extra 1d8 radiant damage; this stacks with Divine Smite." },
+    { "name": "Cleansing Touch", "level": 14,
+      "summary": "Action: end one spell on yourself or on a willing creature you touch.",
+      "resource": { "key": "cleansing-touch", "label": "Cleansing Touch", "max": "max(1,cha)", "recharge": "long" } },
+    { "name": "Aura improvements", "level": 18,
+      "summary": "Your paladin auras (Aura of Protection, Aura of Courage, and your oath's 7th-level aura) extend from 10 ft. to 30 ft." }
+  ],
+  "options": [
+    { "feature": "Fighting Style", "choices": [
+      { "name": "Defense", "summary": "+1 AC while you wear armor.", "prerequisite": "" },
+      { "name": "Dueling", "summary": "+2 damage with a melee weapon held in one hand when you hold no other weapon.", "prerequisite": "" },
+      { "name": "Great Weapon Fighting", "summary": "Reroll 1s and 2s on damage dice for two-handed melee weapon attacks (weapon must be two-handed or versatile); must keep the new roll.", "prerequisite": "" },
+      { "name": "Protection", "summary": "Reaction: impose disadvantage on an attack against a creature (not you) within 5 ft. of you that you can see. Requires a shield.", "prerequisite": "" }
+    ] }
+  ],
+  "subclasses": [
+    { "id": "devotion", "name": "Devotion", "fullName": "Oath of Devotion",
+      "features": [
+        { "name": "Oath Spells", "level": 3, "summary": "Always-prepared Oath of Devotion spells (see spells).", "resource": null },
+        { "name": "Sacred Weapon", "level": 3, "summary": "Channel Divinity, action: for 1 minute a held weapon adds your CHA mod (min +1) to attack rolls, sheds bright light 20 ft. (dim 20 ft. more), and counts as magical. Ends if dropped or you fall unconscious.", "resource": null },
+        { "name": "Turn the Unholy", "level": 3, "summary": "Channel Divinity, action: each fiend or undead within 30 ft. that can see or hear you makes a WIS save or is turned for 1 minute or until damaged (must flee, no reactions, only Dash/escape/Dodge).", "resource": null },
+        { "name": "Aura of Devotion", "level": 7, "summary": "While you are conscious, you and friendly creatures within 10 ft. can't be charmed. Range becomes 30 ft. at 18th level.", "resource": null },
+        { "name": "Purity of Spirit", "level": 15, "summary": "You are permanently under the effect of protection from evil and good.", "resource": null },
+        { "name": "Holy Nimbus", "level": 20, "summary": "Action: for 1 minute emit bright sunlight 30 ft. (dim 30 ft. more); enemies starting their turn in the bright light take 10 radiant damage; you have advantage on saves vs. spells cast by fiends or undead.",
+          "resource": { "key": "holy-nimbus", "label": "Holy Nimbus", "max": 1, "recharge": "long" } }
+      ],
+      "spells": {
+        "3": ["Protection from Evil and Good", "Sanctuary"],
+        "5": ["Lesser Restoration", "Zone of Truth"],
+        "9": ["Beacon of Hope", "Dispel Magic"],
+        "13": ["Freedom of Movement", "Guardian of Faith"],
+        "17": ["Commune", "Flame Strike"]
+      },
+      "options": [
+        { "feature": "Channel Divinity", "choices": [
+          { "name": "Sacred Weapon", "summary": "Empower a held weapon: +CHA to attacks, light, magical, 1 minute.", "prerequisite": "" },
+          { "name": "Turn the Unholy", "summary": "Turn fiends and undead within 30 ft. on a failed WIS save.", "prerequisite": "" }
+        ] }
+      ]
+    },
+    { "id": "ancients", "name": "Ancients", "fullName": "Oath of the Ancients",
+      "features": [
+        { "name": "Oath Spells", "level": 3, "summary": "Always-prepared Oath of the Ancients spells (see spells).", "resource": null },
+        { "name": "Nature's Wrath", "level": 3, "summary": "Channel Divinity, action: spectral vines attack a creature within 10 ft. that you can see; it makes a STR or DEX save (its choice) or is restrained, repeating the save at the end of each of its turns.", "resource": null },
+        { "name": "Turn the Faithless", "level": 3, "summary": "Channel Divinity, action: each fey or fiend within 30 ft. that can hear you makes a WIS save or is turned for 1 minute or until damaged; a turned creature's disguised true form is revealed.", "resource": null },
+        { "name": "Aura of Warding", "level": 7, "summary": "You and friendly creatures within 10 ft. have resistance to damage from spells. Range becomes 30 ft. at 18th level.", "resource": null },
+        { "name": "Undying Sentinel", "level": 15, "summary": "When reduced to 0 HP but not killed outright, you can drop to 1 HP instead. You also suffer no drawbacks of old age and can't be magically aged.",
+          "resource": { "key": "undying-sentinel", "label": "Undying Sentinel", "max": 1, "recharge": "long" } },
+        { "name": "Elder Champion", "level": 20, "summary": "Action: transform for 1 minute. Regain 10 HP at the start of each of your turns, cast 1-action paladin spells as a bonus action, and enemies within 10 ft. have disadvantage on saves vs. your paladin spells and Channel Divinity.",
+          "resource": { "key": "elder-champion", "label": "Elder Champion", "max": 1, "recharge": "long" } }
+      ],
+      "spells": {
+        "3": ["Ensnaring Strike", "Speak with Animals"],
+        "5": ["Moonbeam", "Misty Step"],
+        "9": ["Plant Growth", "Protection from Energy"],
+        "13": ["Ice Storm", "Stoneskin"],
+        "17": ["Commune with Nature", "Tree Stride"]
+      },
+      "options": [
+        { "feature": "Channel Divinity", "choices": [
+          { "name": "Nature's Wrath", "summary": "Restrain one creature within 10 ft. with spectral vines (STR or DEX save).", "prerequisite": "" },
+          { "name": "Turn the Faithless", "summary": "Turn fey and fiends within 30 ft. on a failed WIS save.", "prerequisite": "" }
+        ] }
+      ]
+    },
+    { "id": "vengeance", "name": "Vengeance", "fullName": "Oath of Vengeance",
+      "features": [
+        { "name": "Oath Spells", "level": 3, "summary": "Always-prepared Oath of Vengeance spells (see spells).", "resource": null },
+        { "name": "Abjure Enemy", "level": 3, "summary": "Channel Divinity, action: one creature within 60 ft. you can see makes a WIS save (fiends/undead at disadvantage; frighten-immune creatures unaffected). Fail: frightened 1 minute or until damaged, speed 0. Success: speed halved 1 minute or until damaged.", "resource": null },
+        { "name": "Vow of Enmity", "level": 3, "summary": "Channel Divinity, bonus action: choose a creature within 10 ft. you can see; you have advantage on attack rolls against it for 1 minute or until it drops to 0 HP or falls unconscious.", "resource": null },
+        { "name": "Relentless Avenger", "level": 7, "summary": "When you hit with an opportunity attack, you may move up to half your speed as part of that reaction, without provoking opportunity attacks.", "resource": null },
+        { "name": "Soul of Vengeance", "level": 15, "summary": "When the target of your Vow of Enmity makes an attack, you can use your reaction to make a melee weapon attack against it if it is in range.", "resource": null },
+        { "name": "Avenging Angel", "level": 20, "summary": "Action: transform for 1 hour. Gain a 60 ft. flying speed and a 30 ft. aura; enemies entering or starting a turn there for the first time make a WIS save or are frightened 1 minute or until damaged, and attacks against them have advantage.",
+          "resource": { "key": "avenging-angel", "label": "Avenging Angel", "max": 1, "recharge": "long" } }
+      ],
+      "spells": {
+        "3": ["Bane", "Hunter's Mark"],
+        "5": ["Hold Person", "Misty Step"],
+        "9": ["Haste", "Protection from Energy"],
+        "13": ["Banishment", "Dimension Door"],
+        "17": ["Hold Monster", "Scrying"]
+      },
+      "options": [
+        { "feature": "Channel Divinity", "choices": [
+          { "name": "Abjure Enemy", "summary": "Frighten and root one creature within 60 ft. (WIS save).", "prerequisite": "" },
+          { "name": "Vow of Enmity", "summary": "Advantage on attacks vs. one creature within 10 ft. for 1 minute.", "prerequisite": "" }
+        ] }
+      ]
+    }
+  ],
+  "discrepancies": [
+    "NO LIMITED-USE RESOURCES: no feature object in classes.json has any resource/uses field (features only have name, level, desc), so Lay on Hands (5 x level HP pool, long rest), Divine Sense (1 + CHA mod, long rest), Channel Divinity (1 use, short or long rest), Cleansing Touch (max(1, CHA mod), long rest) and the once-per-long-rest capstones (Holy Nimbus, Elder Champion, Avenging Angel) plus Undying Sentinel cannot be tracked. This is the likely cause of Lay on Hands 'not being usable'.",
+    "Oath of the Ancients (id 'ancients') has NO features in the app: missing Oath Spells, Nature's Wrath and Turn the Faithless (3rd), Aura of Warding (7th), Undying Sentinel (15th), Elder Champion (20th).",
+    "Oath of Vengeance (id 'vengeance') has NO features in the app: missing Oath Spells, Abjure Enemy and Vow of Enmity (3rd), Relentless Avenger (7th), Soul of Vengeance (15th), Avenging Angel (20th).",
+    "No oath spell lists anywhere in the app data for any oath (Devotion, Ancients, Vengeance); the PHB grants always-prepared spells at paladin levels 3/5/9/13/17 (see spells in this file).",
+    "Fighting Style has no option list in the app (the desc ends at 'Choose one of the following options'); PHB paladin options are Defense, Dueling, Great Weapon Fighting, Protection.",
+    "Devotion: the app names the Channel Divinity options 'Channel Divinity: Sacred Weapon' / 'Channel Divinity: Turn the Unholy'; the book names them 'Sacred Weapon' and 'Turn the Unholy' (options of the Channel Divinity feature). Devotion also lacks an Oath Spells entry, and Holy Nimbus' app desc omits that it is usable once per long rest.",
+    "Class table level 3: app progression lists 'Divine Health', 'Sacred Oath', 'Oath Spells', 'Channel Divinity'; the book's table lists only 'Divine Health, Sacred Oath' (Oath Spells and Channel Divinity are sub-sections of Sacred Oath). Harmless but differs from the book.",
+    "App feature 'Spellcasting: Paladin' is printed as 'Spellcasting' in the book; app desc only has the first flavor sentence (no preparation formula CHA mod + half paladin level, no spell save DC/attack formulas, no holy-symbol focus).",
+    "App 'Sacred Oath feature' entries at 7/15/20 reuse the 3rd-level Sacred Oath description text instead of being pure placeholders (and the 3rd-level 'Sacred Oath' entry is fine).",
+    "Divine Smite app desc says 'expend one spell slot'; the printed PHB says 'one paladin spell slot' (SRD wording). Minor.",
+    "Proficiencies: app lumps armor as 'All armor' rather than Light/Medium/Heavy Armor + Shields; equivalent but not split like other classes.",
+    "Matches the book: hit die d10, saves WIS/CHA, skill choice (2 of Athletics, Insight, Intimidation, Medicine, Persuasion, Religion), spell ability CHA, subclass level 3, proficiency bonus column, and all spell slot numbers for levels 1-20; aura_range 10 at 6th and 30 at 18th is correct."
+  ]
+}

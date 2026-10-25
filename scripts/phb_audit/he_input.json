@@ -1,0 +1,2204 @@
+{
+ "barbarian||Rage": {
+  "name": "Rage",
+  "summary": "Bonus action to rage for 1 minute unless in heavy armor: advantage on Str checks/saves, bonus melee Str damage per Rage Damage column, resistance to bludgeoning/piercing/slashing. No spellcasting or concentration. Ends early if unconscious or no attack/damage since last turn."
+ },
+ "barbarian|res|rage": {
+  "name": "Rages"
+ },
+ "barbarian||Unarmored Defense": {
+  "name": "Unarmored Defense",
+  "summary": "With no armor worn, AC is 10 + Dex mod + Con mod; a shield may still be used."
+ },
+ "barbarian||Reckless Attack": {
+  "name": "Reckless Attack",
+  "summary": "On your first attack of the turn, choose to gain advantage on Str-based melee weapon attacks this turn; attacks against you have advantage until your next turn."
+ },
+ "barbarian||Danger Sense": {
+  "name": "Danger Sense",
+  "summary": "Advantage on Dex saves against effects you can see (traps, spells), provided you are not blinded, deafened, or incapacitated."
+ },
+ "barbarian||Primal Path": {
+  "name": "Primal Path",
+  "summary": "Pick a path (Berserker or Totem Warrior) that grants features at 3rd, 6th, 10th, and 14th level."
+ },
+ "barbarian||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th, and 19th level, add +2 to one ability or +1 to two abilities, max 20."
+ },
+ "barbarian||Extra Attack": {
+  "name": "Extra Attack",
+  "summary": "Make two attacks instead of one when taking the Attack action."
+ },
+ "barbarian||Fast Movement": {
+  "name": "Fast Movement",
+  "summary": "+10 ft. walking speed while not in heavy armor."
+ },
+ "barbarian||Feral Instinct": {
+  "name": "Feral Instinct",
+  "summary": "Advantage on initiative. If surprised and not incapacitated, you may act on your first turn as long as you rage before doing anything else."
+ },
+ "barbarian||Brutal Critical": {
+  "name": "Brutal Critical",
+  "summary": "Roll one extra weapon damage die on melee critical hits; two extra dice at 13th level, three at 17th."
+ },
+ "barbarian||Relentless Rage": {
+  "name": "Relentless Rage",
+  "summary": "When dropped to 0 HP while raging (not killed outright), DC 10 Con save to stay at 1 HP instead. DC rises by 5 per later use; resets on a short or long rest."
+ },
+ "barbarian||Persistent Rage": {
+  "name": "Persistent Rage",
+  "summary": "Rage only ends early if you fall unconscious or choose to end it."
+ },
+ "barbarian||Indomitable Might": {
+  "name": "Indomitable Might",
+  "summary": "If a Strength check total is below your Strength score, use the score instead."
+ },
+ "barbarian||Primal Champion": {
+  "name": "Primal Champion",
+  "summary": "Strength and Constitution each rise by 4, and their maximum becomes 24."
+ },
+ "barbarian|berserker|Frenzy": {
+  "name": "Frenzy",
+  "summary": "When you rage you may frenzy: one melee weapon attack as a bonus action each turn after this one; gain one level of exhaustion when the rage ends."
+ },
+ "barbarian|berserker|Mindless Rage": {
+  "name": "Mindless Rage",
+  "summary": "Immune to charmed and frightened while raging; such existing effects are suspended during the rage."
+ },
+ "barbarian|berserker|Intimidating Presence": {
+  "name": "Intimidating Presence",
+  "summary": "Action: one creature within 30 ft. that can see/hear you makes a Wis save (DC 8 + prof + Cha) or is frightened until end of your next turn; extend with your action each turn. Ends beyond 60 ft. or out of sight. On a success, that creature is immune for 24 hours."
+ },
+ "barbarian|berserker|Retaliation": {
+  "name": "Retaliation",
+  "summary": "Reaction when a creature within 5 ft. damages you: make one melee weapon attack against it."
+ },
+ "barbarian|totem-warrior|Spirit Seeker": {
+  "name": "Spirit Seeker",
+  "summary": "Can cast beast sense and speak with animals, but only as rituals."
+ },
+ "barbarian|totem-warrior|Totem Spirit": {
+  "name": "Totem Spirit",
+  "summary": "Choose a totem animal (Bear, Eagle, or Wolf) and gain its rage benefit; requires a physical totem object incorporating parts of that animal."
+ },
+ "barbarian|totem-warrior|Aspect of the Beast": {
+  "name": "Aspect of the Beast",
+  "summary": "Choose a totem animal (same or different) and gain its always-on benefit: Bear, Eagle, or Wolf."
+ },
+ "barbarian|totem-warrior|Spirit Walker": {
+  "name": "Spirit Walker",
+  "summary": "Can cast commune with nature, but only as a ritual; a spirit of one of your chosen totem animals delivers the information."
+ },
+ "barbarian|totem-warrior|Totemic Attunement": {
+  "name": "Totemic Attunement",
+  "summary": "Choose a totem animal (same or different) and gain its rage benefit: Bear, Eagle, or Wolf."
+ },
+ "barbarian|opt|Totem Spirit|Bear": {
+  "name": "Bear",
+  "summary": "While raging, resistance to every damage type except psychic."
+ },
+ "barbarian|opt|Totem Spirit|Eagle": {
+  "name": "Eagle",
+  "summary": "While raging and not in heavy armor, opportunity attacks against you have disadvantage and you can Dash as a bonus action."
+ },
+ "barbarian|opt|Totem Spirit|Wolf": {
+  "name": "Wolf",
+  "summary": "While raging, allies have advantage on melee attacks against hostile creatures within 5 ft. of you."
+ },
+ "barbarian|opt|Aspect of the Beast|Bear": {
+  "name": "Bear",
+  "summary": "Carrying capacity (incl. max load and lift) doubled; advantage on Str checks to push, pull, lift, or break."
+ },
+ "barbarian|opt|Aspect of the Beast|Eagle": {
+  "name": "Eagle",
+  "summary": "See up to 1 mile clearly, discerning fine detail as if within 100 ft.; dim light does not impose disadvantage on Wisdom (Perception) checks."
+ },
+ "barbarian|opt|Aspect of the Beast|Wolf": {
+  "name": "Wolf",
+  "summary": "Track creatures while traveling at a fast pace, and move stealthily at a normal pace."
+ },
+ "barbarian|opt|Totemic Attunement|Bear": {
+  "name": "Bear",
+  "summary": "While raging, hostile creatures within 5 ft. have disadvantage on attacks against anyone but you or others with this feature (unless they can't see/hear you or can't be frightened)."
+ },
+ "barbarian|opt|Totemic Attunement|Eagle": {
+  "name": "Eagle",
+  "summary": "While raging, gain a flying speed equal to walking speed, but you fall if you end your turn airborne with nothing holding you up."
+ },
+ "barbarian|opt|Totemic Attunement|Wolf": {
+  "name": "Wolf",
+  "summary": "While raging, when you hit a Large or smaller creature with a melee weapon attack, bonus action to knock it prone."
+ },
+ "bard||Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Known-spells Cha caster from the bard list (cantrips and spells known per table); swap one known spell on level-up; can ritual-cast known ritual spells; musical instrument as focus. Save DC 8 + prof + Cha."
+ },
+ "bard||Bardic Inspiration": {
+  "name": "Bardic Inspiration",
+  "summary": "Bonus action: give a creature (not you) within 60 ft. that can hear you an inspiration die (d6, d8 at 5th, d10 at 10th, d12 at 15th) to add to one ability check, attack, or save within 10 minutes. One die per creature."
+ },
+ "bard|res|bardic-inspiration": {
+  "name": "Bardic Inspiration"
+ },
+ "bard||Jack of All Trades": {
+  "name": "Jack of All Trades",
+  "summary": "Add half proficiency bonus (rounded down) to any ability check that doesn't already use your proficiency bonus."
+ },
+ "bard||Song of Rest": {
+  "name": "Song of Rest",
+  "summary": "During a short rest, you and friendly listeners who spend Hit Dice regain extra 1d6 HP (1d8 at 9th, 1d10 at 13th, 1d12 at 17th)."
+ },
+ "bard||Bard College": {
+  "name": "Bard College",
+  "summary": "Choose College of Lore or College of Valor, granting features at 3rd, 6th, and 14th level."
+ },
+ "bard||Expertise": {
+  "name": "Expertise",
+  "summary": "Double proficiency bonus for two chosen skill proficiencies; pick two more at 10th level."
+ },
+ "bard||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th, and 19th level, add +2 to one ability or +1 to two abilities, max 20."
+ },
+ "bard||Font of Inspiration": {
+  "name": "Font of Inspiration",
+  "summary": "Bardic Inspiration uses now recover on a short or long rest."
+ },
+ "bard||Countercharm": {
+  "name": "Countercharm",
+  "summary": "Action: perform until end of next turn; you and friendly creatures within 30 ft. that can hear you have advantage on saves against frightened and charmed. Ends if incapacitated, silenced, or you stop."
+ },
+ "bard||Magical Secrets": {
+  "name": "Magical Secrets",
+  "summary": "Learn two spells of any class (of a level you can cast, or cantrips); they count as bard spells and toward Spells Known. Two more at 14th and 18th."
+ },
+ "bard||Superior Inspiration": {
+  "name": "Superior Inspiration",
+  "summary": "When you roll initiative with no Bardic Inspiration uses left, regain one use."
+ },
+ "bard|lore|Bonus Proficiencies": {
+  "name": "Bonus Proficiencies",
+  "summary": "Gain proficiency in three skills of your choice."
+ },
+ "bard|lore|Cutting Words": {
+  "name": "Cutting Words",
+  "summary": "Reaction: when a creature within 60 ft. you can see makes an attack roll, ability check, or damage roll, spend a Bardic Inspiration use and subtract the die from its roll. Creatures that can't hear you or can't be charmed are immune."
+ },
+ "bard|lore|Additional Magical Secrets": {
+  "name": "Additional Magical Secrets",
+  "summary": "Learn two spells from any class (castable level or cantrip); they count as bard spells but not against Spells Known."
+ },
+ "bard|lore|Peerless Skill": {
+  "name": "Peerless Skill",
+  "summary": "Spend a Bardic Inspiration use to add the die to your own ability check, deciding after the roll but before the outcome is known."
+ },
+ "bard|valor|Bonus Proficiencies": {
+  "name": "Bonus Proficiencies",
+  "summary": "Gain proficiency with medium armor, shields, and martial weapons."
+ },
+ "bard|valor|Combat Inspiration": {
+  "name": "Combat Inspiration",
+  "summary": "A creature holding your Bardic Inspiration die may add it to a weapon damage roll it just made, or use its reaction to add it to AC against an attack after seeing the roll."
+ },
+ "bard|valor|Extra Attack": {
+  "name": "Extra Attack",
+  "summary": "Make two attacks instead of one when taking the Attack action."
+ },
+ "bard|valor|Battle Magic": {
+  "name": "Battle Magic",
+  "summary": "After using your action to cast a bard spell, make one weapon attack as a bonus action."
+ },
+ "cleric||Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Full Wisdom caster that prepares spells daily from the whole cleric list (Wis mod + cleric level, min 1). Can ritual-cast prepared ritual spells; holy symbol works as focus."
+ },
+ "cleric||Divine Domain": {
+  "name": "Divine Domain",
+  "summary": "Pick a domain tied to your deity (Knowledge, Life, Light, Nature, Tempest, Trickery, War). It grants features at 1st, 2nd (Channel Divinity option), 6th, 8th and 17th level."
+ },
+ "cleric||Domain Spells": {
+  "name": "Domain Spells",
+  "summary": "Your domain adds two spells at cleric levels 1, 3, 5, 7 and 9. They are always prepared, don't count toward your prepared total, and count as cleric spells for you."
+ },
+ "cleric||Channel Divinity": {
+  "name": "Channel Divinity",
+  "summary": "Spend a use to create one divine effect: Turn Undead or your domain's option(s). Save DCs use your cleric spell save DC. Uses return on a short or long rest; 2 uses at 6th, 3 at 18th."
+ },
+ "cleric|res|channel-divinity": {
+  "name": "Channel Divinity"
+ },
+ "cleric||Channel Divinity: Turn Undead": {
+  "name": "Channel Divinity: Turn Undead",
+  "summary": "Action: undead within 30 ft. that see or hear you make a Wis save; on a failure each is turned for 1 minute or until damaged, fleeing you and unable to take reactions."
+ },
+ "cleric||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th and 19th level, add +2 to one ability or +1 to two abilities (max 20)."
+ },
+ "cleric||Destroy Undead": {
+  "name": "Destroy Undead",
+  "summary": "Undead that fail the save against your Turn Undead are destroyed outright if their CR is at or below the threshold: 1/2 at 5th, 1 at 8th, 2 at 11th, 3 at 14th, 4 at 17th."
+ },
+ "cleric||Divine Intervention": {
+  "name": "Divine Intervention",
+  "summary": "Action: ask your god for help and roll d100; if the roll is no higher than your cleric level the DM grants aid. Success locks it for 7 days, failure until a long rest. Auto-succeeds at 20th."
+ },
+ "cleric|res|divine-intervention": {
+  "name": "Divine Intervention"
+ },
+ "cleric|life|Bonus Proficiency": {
+  "name": "Bonus Proficiency",
+  "summary": "Gain heavy armor proficiency."
+ },
+ "cleric|life|Disciple of Life": {
+  "name": "Disciple of Life",
+  "summary": "Healing spells of 1st level or higher restore an extra 2 + spell level hit points to each creature they heal."
+ },
+ "cleric|life|Channel Divinity: Preserve Life": {
+  "name": "Channel Divinity: Preserve Life",
+  "summary": "Action: split 5 x cleric level hit points of healing among creatures within 30 ft., raising none above half its max HP. No effect on undead or constructs."
+ },
+ "cleric|life|Blessed Healer": {
+  "name": "Blessed Healer",
+  "summary": "When a 1st-level-or-higher spell of yours heals someone other than you, you also regain 2 + spell level hit points."
+ },
+ "cleric|life|Divine Strike": {
+  "name": "Divine Strike",
+  "summary": "Once per turn on a weapon hit, add 1d8 radiant damage (2d8 from 14th level)."
+ },
+ "cleric|life|Supreme Healing": {
+  "name": "Supreme Healing",
+  "summary": "Healing spell dice are not rolled; each die counts as its maximum value."
+ },
+ "cleric|knowledge|Blessings of Knowledge": {
+  "name": "Blessings of Knowledge",
+  "summary": "Learn two languages and gain proficiency in two of Arcana, History, Nature or Religion; your proficiency bonus is doubled for checks with those two skills."
+ },
+ "cleric|knowledge|Channel Divinity: Knowledge of the Ages": {
+  "name": "Channel Divinity: Knowledge of the Ages",
+  "summary": "Action: choose one skill or tool and be proficient with it for 10 minutes."
+ },
+ "cleric|knowledge|Channel Divinity: Read Thoughts": {
+  "name": "Channel Divinity: Read Thoughts",
+  "summary": "Action: a creature within 60 ft. makes a Wis save. On a failure you read its surface thoughts for 1 minute and may end it to cast suggestion on it (no slot, auto-fail). If it saves, you can't retry this until a long rest."
+ },
+ "cleric|knowledge|Potent Spellcasting": {
+  "name": "Potent Spellcasting",
+  "summary": "Add your Wisdom modifier to damage dealt by your cleric cantrips."
+ },
+ "cleric|knowledge|Visions of the Past": {
+  "name": "Visions of the Past",
+  "summary": "Meditate (concentration, up to Wis-score minutes) to see past events: Object Reading reveals an item's previous owner(s); Area Reading reveals significant events nearby going back Wis-score days."
+ },
+ "cleric|res|visions-of-the-past": {
+  "name": "Visions of the Past"
+ },
+ "cleric|opt|Visions of the Past|Object Reading": {
+  "name": "Object Reading",
+  "summary": "After 1 minute holding an object, learn how its owner got and lost it and the latest notable event involving them; extra minutes reveal earlier recent owners."
+ },
+ "cleric|opt|Visions of the Past|Area Reading": {
+  "name": "Area Reading",
+  "summary": "Each minute of meditation reveals one significant event in the surrounding area (up to a 50-ft. cube), newest first, going back up to Wis-score days."
+ },
+ "cleric|light|Bonus Cantrip": {
+  "name": "Bonus Cantrip",
+  "summary": "Learn the light cantrip if you don't already know it."
+ },
+ "cleric|light|Warding Flare": {
+  "name": "Warding Flare",
+  "summary": "Reaction when a creature within 30 ft. you can see attacks you: impose disadvantage on that attack (creatures immune to blindness are unaffected)."
+ },
+ "cleric|res|warding-flare": {
+  "name": "Warding Flare"
+ },
+ "cleric|light|Channel Divinity: Radiance of the Dawn": {
+  "name": "Channel Divinity: Radiance of the Dawn",
+  "summary": "Action: dispel magical darkness within 30 ft.; hostile creatures there make a Con save, taking 2d10 + cleric level radiant damage (half on success). Total cover protects."
+ },
+ "cleric|light|Improved Flare": {
+  "name": "Improved Flare",
+  "summary": "Warding Flare can also protect another creature attacked within 30 ft. of you."
+ },
+ "cleric|light|Potent Spellcasting": {
+  "name": "Potent Spellcasting",
+  "summary": "Add your Wisdom modifier to damage dealt by your cleric cantrips."
+ },
+ "cleric|light|Corona of Light": {
+  "name": "Corona of Light",
+  "summary": "Action: emit sunlight (60 ft. bright, 30 ft. more dim) for 1 minute; enemies in the bright light have disadvantage on saves against fire or radiant spells."
+ },
+ "cleric|nature|Acolyte of Nature": {
+  "name": "Acolyte of Nature",
+  "summary": "Learn one druid cantrip and gain proficiency in Animal Handling, Nature or Survival (pick one)."
+ },
+ "cleric|nature|Bonus Proficiency": {
+  "name": "Bonus Proficiency",
+  "summary": "Gain heavy armor proficiency."
+ },
+ "cleric|nature|Channel Divinity: Charm Animals and Plants": {
+  "name": "Channel Divinity: Charm Animals and Plants",
+  "summary": "Action: beasts and plant creatures within 30 ft. that see you make a Wis save or are charmed (friendly to you and allies) for 1 minute or until damaged."
+ },
+ "cleric|nature|Dampen Elements": {
+  "name": "Dampen Elements",
+  "summary": "Reaction: give yourself or a creature within 30 ft. resistance against one instance of acid, cold, fire, lightning or thunder damage."
+ },
+ "cleric|nature|Divine Strike": {
+  "name": "Divine Strike",
+  "summary": "Once per turn on a weapon hit, add 1d8 cold, fire or lightning damage (your pick); 2d8 from 14th level."
+ },
+ "cleric|nature|Master of Nature": {
+  "name": "Master of Nature",
+  "summary": "Bonus action: command creatures charmed by your Charm Animals and Plants what to do on their next turn."
+ },
+ "cleric|tempest|Bonus Proficiencies": {
+  "name": "Bonus Proficiencies",
+  "summary": "Gain martial weapon and heavy armor proficiency."
+ },
+ "cleric|tempest|Wrath of the Storm": {
+  "name": "Wrath of the Storm",
+  "summary": "Reaction when a creature within 5 ft. that you can see hits you: it makes a Dex save, taking 2d8 lightning or thunder damage (half on success)."
+ },
+ "cleric|res|wrath-of-the-storm": {
+  "name": "Wrath of the Storm"
+ },
+ "cleric|tempest|Channel Divinity: Destructive Wrath": {
+  "name": "Channel Divinity: Destructive Wrath",
+  "summary": "When you roll lightning or thunder damage, spend Channel Divinity to deal the maximum instead of rolling."
+ },
+ "cleric|tempest|Thunderbolt Strike": {
+  "name": "Thunderbolt Strike",
+  "summary": "When you deal lightning damage to a Large or smaller creature, you can also push it up to 10 ft. away."
+ },
+ "cleric|tempest|Divine Strike": {
+  "name": "Divine Strike",
+  "summary": "Once per turn on a weapon hit, add 1d8 thunder damage (2d8 from 14th level)."
+ },
+ "cleric|tempest|Stormborn": {
+  "name": "Stormborn",
+  "summary": "Gain a flying speed equal to your walking speed while not underground or indoors."
+ },
+ "cleric|trickery|Blessing of the Trickster": {
+  "name": "Blessing of the Trickster",
+  "summary": "Action: touch a willing creature other than you to give it advantage on Dex (Stealth) checks for 1 hour or until you use this again."
+ },
+ "cleric|trickery|Channel Divinity: Invoke Duplicity": {
+  "name": "Channel Divinity: Invoke Duplicity",
+  "summary": "Action: create an illusory double within 30 ft. for 1 minute (concentration). Bonus action moves it 30 ft. (stay within 120 ft.); you may cast spells from its space and gain advantage on attacks vs. creatures adjacent to both of you."
+ },
+ "cleric|trickery|Channel Divinity: Cloak of Shadows": {
+  "name": "Channel Divinity: Cloak of Shadows",
+  "summary": "Action: become invisible until the end of your next turn; attacking or casting a spell ends it."
+ },
+ "cleric|trickery|Divine Strike": {
+  "name": "Divine Strike",
+  "summary": "Once per turn on a weapon hit, add 1d8 poison damage (2d8 from 14th level)."
+ },
+ "cleric|trickery|Improved Duplicity": {
+  "name": "Improved Duplicity",
+  "summary": "Invoke Duplicity creates up to four duplicates; one bonus action moves any of them up to 30 ft. each (within 120 ft.)."
+ },
+ "cleric|war|Bonus Proficiencies": {
+  "name": "Bonus Proficiencies",
+  "summary": "Gain martial weapon and heavy armor proficiency."
+ },
+ "cleric|war|War Priest": {
+  "name": "War Priest",
+  "summary": "When you take the Attack action, you can make one extra weapon attack as a bonus action."
+ },
+ "cleric|res|war-priest": {
+  "name": "War Priest"
+ },
+ "cleric|war|Channel Divinity: Guided Strike": {
+  "name": "Channel Divinity: Guided Strike",
+  "summary": "After seeing your attack roll but before the result is declared, spend Channel Divinity for +10 to that roll."
+ },
+ "cleric|war|Channel Divinity: War God's Blessing": {
+  "name": "Channel Divinity: War God's Blessing",
+  "summary": "Reaction: spend Channel Divinity to give +10 to an attack roll made by a creature within 30 ft. (decide after the roll, before the result)."
+ },
+ "cleric|war|Divine Strike": {
+  "name": "Divine Strike",
+  "summary": "Once per turn on a weapon hit, add 1d8 damage of the weapon's damage type (2d8 from 14th level)."
+ },
+ "cleric|war|Avatar of Battle": {
+  "name": "Avatar of Battle",
+  "summary": "Gain resistance to bludgeoning, piercing and slashing damage from nonmagical weapons."
+ },
+ "druid||Druidic": {
+  "name": "Druidic",
+  "summary": "You know the secret druid language and can leave hidden messages in it; others notice such a message with a DC 15 Wis (Perception) check but can't read it without magic."
+ },
+ "druid||Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Full Wisdom caster preparing Wis mod + druid level (min 1) spells daily from the druid list; ritual casting for prepared rituals; druidic focus as spellcasting focus."
+ },
+ "druid||Wild Shape": {
+  "name": "Wild Shape",
+  "summary": "Action: turn into a beast you have seen, for up to half your druid level in hours. Max CR 1/4 with no fly/swim speed at 2nd; CR 1/2, no fly at 4th; CR 1 at 8th. You take the beast's HP and stats but keep mental scores and can't cast spells."
+ },
+ "druid|res|wild-shape": {
+  "name": "Wild Shape"
+ },
+ "druid||Druid Circle": {
+  "name": "Druid Circle",
+  "summary": "Join the Circle of the Land or the Circle of the Moon; the circle grants features at 2nd, 6th, 10th and 14th level."
+ },
+ "druid||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th and 19th level, add +2 to one ability or +1 to two abilities (max 20)."
+ },
+ "druid||Timeless Body": {
+  "name": "Timeless Body",
+  "summary": "You age only one year for every ten that pass."
+ },
+ "druid||Beast Spells": {
+  "name": "Beast Spells",
+  "summary": "You can cast druid spells while in Wild Shape, supplying verbal and somatic components but not material ones."
+ },
+ "druid||Archdruid": {
+  "name": "Archdruid",
+  "summary": "Wild Shape uses become unlimited, and you can skip verbal, somatic and costless non-consumed material components of druid spells in any form."
+ },
+ "druid|land|Bonus Cantrip": {
+  "name": "Bonus Cantrip",
+  "summary": "Learn one extra druid cantrip of your choice."
+ },
+ "druid|land|Natural Recovery": {
+  "name": "Natural Recovery",
+  "summary": "During a short rest, recover expended spell slots with a combined level up to half your druid level (rounded up); no slot of 6th level or higher."
+ },
+ "druid|res|natural-recovery": {
+  "name": "Natural Recovery"
+ },
+ "druid|land|Circle Spells": {
+  "name": "Circle Spells",
+  "summary": "Choose the land you were initiated in; gain its two circle spells at druid levels 3, 5, 7 and 9. They are always prepared, don't count against prepared spells and count as druid spells."
+ },
+ "druid|land|Land's Stride": {
+  "name": "Land's Stride",
+  "summary": "Nonmagical difficult terrain costs no extra movement; pass through nonmagical plants unslowed and unharmed; advantage on saves against magical plants that hinder movement (e.g. entangle)."
+ },
+ "druid|land|Nature's Ward": {
+  "name": "Nature's Ward",
+  "summary": "Elementals and fey can't charm or frighten you, and you are immune to poison and disease."
+ },
+ "druid|land|Nature's Sanctuary": {
+  "name": "Nature's Sanctuary",
+  "summary": "A beast or plant attacking you must pass a Wis save vs. your spell DC or pick another target (or miss). On a success it is immune for 24 hours; it knows of this effect beforehand."
+ },
+ "druid|opt|Circle Spells|Arctic": {
+  "name": "Arctic",
+  "summary": "3: Hold Person, Spike Growth; 5: Sleet Storm, Slow; 7: Freedom of Movement, Ice Storm; 9: Commune with Nature, Cone of Cold"
+ },
+ "druid|opt|Circle Spells|Coast": {
+  "name": "Coast",
+  "summary": "3: Mirror Image, Misty Step; 5: Water Breathing, Water Walk; 7: Control Water, Freedom of Movement; 9: Conjure Elemental, Scrying"
+ },
+ "druid|opt|Circle Spells|Desert": {
+  "name": "Desert",
+  "summary": "3: Blur, Silence; 5: Create Food and Water, Protection from Energy; 7: Blight, Hallucinatory Terrain; 9: Insect Plague, Wall of Stone"
+ },
+ "druid|opt|Circle Spells|Forest": {
+  "name": "Forest",
+  "summary": "3: Barkskin, Spider Climb; 5: Call Lightning, Plant Growth; 7: Divination, Freedom of Movement; 9: Commune with Nature, Tree Stride"
+ },
+ "druid|opt|Circle Spells|Grassland": {
+  "name": "Grassland",
+  "summary": "3: Invisibility, Pass without Trace; 5: Daylight, Haste; 7: Divination, Freedom of Movement; 9: Dream, Insect Plague"
+ },
+ "druid|opt|Circle Spells|Mountain": {
+  "name": "Mountain",
+  "summary": "3: Spider Climb, Spike Growth; 5: Lightning Bolt, Meld into Stone; 7: Stone Shape, Stoneskin; 9: Passwall, Wall of Stone"
+ },
+ "druid|opt|Circle Spells|Swamp": {
+  "name": "Swamp",
+  "summary": "3: Darkness, Melf's Acid Arrow; 5: Water Walk, Stinking Cloud; 7: Freedom of Movement, Locate Creature; 9: Insect Plague, Scrying"
+ },
+ "druid|opt|Circle Spells|Underdark": {
+  "name": "Underdark",
+  "summary": "3: Spider Climb, Web; 5: Gaseous Form, Stinking Cloud; 7: Greater Invisibility, Stone Shape; 9: Cloudkill, Insect Plague"
+ },
+ "druid|moon|Combat Wild Shape": {
+  "name": "Combat Wild Shape",
+  "summary": "Wild Shape takes a bonus action instead of an action. While transformed, bonus action: spend a spell slot to regain 1d8 HP per slot level."
+ },
+ "druid|moon|Circle Forms": {
+  "name": "Circle Forms",
+  "summary": "Wild Shape max CR becomes 1 at 2nd level (ignore the Beast Shapes CR column but keep its movement limits), and druid level / 3 (rounded down) from 6th level."
+ },
+ "druid|moon|Primal Strike": {
+  "name": "Primal Strike",
+  "summary": "Your beast-form attacks count as magical for overcoming resistance and immunity to nonmagical attacks and damage."
+ },
+ "druid|moon|Elemental Wild Shape": {
+  "name": "Elemental Wild Shape",
+  "summary": "Spend two Wild Shape uses at once to become an air, earth, fire or water elemental."
+ },
+ "druid|moon|Thousand Forms": {
+  "name": "Thousand Forms",
+  "summary": "Cast alter self at will."
+ },
+ "druid|opt|Wild Shape|Beast Shapes: 2nd level": {
+  "name": "Beast Shapes: 2nd level",
+  "summary": "Max CR 1/4; no flying or swimming speed (e.g. wolf)."
+ },
+ "druid|opt|Wild Shape|Beast Shapes: 4th level": {
+  "name": "Beast Shapes: 4th level",
+  "summary": "Max CR 1/2; no flying speed (e.g. crocodile)."
+ },
+ "druid|opt|Wild Shape|Beast Shapes: 8th level": {
+  "name": "Beast Shapes: 8th level",
+  "summary": "Max CR 1; no movement restriction (e.g. giant eagle)."
+ },
+ "fighter||Fighting Style": {
+  "name": "Fighting Style",
+  "summary": "Pick one fighting style option (see options); the same style can never be taken twice, even when another choice is granted later."
+ },
+ "fighter||Second Wind": {
+  "name": "Second Wind",
+  "summary": "Bonus action on your turn: heal 1d10 + fighter level hit points. Usable once per short or long rest."
+ },
+ "fighter|res|second-wind": {
+  "name": "Second Wind"
+ },
+ "fighter||Action Surge": {
+  "name": "Action Surge",
+  "summary": "On your turn, take one extra action. Recharges on a short or long rest; from 17th level two uses per rest, but never twice in one turn."
+ },
+ "fighter|res|action-surge": {
+  "name": "Action Surge"
+ },
+ "fighter||Martial Archetype": {
+  "name": "Martial Archetype",
+  "summary": "Choose Champion, Battle Master or Eldritch Knight; the archetype grants features at 3rd, 7th, 10th, 15th and 18th level."
+ },
+ "fighter||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 6th, 8th, 12th, 14th, 16th and 19th level: +2 to one ability score or +1 to two, to a maximum of 20."
+ },
+ "fighter||Extra Attack": {
+  "name": "Extra Attack",
+  "summary": "The Attack action lets you attack twice; three attacks from 11th fighter level and four from 20th."
+ },
+ "fighter||Indomitable": {
+  "name": "Indomitable",
+  "summary": "Reroll a failed saving throw and keep the new result. Once per long rest; twice from 13th level, three times from 17th."
+ },
+ "fighter|res|indomitable": {
+  "name": "Indomitable"
+ },
+ "fighter|champion|Improved Critical": {
+  "name": "Improved Critical",
+  "summary": "Weapon attacks crit on a 19 or 20."
+ },
+ "fighter|champion|Remarkable Athlete": {
+  "name": "Remarkable Athlete",
+  "summary": "Add half proficiency bonus (rounded up) to Str, Dex and Con checks that don't already use proficiency; running long jumps gain feet equal to your Strength modifier."
+ },
+ "fighter|champion|Additional Fighting Style": {
+  "name": "Additional Fighting Style",
+  "summary": "Choose a second Fighting Style option."
+ },
+ "fighter|champion|Superior Critical": {
+  "name": "Superior Critical",
+  "summary": "Weapon attacks crit on 18-20."
+ },
+ "fighter|champion|Survivor": {
+  "name": "Survivor",
+  "summary": "At the start of each turn, if at or below half hit points (but above 0), regain 5 + Constitution modifier hit points."
+ },
+ "fighter|battle-master|Combat Superiority": {
+  "name": "Combat Superiority",
+  "summary": "Learn 3 maneuvers (2 more at 7th, 10th and 15th; may swap one each time) fueled by superiority dice: 4d8, +1 die at 7th and 15th, regained on a short or long rest. One maneuver per attack; save DC 8 + prof + Str or Dex modifier."
+ },
+ "fighter|res|superiority-dice": {
+  "name": "Superiority Dice (d8; d10 at 10th, d12 at 18th)"
+ },
+ "fighter|battle-master|Student of War": {
+  "name": "Student of War",
+  "summary": "Gain proficiency with one type of artisan's tools of your choice."
+ },
+ "fighter|battle-master|Know Your Enemy": {
+  "name": "Know Your Enemy",
+  "summary": "After 1 minute observing or interacting with a creature out of combat, learn whether it is your equal, superior or inferior in two chosen traits (Str, Dex, Con, AC, current HP, total class levels, fighter levels)."
+ },
+ "fighter|battle-master|Improved Combat Superiority": {
+  "name": "Improved Combat Superiority",
+  "summary": "Superiority dice become d10s; at 18th level they become d12s."
+ },
+ "fighter|battle-master|Relentless": {
+  "name": "Relentless",
+  "summary": "When you roll initiative with no superiority dice left, regain one."
+ },
+ "fighter|opt|Combat Superiority|Commander's Strike": {
+  "name": "Commander's Strike",
+  "summary": "Give up one of your Attack-action attacks and use a bonus action plus a die: an ally who can see or hear you uses its reaction to make a weapon attack, adding the die to damage."
+ },
+ "fighter|opt|Combat Superiority|Disarming Attack": {
+  "name": "Disarming Attack",
+  "summary": "On a weapon hit, add the die to damage; target makes a Strength save or drops an item of your choice at its feet."
+ },
+ "fighter|opt|Combat Superiority|Distracting Strike": {
+  "name": "Distracting Strike",
+  "summary": "On a weapon hit, add the die to damage; the next attack by someone other than you against that target before your next turn has advantage."
+ },
+ "fighter|opt|Combat Superiority|Evasive Footwork": {
+  "name": "Evasive Footwork",
+  "summary": "While moving, spend a die and add the roll to your AC until you stop moving."
+ },
+ "fighter|opt|Combat Superiority|Feinting Attack": {
+  "name": "Feinting Attack",
+  "summary": "Bonus action plus a die to feint a creature within 5 feet: advantage on your next attack against it this turn, adding the die to damage if it hits."
+ },
+ "fighter|opt|Combat Superiority|Goading Attack": {
+  "name": "Goading Attack",
+  "summary": "On a weapon hit, add the die to damage; target makes a Wisdom save or has disadvantage on attacks against anyone but you until the end of your next turn."
+ },
+ "fighter|opt|Combat Superiority|Lunging Attack": {
+  "name": "Lunging Attack",
+  "summary": "On a melee weapon attack on your turn, spend a die to gain 5 extra feet of reach for that attack; add the die to damage on a hit."
+ },
+ "fighter|opt|Combat Superiority|Maneuvering Attack": {
+  "name": "Maneuvering Attack",
+  "summary": "On a weapon hit, add the die to damage; an ally who can see or hear you may use its reaction to move half its speed without provoking opportunity attacks from the target."
+ },
+ "fighter|opt|Combat Superiority|Menacing Attack": {
+  "name": "Menacing Attack",
+  "summary": "On a weapon hit, add the die to damage; target makes a Wisdom save or is frightened of you until the end of your next turn."
+ },
+ "fighter|opt|Combat Superiority|Parry": {
+  "name": "Parry",
+  "summary": "Reaction when a melee attack damages you: reduce the damage by the die roll + your Dexterity modifier."
+ },
+ "fighter|opt|Combat Superiority|Precision Attack": {
+  "name": "Precision Attack",
+  "summary": "Add the die to a weapon attack roll, before or after rolling but before effects are applied."
+ },
+ "fighter|opt|Combat Superiority|Pushing Attack": {
+  "name": "Pushing Attack",
+  "summary": "On a weapon hit, add the die to damage; a Large or smaller target makes a Strength save or is pushed up to 15 feet away."
+ },
+ "fighter|opt|Combat Superiority|Rally": {
+  "name": "Rally",
+  "summary": "Bonus action plus a die: an ally who can see or hear you gains temporary hit points equal to the die roll + your Charisma modifier."
+ },
+ "fighter|opt|Combat Superiority|Riposte": {
+  "name": "Riposte",
+  "summary": "Reaction when a creature misses you with a melee attack: make one melee weapon attack against it, adding the die to damage on a hit."
+ },
+ "fighter|opt|Combat Superiority|Sweeping Attack": {
+  "name": "Sweeping Attack",
+  "summary": "On a melee weapon hit, choose a second creature within 5 feet of the target and within reach; if the original roll would hit it, it takes the die roll as damage of the same type."
+ },
+ "fighter|opt|Combat Superiority|Trip Attack": {
+  "name": "Trip Attack",
+  "summary": "On a weapon hit, add the die to damage; a Large or smaller target makes a Strength save or is knocked prone."
+ },
+ "fighter|eldritch-knight|Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Cast wizard spells using Intelligence (see spellcasting table). Spells known must be abjuration or evocation, except the ones learned at 3rd (one of the first three), 8th, 14th and 20th level; slots regained on a long rest."
+ },
+ "fighter|eldritch-knight|Weapon Bond": {
+  "name": "Weapon Bond",
+  "summary": "A 1-hour ritual bonds up to two weapons to you; a bonded weapon can't be disarmed unless you are incapacitated and can be summoned to your hand as a bonus action on the same plane."
+ },
+ "fighter|eldritch-knight|War Magic": {
+  "name": "War Magic",
+  "summary": "After using your action to cast a cantrip, you may make one weapon attack as a bonus action."
+ },
+ "fighter|eldritch-knight|Eldritch Strike": {
+  "name": "Eldritch Strike",
+  "summary": "A creature you hit with a weapon attack has disadvantage on its next save against a spell you cast before the end of your next turn."
+ },
+ "fighter|eldritch-knight|Arcane Charge": {
+  "name": "Arcane Charge",
+  "summary": "When you use Action Surge, you may teleport up to 30 feet to an unoccupied space you can see, before or after the extra action."
+ },
+ "fighter|eldritch-knight|Improved War Magic": {
+  "name": "Improved War Magic",
+  "summary": "After using your action to cast any spell, you may make one weapon attack as a bonus action."
+ },
+ "fighter|opt|Fighting Style|Archery": {
+  "name": "Archery",
+  "summary": "+2 to attack rolls with ranged weapons."
+ },
+ "fighter|opt|Fighting Style|Defense": {
+  "name": "Defense",
+  "summary": "+1 AC while wearing armor."
+ },
+ "fighter|opt|Fighting Style|Dueling": {
+  "name": "Dueling",
+  "summary": "+2 damage with a melee weapon held in one hand when you wield no other weapon."
+ },
+ "fighter|opt|Fighting Style|Great Weapon Fighting": {
+  "name": "Great Weapon Fighting",
+  "summary": "Reroll 1s and 2s on damage dice for two-handed melee attacks with a two-handed or versatile weapon; the reroll stands."
+ },
+ "fighter|opt|Fighting Style|Protection": {
+  "name": "Protection",
+  "summary": "While holding a shield, use your reaction to give disadvantage to an attack against another creature within 5 feet of you that you can see."
+ },
+ "fighter|opt|Fighting Style|Two-Weapon Fighting": {
+  "name": "Two-Weapon Fighting",
+  "summary": "Add your ability modifier to the damage of the off-hand attack when two-weapon fighting."
+ },
+ "monk||Unarmored Defense": {
+  "name": "Unarmored Defense",
+  "summary": "With no armor and no shield, AC = 10 + Dex modifier + Wis modifier."
+ },
+ "monk||Martial Arts": {
+  "name": "Martial Arts",
+  "summary": "Unarmed or with monk weapons (shortswords, simple melee weapons without two-handed/heavy) and no armor/shield: use Dex for attack and damage, use the Martial Arts die for damage, and make a bonus-action unarmed strike after attacking with the Attack action."
+ },
+ "monk||Ki": {
+  "name": "Ki",
+  "summary": "Pool of ki points equal to the Ki Points column, regained on a short or long rest with 30 minutes of meditation. Ki save DC = 8 + prof + Wis. Grants Flurry of Blows, Patient Defense and Step of the Wind."
+ },
+ "monk|res|ki": {
+  "name": "Ki Points"
+ },
+ "monk||Flurry of Blows": {
+  "name": "Flurry of Blows",
+  "summary": "Right after the Attack action, spend 1 ki to make two unarmed strikes as a bonus action."
+ },
+ "monk||Patient Defense": {
+  "name": "Patient Defense",
+  "summary": "Spend 1 ki to Dodge as a bonus action on your turn."
+ },
+ "monk||Step of the Wind": {
+  "name": "Step of the Wind",
+  "summary": "Spend 1 ki to Disengage or Dash as a bonus action; jump distance doubles for the turn."
+ },
+ "monk||Unarmored Movement": {
+  "name": "Unarmored Movement",
+  "summary": "Speed bonus per the Unarmored Movement column while unarmored and without a shield. From 9th level, you can run up vertical surfaces and across liquids during your move."
+ },
+ "monk||Monastic Tradition": {
+  "name": "Monastic Tradition",
+  "summary": "Choose Way of the Open Hand, Way of Shadow or Way of the Four Elements; features at 3rd, 6th, 11th and 17th level."
+ },
+ "monk||Deflect Missiles": {
+  "name": "Deflect Missiles",
+  "summary": "Reaction when hit by a ranged weapon attack: reduce damage by 1d10 + Dex modifier + monk level. If reduced to 0 and you have a free hand, catch it and may spend 1 ki to throw it back as a monk-weapon attack with proficiency."
+ },
+ "monk||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th and 19th level: +2 to one ability score or +1 to two, to a maximum of 20."
+ },
+ "monk||Slow Fall": {
+  "name": "Slow Fall",
+  "summary": "Reaction while falling: reduce fall damage by 5 x monk level."
+ },
+ "monk||Extra Attack": {
+  "name": "Extra Attack",
+  "summary": "Attack twice when you take the Attack action."
+ },
+ "monk||Stunning Strike": {
+  "name": "Stunning Strike",
+  "summary": "On a melee weapon hit, spend 1 ki: target makes a Con save or is stunned until the end of your next turn."
+ },
+ "monk||Ki-Empowered Strikes": {
+  "name": "Ki-Empowered Strikes",
+  "summary": "Unarmed strikes count as magical for overcoming resistance and immunity to nonmagical damage."
+ },
+ "monk||Evasion": {
+  "name": "Evasion",
+  "summary": "On a Dex save for half damage: no damage on a success, half on a failure."
+ },
+ "monk||Stillness of Mind": {
+  "name": "Stillness of Mind",
+  "summary": "Use your action to end one charmed or frightened effect on yourself."
+ },
+ "monk||Purity of Body": {
+  "name": "Purity of Body",
+  "summary": "Immune to disease and poison."
+ },
+ "monk||Tongue of the Sun and Moon": {
+  "name": "Tongue of the Sun and Moon",
+  "summary": "Understand all spoken languages, and any creature that knows a language understands your speech."
+ },
+ "monk||Diamond Soul": {
+  "name": "Diamond Soul",
+  "summary": "Proficiency in all saving throws; spend 1 ki to reroll a failed save and use the new result."
+ },
+ "monk||Timeless Body": {
+  "name": "Timeless Body",
+  "summary": "No frailty from old age, immune to magical aging, and no longer need food or water (can still die of old age)."
+ },
+ "monk||Empty Body": {
+  "name": "Empty Body",
+  "summary": "Action + 4 ki: invisible for 1 minute with resistance to all damage except force. 8 ki: cast astral projection without material components, on yourself only."
+ },
+ "monk||Perfect Self": {
+  "name": "Perfect Self",
+  "summary": "When you roll initiative with 0 ki remaining, regain 4 ki."
+ },
+ "monk|open-hand|Open Hand Technique": {
+  "name": "Open Hand Technique",
+  "summary": "Flurry of Blows hits can impose one effect: Dex save or prone, Str save or pushed up to 15 ft, or no reactions until the end of your next turn."
+ },
+ "monk|open-hand|Wholeness of Body": {
+  "name": "Wholeness of Body",
+  "summary": "Action: regain hit points equal to 3 x monk level. Once per long rest."
+ },
+ "monk|res|wholeness-of-body": {
+  "name": "Wholeness of Body"
+ },
+ "monk|open-hand|Tranquility": {
+  "name": "Tranquility",
+  "summary": "At the end of each long rest, gain a sanctuary effect lasting until your next long rest (save DC 8 + Wis + prof); ends early as the spell does."
+ },
+ "monk|open-hand|Quivering Palm": {
+  "name": "Quivering Palm",
+  "summary": "On an unarmed hit, spend 3 ki to plant vibrations lasting monk-level days; later use an action (same plane) to force a Con save: fail drops it to 0 HP, success deals 10d10 necrotic. One target at a time."
+ },
+ "monk|shadow|Shadow Arts": {
+  "name": "Shadow Arts",
+  "summary": "Action + 2 ki: cast darkness, darkvision, pass without trace or silence with no material components. Also learn the minor illusion cantrip if you lack it."
+ },
+ "monk|shadow|Shadow Step": {
+  "name": "Shadow Step",
+  "summary": "In dim light or darkness, bonus action to teleport up to 60 ft to another dim or dark space you can see; advantage on your first melee attack before the end of the turn."
+ },
+ "monk|shadow|Cloak of Shadows": {
+  "name": "Cloak of Shadows",
+  "summary": "In dim light or darkness, use your action to become invisible until you attack, cast a spell, or enter bright light."
+ },
+ "monk|shadow|Opportunist": {
+  "name": "Opportunist",
+  "summary": "Reaction when a creature within 5 ft is hit by someone else's attack: make a melee attack against it."
+ },
+ "monk|four-elements|Disciple of the Elements": {
+  "name": "Disciple of the Elements",
+  "summary": "Know Elemental Attunement plus one other elemental discipline; learn one more at 6th, 11th and 17th level (may swap one each time). Discipline spells need no material components; from 5th level extra ki upcasts them, capped by the Spells and Ki Points table (3 ki at 5th-8th, 4 at 9th-12th, 5 at 13th-16th, 6 at 17th-20th)."
+ },
+ "monk|opt|Disciple of the Elements|Breath of Winter": {
+  "name": "Breath of Winter",
+  "summary": "6 ki: cast cone of cold."
+ },
+ "monk|opt|Disciple of the Elements|Clench of the North Wind": {
+  "name": "Clench of the North Wind",
+  "summary": "3 ki: cast hold person."
+ },
+ "monk|opt|Disciple of the Elements|Elemental Attunement": {
+  "name": "Elemental Attunement",
+  "summary": "Action: minor elemental tricks - harmless sensory effect, light/snuff a small flame, chill or warm up to 1 lb for 1 hour, or shape a 1-foot cube of earth, fire, water or mist for 1 minute."
+ },
+ "monk|opt|Disciple of the Elements|Eternal Mountain Defense": {
+  "name": "Eternal Mountain Defense",
+  "summary": "5 ki: cast stoneskin on yourself."
+ },
+ "monk|opt|Disciple of the Elements|Fangs of the Fire Snake": {
+  "name": "Fangs of the Fire Snake",
+  "summary": "1 ki when taking the Attack action: unarmed reach +10 ft for the turn and those hits deal fire damage; +1 ki on a hit for an extra 1d10 fire."
+ },
+ "monk|opt|Disciple of the Elements|Fist of Four Thunders": {
+  "name": "Fist of Four Thunders",
+  "summary": "2 ki: cast thunderwave."
+ },
+ "monk|opt|Disciple of the Elements|Fist of Unbroken Air": {
+  "name": "Fist of Unbroken Air",
+  "summary": "Action + 2 ki: creature within 30 ft makes a Str save or takes 3d10 bludgeoning (+1d10 per extra ki), is pushed up to 20 ft and knocked prone; half damage only on a success."
+ },
+ "monk|opt|Disciple of the Elements|Flames of the Phoenix": {
+  "name": "Flames of the Phoenix",
+  "summary": "4 ki: cast fireball."
+ },
+ "monk|opt|Disciple of the Elements|Gong of the Summit": {
+  "name": "Gong of the Summit",
+  "summary": "3 ki: cast shatter."
+ },
+ "monk|opt|Disciple of the Elements|Mist Stance": {
+  "name": "Mist Stance",
+  "summary": "4 ki: cast gaseous form on yourself."
+ },
+ "monk|opt|Disciple of the Elements|Ride the Wind": {
+  "name": "Ride the Wind",
+  "summary": "4 ki: cast fly on yourself."
+ },
+ "monk|opt|Disciple of the Elements|River of Hungry Flame": {
+  "name": "River of Hungry Flame",
+  "summary": "5 ki: cast wall of fire."
+ },
+ "monk|opt|Disciple of the Elements|Rush of the Gale Spirits": {
+  "name": "Rush of the Gale Spirits",
+  "summary": "2 ki: cast gust of wind."
+ },
+ "monk|opt|Disciple of the Elements|Shape the Flowing River": {
+  "name": "Shape the Flowing River",
+  "summary": "Action + 1 ki: reshape ice or water in a cube up to 30 ft on a side within 120 ft - freeze/thaw, raise or lower elevation, dig trenches, raise walls or pillars (changes up to half the largest dimension; can't trap or harm creatures)."
+ },
+ "monk|opt|Disciple of the Elements|Sweeping Cinder Strike": {
+  "name": "Sweeping Cinder Strike",
+  "summary": "2 ki: cast burning hands."
+ },
+ "monk|opt|Disciple of the Elements|Water Whip": {
+  "name": "Water Whip",
+  "summary": "Bonus action + 2 ki: creature within 30 ft makes a Dex save or takes 3d10 bludgeoning (+1d10 per extra ki) and is knocked prone or pulled up to 25 ft closer; half damage only on a success."
+ },
+ "monk|opt|Disciple of the Elements|Wave of Rolling Earth": {
+  "name": "Wave of Rolling Earth",
+  "summary": "6 ki: cast wall of stone."
+ },
+ "paladin||Divine Sense": {
+  "name": "Divine Sense",
+  "summary": "Action: until the end of your next turn, learn the location and type (celestial, fiend, undead) of such creatures within 60 ft. not behind total cover, plus consecrated/desecrated places or objects."
+ },
+ "paladin|res|divine-sense": {
+  "name": "Divine Sense"
+ },
+ "paladin||Lay on Hands": {
+  "name": "Lay on Hands",
+  "summary": "Healing pool of 5 x paladin level HP. Action, touch: restore any amount of HP from the pool, or spend 5 points per disease cured / poison neutralized. No effect on undead or constructs."
+ },
+ "paladin|res|lay-on-hands": {
+  "name": "Healing pool (HP)"
+ },
+ "paladin||Fighting Style": {
+  "name": "Fighting Style",
+  "summary": "Pick one fighting style from the paladin list (Defense, Dueling, Great Weapon Fighting, Protection). The same style can never be taken twice."
+ },
+ "paladin||Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Half-caster using Charisma. Prepare CHA mod + half paladin level (round down, min 1) spells from the paladin list after a long rest; slots per the class table. Holy symbol can be a focus."
+ },
+ "paladin||Divine Smite": {
+  "name": "Divine Smite",
+  "summary": "On a melee weapon hit, spend a paladin spell slot for extra radiant damage: 2d8 for 1st level, +1d8 per slot level above 1st (max 5d8), +1d8 more vs. undead or fiends."
+ },
+ "paladin||Divine Health": {
+  "name": "Divine Health",
+  "summary": "You are immune to disease."
+ },
+ "paladin||Sacred Oath": {
+  "name": "Sacred Oath",
+  "summary": "Swear an oath (Devotion, Ancients, or Vengeance). It grants features at 3rd, 7th, 15th, and 20th level, including oath spells and Channel Divinity options."
+ },
+ "paladin||Oath Spells": {
+  "name": "Oath Spells",
+  "summary": "Part of Sacred Oath. Each oath lists spells gained at paladin levels 3/5/9/13/17; they are always prepared, don't count against your prepared total, and count as paladin spells."
+ },
+ "paladin||Channel Divinity": {
+  "name": "Channel Divinity",
+  "summary": "Part of Sacred Oath. Use one Channel Divinity option granted by your oath; then you must finish a short or long rest before using it again. Save DC = your paladin spell save DC."
+ },
+ "paladin|res|channel-divinity": {
+  "name": "Channel Divinity"
+ },
+ "paladin||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th and 19th level: +2 to one ability score or +1 to two, max 20."
+ },
+ "paladin||Extra Attack": {
+  "name": "Extra Attack",
+  "summary": "When you take the Attack action, you make two attacks instead of one."
+ },
+ "paladin||Aura of Protection": {
+  "name": "Aura of Protection",
+  "summary": "While you are conscious, you and friendly creatures within 10 ft. add your Charisma modifier (minimum +1) to all saving throws. Range becomes 30 ft. at 18th level."
+ },
+ "paladin||Aura of Courage": {
+  "name": "Aura of Courage",
+  "summary": "While you are conscious, you and friendly creatures within 10 ft. can't be frightened. Range becomes 30 ft. at 18th level."
+ },
+ "paladin||Improved Divine Smite": {
+  "name": "Improved Divine Smite",
+  "summary": "Every melee weapon hit deals an extra 1d8 radiant damage; this stacks with Divine Smite."
+ },
+ "paladin||Cleansing Touch": {
+  "name": "Cleansing Touch",
+  "summary": "Action: end one spell on yourself or on a willing creature you touch."
+ },
+ "paladin|res|cleansing-touch": {
+  "name": "Cleansing Touch"
+ },
+ "paladin||Aura improvements": {
+  "name": "Aura improvements",
+  "summary": "Your paladin auras (Aura of Protection, Aura of Courage, and your oath's 7th-level aura) extend from 10 ft. to 30 ft."
+ },
+ "paladin|devotion|Oath Spells": {
+  "name": "Oath Spells",
+  "summary": "Always-prepared Oath of Devotion spells (see spells)."
+ },
+ "paladin|devotion|Sacred Weapon": {
+  "name": "Sacred Weapon",
+  "summary": "Channel Divinity, action: for 1 minute a held weapon adds your CHA mod (min +1) to attack rolls, sheds bright light 20 ft. (dim 20 ft. more), and counts as magical. Ends if dropped or you fall unconscious."
+ },
+ "paladin|devotion|Turn the Unholy": {
+  "name": "Turn the Unholy",
+  "summary": "Channel Divinity, action: each fiend or undead within 30 ft. that can see or hear you makes a WIS save or is turned for 1 minute or until damaged (must flee, no reactions, only Dash/escape/Dodge)."
+ },
+ "paladin|devotion|Aura of Devotion": {
+  "name": "Aura of Devotion",
+  "summary": "While you are conscious, you and friendly creatures within 10 ft. can't be charmed. Range becomes 30 ft. at 18th level."
+ },
+ "paladin|devotion|Purity of Spirit": {
+  "name": "Purity of Spirit",
+  "summary": "You are permanently under the effect of protection from evil and good."
+ },
+ "paladin|devotion|Holy Nimbus": {
+  "name": "Holy Nimbus",
+  "summary": "Action: for 1 minute emit bright sunlight 30 ft. (dim 30 ft. more); enemies starting their turn in the bright light take 10 radiant damage; you have advantage on saves vs. spells cast by fiends or undead."
+ },
+ "paladin|res|holy-nimbus": {
+  "name": "Holy Nimbus"
+ },
+ "paladin|opt|Channel Divinity|Sacred Weapon": {
+  "name": "Sacred Weapon",
+  "summary": "Empower a held weapon: +CHA to attacks, light, magical, 1 minute."
+ },
+ "paladin|opt|Channel Divinity|Turn the Unholy": {
+  "name": "Turn the Unholy",
+  "summary": "Turn fiends and undead within 30 ft. on a failed WIS save."
+ },
+ "paladin|ancients|Oath Spells": {
+  "name": "Oath Spells",
+  "summary": "Always-prepared Oath of the Ancients spells (see spells)."
+ },
+ "paladin|ancients|Nature's Wrath": {
+  "name": "Nature's Wrath",
+  "summary": "Channel Divinity, action: spectral vines attack a creature within 10 ft. that you can see; it makes a STR or DEX save (its choice) or is restrained, repeating the save at the end of each of its turns."
+ },
+ "paladin|ancients|Turn the Faithless": {
+  "name": "Turn the Faithless",
+  "summary": "Channel Divinity, action: each fey or fiend within 30 ft. that can hear you makes a WIS save or is turned for 1 minute or until damaged; a turned creature's disguised true form is revealed."
+ },
+ "paladin|ancients|Aura of Warding": {
+  "name": "Aura of Warding",
+  "summary": "You and friendly creatures within 10 ft. have resistance to damage from spells. Range becomes 30 ft. at 18th level."
+ },
+ "paladin|ancients|Undying Sentinel": {
+  "name": "Undying Sentinel",
+  "summary": "When reduced to 0 HP but not killed outright, you can drop to 1 HP instead. You also suffer no drawbacks of old age and can't be magically aged."
+ },
+ "paladin|res|undying-sentinel": {
+  "name": "Undying Sentinel"
+ },
+ "paladin|ancients|Elder Champion": {
+  "name": "Elder Champion",
+  "summary": "Action: transform for 1 minute. Regain 10 HP at the start of each of your turns, cast 1-action paladin spells as a bonus action, and enemies within 10 ft. have disadvantage on saves vs. your paladin spells and Channel Divinity."
+ },
+ "paladin|res|elder-champion": {
+  "name": "Elder Champion"
+ },
+ "paladin|opt|Channel Divinity|Nature's Wrath": {
+  "name": "Nature's Wrath",
+  "summary": "Restrain one creature within 10 ft. with spectral vines (STR or DEX save)."
+ },
+ "paladin|opt|Channel Divinity|Turn the Faithless": {
+  "name": "Turn the Faithless",
+  "summary": "Turn fey and fiends within 30 ft. on a failed WIS save."
+ },
+ "paladin|vengeance|Oath Spells": {
+  "name": "Oath Spells",
+  "summary": "Always-prepared Oath of Vengeance spells (see spells)."
+ },
+ "paladin|vengeance|Abjure Enemy": {
+  "name": "Abjure Enemy",
+  "summary": "Channel Divinity, action: one creature within 60 ft. you can see makes a WIS save (fiends/undead at disadvantage; frighten-immune creatures unaffected). Fail: frightened 1 minute or until damaged, speed 0. Success: speed halved 1 minute or until damaged."
+ },
+ "paladin|vengeance|Vow of Enmity": {
+  "name": "Vow of Enmity",
+  "summary": "Channel Divinity, bonus action: choose a creature within 10 ft. you can see; you have advantage on attack rolls against it for 1 minute or until it drops to 0 HP or falls unconscious."
+ },
+ "paladin|vengeance|Relentless Avenger": {
+  "name": "Relentless Avenger",
+  "summary": "When you hit with an opportunity attack, you may move up to half your speed as part of that reaction, without provoking opportunity attacks."
+ },
+ "paladin|vengeance|Soul of Vengeance": {
+  "name": "Soul of Vengeance",
+  "summary": "When the target of your Vow of Enmity makes an attack, you can use your reaction to make a melee weapon attack against it if it is in range."
+ },
+ "paladin|vengeance|Avenging Angel": {
+  "name": "Avenging Angel",
+  "summary": "Action: transform for 1 hour. Gain a 60 ft. flying speed and a 30 ft. aura; enemies entering or starting a turn there for the first time make a WIS save or are frightened 1 minute or until damaged, and attacks against them have advantage."
+ },
+ "paladin|res|avenging-angel": {
+  "name": "Avenging Angel"
+ },
+ "paladin|opt|Channel Divinity|Abjure Enemy": {
+  "name": "Abjure Enemy",
+  "summary": "Frighten and root one creature within 60 ft. (WIS save)."
+ },
+ "paladin|opt|Channel Divinity|Vow of Enmity": {
+  "name": "Vow of Enmity",
+  "summary": "Advantage on attacks vs. one creature within 10 ft. for 1 minute."
+ },
+ "paladin|opt|Fighting Style|Defense": {
+  "name": "Defense",
+  "summary": "+1 AC while you wear armor."
+ },
+ "paladin|opt|Fighting Style|Dueling": {
+  "name": "Dueling",
+  "summary": "+2 damage with a melee weapon held in one hand when you hold no other weapon."
+ },
+ "paladin|opt|Fighting Style|Great Weapon Fighting": {
+  "name": "Great Weapon Fighting",
+  "summary": "Reroll 1s and 2s on damage dice for two-handed melee weapon attacks (weapon must be two-handed or versatile); must keep the new roll."
+ },
+ "paladin|opt|Fighting Style|Protection": {
+  "name": "Protection",
+  "summary": "Reaction: impose disadvantage on an attack against a creature (not you) within 5 ft. of you that you can see. Requires a shield."
+ },
+ "ranger||Favored Enemy": {
+  "name": "Favored Enemy",
+  "summary": "Pick a creature type (or two humanoid races). Advantage on WIS (Survival) to track them and INT checks to recall lore about them; learn one of their languages. Extra choice (and language) at 6th and 14th level."
+ },
+ "ranger||Natural Explorer": {
+  "name": "Natural Explorer",
+  "summary": "Pick a favored terrain: double proficiency on proficient INT/WIS checks about it, and travel perks there (no slowdown from difficult terrain, can't get lost, double forage, etc.). Extra terrain at 6th and 10th level."
+ },
+ "ranger||Fighting Style": {
+  "name": "Fighting Style",
+  "summary": "Pick one fighting style from the ranger list (Archery, Defense, Dueling, Two-Weapon Fighting). The same style can never be taken twice."
+ },
+ "ranger||Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Half-caster using Wisdom with a fixed number of known spells (Spells Known column); can swap one known spell on each ranger level-up. Slots per the class table, regained on a long rest."
+ },
+ "ranger||Ranger Archetype": {
+  "name": "Ranger Archetype",
+  "summary": "Choose Hunter or Beast Master; the archetype grants features at 3rd, 7th, 11th and 15th level."
+ },
+ "ranger||Primeval Awareness": {
+  "name": "Primeval Awareness",
+  "summary": "Action + one ranger spell slot: for 1 minute per slot level, sense whether aberrations, celestials, dragons, elementals, fey, fiends or undead are within 1 mile (6 miles in favored terrain); no location or count."
+ },
+ "ranger||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th and 19th level: +2 to one ability score or +1 to two, max 20."
+ },
+ "ranger||Extra Attack": {
+  "name": "Extra Attack",
+  "summary": "When you take the Attack action, you make two attacks instead of one."
+ },
+ "ranger||Land's Stride": {
+  "name": "Land's Stride",
+  "summary": "Nonmagical difficult terrain costs no extra movement; pass through nonmagical plants unhindered and unharmed by thorns; advantage on saves vs. magical plants that impede movement (e.g. entangle)."
+ },
+ "ranger||Hide in Plain Sight": {
+  "name": "Hide in Plain Sight",
+  "summary": "Spend 1 minute camouflaging with natural materials; while pressed against a solid surface at least your size and not moving or acting, gain +10 to DEX (Stealth). Moving or acting ends it."
+ },
+ "ranger||Vanish": {
+  "name": "Vanish",
+  "summary": "Take the Hide action as a bonus action; you can't be tracked by nonmagical means unless you choose to leave a trail."
+ },
+ "ranger||Feral Senses": {
+  "name": "Feral Senses",
+  "summary": "Not seeing a creature doesn't give you disadvantage on attacks against it; you know where invisible creatures within 30 ft. are if they aren't hidden and you aren't blinded or deafened."
+ },
+ "ranger||Foe Slayer": {
+  "name": "Foe Slayer",
+  "summary": "Once per turn, add your WIS modifier to the attack roll or damage roll of an attack against a favored enemy, choosing before or after the roll but before effects apply."
+ },
+ "ranger|hunter|Hunter's Prey": {
+  "name": "Hunter's Prey",
+  "summary": "Choose one: Colossus Slayer, Giant Killer, or Horde Breaker."
+ },
+ "ranger|hunter|Defensive Tactics": {
+  "name": "Defensive Tactics",
+  "summary": "Choose one: Escape the Horde, Multiattack Defense, or Steel Will."
+ },
+ "ranger|hunter|Multiattack": {
+  "name": "Multiattack",
+  "summary": "Choose one: Volley or Whirlwind Attack."
+ },
+ "ranger|hunter|Superior Hunter's Defense": {
+  "name": "Superior Hunter's Defense",
+  "summary": "Choose one: Evasion, Stand Against the Tide, or Uncanny Dodge."
+ },
+ "ranger|opt|Hunter's Prey|Colossus Slayer": {
+  "name": "Colossus Slayer",
+  "summary": "Once per turn, a weapon hit on a creature below its HP maximum deals an extra 1d8 damage."
+ },
+ "ranger|opt|Hunter's Prey|Giant Killer": {
+  "name": "Giant Killer",
+  "summary": "Reaction: when a Large or larger creature within 5 ft. hits or misses you, attack it right after, if you can see it."
+ },
+ "ranger|opt|Hunter's Prey|Horde Breaker": {
+  "name": "Horde Breaker",
+  "summary": "Once per turn, after a weapon attack, make another attack with the same weapon against a different creature within 5 ft. of the first target and in range."
+ },
+ "ranger|opt|Defensive Tactics|Escape the Horde": {
+  "name": "Escape the Horde",
+  "summary": "Opportunity attacks against you have disadvantage."
+ },
+ "ranger|opt|Defensive Tactics|Multiattack Defense": {
+  "name": "Multiattack Defense",
+  "summary": "After a creature hits you, you get +4 AC against its later attacks this turn."
+ },
+ "ranger|opt|Defensive Tactics|Steel Will": {
+  "name": "Steel Will",
+  "summary": "Advantage on saving throws against being frightened."
+ },
+ "ranger|opt|Multiattack|Volley": {
+  "name": "Volley",
+  "summary": "Action: ranged attack against any number of creatures within 10 ft. of a point in range; ammo and a separate roll per target."
+ },
+ "ranger|opt|Multiattack|Whirlwind Attack": {
+  "name": "Whirlwind Attack",
+  "summary": "Action: melee attack against any number of creatures within 5 ft. of you, separate roll for each."
+ },
+ "ranger|opt|Superior Hunter's Defense|Evasion": {
+  "name": "Evasion",
+  "summary": "On a DEX save for half damage, take none on a success and half on a failure."
+ },
+ "ranger|opt|Superior Hunter's Defense|Stand Against the Tide": {
+  "name": "Stand Against the Tide",
+  "summary": "Reaction: when a hostile creature misses you with a melee attack, make it repeat the attack against another creature of your choice."
+ },
+ "ranger|opt|Superior Hunter's Defense|Uncanny Dodge": {
+  "name": "Uncanny Dodge",
+  "summary": "Reaction: halve the damage of an attack that hits you from an attacker you can see."
+ },
+ "ranger|beast-master|Ranger's Companion": {
+  "name": "Ranger's Companion",
+  "summary": "Gain a beast companion (Medium or smaller, CR 1/4 or lower). Add proficiency bonus to its AC, attacks, damage, and proficient saves/skills; HP max is the greater of normal or 4 x ranger level. It acts on your initiative only when commanded: your action orders Attack, Dash, Disengage, Dodge or Help. Replace it with 8 hours of bonding."
+ },
+ "ranger|beast-master|Exceptional Training": {
+  "name": "Exceptional Training",
+  "summary": "On a turn your companion doesn't attack, a bonus action can command it to Dash, Disengage, Dodge, or Help."
+ },
+ "ranger|beast-master|Bestial Fury": {
+  "name": "Bestial Fury",
+  "summary": "Your companion makes two attacks when commanded to take the Attack action."
+ },
+ "ranger|beast-master|Share Spells": {
+  "name": "Share Spells",
+  "summary": "A spell you cast targeting yourself can also affect your companion if it is within 30 ft."
+ },
+ "ranger|opt|Fighting Style|Archery": {
+  "name": "Archery",
+  "summary": "+2 to attack rolls with ranged weapons."
+ },
+ "ranger|opt|Fighting Style|Defense": {
+  "name": "Defense",
+  "summary": "+1 AC while you wear armor."
+ },
+ "ranger|opt|Fighting Style|Dueling": {
+  "name": "Dueling",
+  "summary": "+2 damage with a melee weapon held in one hand when you hold no other weapon."
+ },
+ "ranger|opt|Fighting Style|Two-Weapon Fighting": {
+  "name": "Two-Weapon Fighting",
+  "summary": "Add your ability modifier to the damage of the off-hand attack when two-weapon fighting."
+ },
+ "ranger|opt|Favored Enemy|Aberrations": {
+  "name": "Aberrations",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Beasts": {
+  "name": "Beasts",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Celestials": {
+  "name": "Celestials",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Constructs": {
+  "name": "Constructs",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Dragons": {
+  "name": "Dragons",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Elementals": {
+  "name": "Elementals",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Fey": {
+  "name": "Fey",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Fiends": {
+  "name": "Fiends",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Giants": {
+  "name": "Giants",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Monstrosities": {
+  "name": "Monstrosities",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Oozes": {
+  "name": "Oozes",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Plants": {
+  "name": "Plants",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Undead": {
+  "name": "Undead",
+  "summary": "Creature type."
+ },
+ "ranger|opt|Favored Enemy|Two humanoid races": {
+  "name": "Two humanoid races",
+  "summary": "Instead of a creature type, pick two humanoid races (e.g. gnolls and orcs)."
+ },
+ "ranger|opt|Natural Explorer|Arctic": {
+  "name": "Arctic",
+  "summary": "Favored terrain."
+ },
+ "ranger|opt|Natural Explorer|Coast": {
+  "name": "Coast",
+  "summary": "Favored terrain."
+ },
+ "ranger|opt|Natural Explorer|Desert": {
+  "name": "Desert",
+  "summary": "Favored terrain."
+ },
+ "ranger|opt|Natural Explorer|Forest": {
+  "name": "Forest",
+  "summary": "Favored terrain."
+ },
+ "ranger|opt|Natural Explorer|Grassland": {
+  "name": "Grassland",
+  "summary": "Favored terrain."
+ },
+ "ranger|opt|Natural Explorer|Mountain": {
+  "name": "Mountain",
+  "summary": "Favored terrain."
+ },
+ "ranger|opt|Natural Explorer|Swamp": {
+  "name": "Swamp",
+  "summary": "Favored terrain."
+ },
+ "ranger|opt|Natural Explorer|Underdark": {
+  "name": "Underdark",
+  "summary": "Favored terrain."
+ },
+ "rogue||Expertise": {
+  "name": "Expertise",
+  "summary": "Pick two skill proficiencies (or one skill plus thieves' tools); your proficiency bonus is doubled for checks using them. Pick two more at 6th level."
+ },
+ "rogue||Sneak Attack": {
+  "name": "Sneak Attack",
+  "summary": "Once per turn, add the Sneak Attack dice to one finesse or ranged weapon hit if you have advantage, or if an active ally is within 5 ft. of the target and you lack disadvantage."
+ },
+ "rogue||Thieves' Cant": {
+  "name": "Thieves' Cant",
+  "summary": "You know the secret rogue jargon for hiding messages in ordinary talk (takes four times as long) plus a set of signs and symbols for short coded messages."
+ },
+ "rogue||Cunning Action": {
+  "name": "Cunning Action",
+  "summary": "Each turn in combat you may take a bonus action to Dash, Disengage, or Hide."
+ },
+ "rogue||Roguish Archetype": {
+  "name": "Roguish Archetype",
+  "summary": "Choose Thief, Assassin, or Arcane Trickster; it grants features at 3rd, 9th, 13th, and 17th level."
+ },
+ "rogue||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 10th, 12th, 16th, and 19th level, raise one ability score by 2 or two scores by 1 (maximum 20)."
+ },
+ "rogue||Uncanny Dodge": {
+  "name": "Uncanny Dodge",
+  "summary": "Reaction: when an attacker you can see hits you, halve that attack's damage."
+ },
+ "rogue||Evasion": {
+  "name": "Evasion",
+  "summary": "On a Dexterity save against an effect that deals half damage on success, you take none on a success and half on a failure."
+ },
+ "rogue||Reliable Talent": {
+  "name": "Reliable Talent",
+  "summary": "On any ability check that adds your proficiency bonus, a d20 roll of 9 or lower counts as 10."
+ },
+ "rogue||Blindsense": {
+  "name": "Blindsense",
+  "summary": "While you can hear, you know where any hidden or invisible creature within 10 ft. of you is."
+ },
+ "rogue||Slippery Mind": {
+  "name": "Slippery Mind",
+  "summary": "You become proficient in Wisdom saving throws."
+ },
+ "rogue||Elusive": {
+  "name": "Elusive",
+  "summary": "Unless you are incapacitated, attack rolls against you can never have advantage."
+ },
+ "rogue||Stroke of Luck": {
+  "name": "Stroke of Luck",
+  "summary": "Turn a missed attack against a target in range into a hit, or treat a failed ability check's d20 as a 20. Once per short or long rest."
+ },
+ "rogue|res|stroke-of-luck": {
+  "name": "Stroke of Luck"
+ },
+ "rogue|thief|Fast Hands": {
+  "name": "Fast Hands",
+  "summary": "Cunning Action's bonus action can also be a Sleight of Hand check, using thieves' tools on a trap or lock, or the Use an Object action."
+ },
+ "rogue|thief|Second-Story Work": {
+  "name": "Second-Story Work",
+  "summary": "Climbing costs no extra movement, and running jumps go farther by a number of feet equal to your Dexterity modifier."
+ },
+ "rogue|thief|Supreme Sneak": {
+  "name": "Supreme Sneak",
+  "summary": "Advantage on Stealth checks on a turn in which you move no more than half your speed."
+ },
+ "rogue|thief|Use Magic Device": {
+  "name": "Use Magic Device",
+  "summary": "You disregard class, race, and level requirements when using magic items."
+ },
+ "rogue|thief|Thief's Reflexes": {
+  "name": "Thief's Reflexes",
+  "summary": "In the first round of combat you take two turns: one at your initiative and a second at initiative minus 10. Not usable when surprised."
+ },
+ "rogue|assassin|Bonus Proficiencies": {
+  "name": "Bonus Proficiencies",
+  "summary": "Gain proficiency with the disguise kit and the poisoner's kit."
+ },
+ "rogue|assassin|Assassinate": {
+  "name": "Assassinate",
+  "summary": "Advantage on attacks against creatures that have not yet acted in the combat; any hit against a surprised creature is a critical hit."
+ },
+ "rogue|assassin|Infiltration Expertise": {
+  "name": "Infiltration Expertise",
+  "summary": "Spend 7 days and 25 gp to build a reliable false identity (not someone else's); while you use it, others accept it unless given clear reason to doubt."
+ },
+ "rogue|assassin|Impostor": {
+  "name": "Impostor",
+  "summary": "After 3 hours studying a person's speech, writing, and behaviour you can mimic them; casual observers are fooled and you get advantage on Deception checks to avoid detection."
+ },
+ "rogue|assassin|Death Strike": {
+  "name": "Death Strike",
+  "summary": "When you hit a surprised creature, it makes a Con save (DC 8 + Dex mod + prof); on a failure the attack's damage is doubled."
+ },
+ "rogue|arcane-trickster|Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Int-based wizard spellcasting per the Arcane Trickster table: mage hand plus two other cantrips; leveled spells mostly enchantment or illusion, except those learned at 3rd, 8th, 14th, and 20th level, which may be any school."
+ },
+ "rogue|arcane-trickster|Mage Hand Legerdemain": {
+  "name": "Mage Hand Legerdemain",
+  "summary": "Your mage hand can be invisible and can stow or retrieve items in containers others wear and use thieves' tools at range (Sleight of Hand vs. Perception to go unnoticed); control it with Cunning Action."
+ },
+ "rogue|arcane-trickster|Magical Ambush": {
+  "name": "Magical Ambush",
+  "summary": "If you are hidden when you cast a spell on a creature, it has disadvantage on saves against that spell this turn."
+ },
+ "rogue|arcane-trickster|Versatile Trickster": {
+  "name": "Versatile Trickster",
+  "summary": "Bonus action: target a creature within 5 ft. of your mage hand to gain advantage on attacks against it until the end of the turn."
+ },
+ "rogue|arcane-trickster|Spell Thief": {
+  "name": "Spell Thief",
+  "summary": "Reaction when a spell targets or includes you: caster saves with its spellcasting modifier vs. your DC; on a failure you negate it for you and, if it is 1st level or higher and castable by you, you know it for 8 hours while the caster cannot cast it."
+ },
+ "rogue|res|spell-thief": {
+  "name": "Spell Thief"
+ },
+ "sorcerer||Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Charisma-based casting from the sorcerer list; cantrips, spells known, and slots per the Sorcerer table. Swap one known spell on level-up. Arcane focus usable."
+ },
+ "sorcerer||Sorcerous Origin": {
+  "name": "Sorcerous Origin",
+  "summary": "Choose Draconic Bloodline or Wild Magic; it grants features at 1st, 6th, 14th, and 18th level."
+ },
+ "sorcerer||Font of Magic": {
+  "name": "Font of Magic",
+  "summary": "Gain sorcery points (table column, regained on a long rest). Flexible Casting: bonus action to turn points into a slot of up to 5th level, or a slot into points equal to its level."
+ },
+ "sorcerer|res|sorcery-points": {
+  "name": "Sorcery Points"
+ },
+ "sorcerer||Metamagic": {
+  "name": "Metamagic",
+  "summary": "Learn two Metamagic options, plus one more at 10th and 17th level. Normally only one option can be applied per spell."
+ },
+ "sorcerer||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th, and 19th level, raise one ability score by 2 or two scores by 1 (maximum 20)."
+ },
+ "sorcerer||Sorcerous Restoration": {
+  "name": "Sorcerous Restoration",
+  "summary": "Regain 4 spent sorcery points whenever you finish a short rest."
+ },
+ "sorcerer|draconic|Dragon Ancestor": {
+  "name": "Dragon Ancestor",
+  "summary": "Choose a dragon type (sets your ancestry damage type). You know Draconic, and double your proficiency bonus on Charisma checks with dragons when it applies."
+ },
+ "sorcerer|draconic|Draconic Resilience": {
+  "name": "Draconic Resilience",
+  "summary": "+1 hit point maximum per sorcerer level; unarmored AC is 13 + Dex modifier."
+ },
+ "sorcerer|draconic|Elemental Affinity": {
+  "name": "Elemental Affinity",
+  "summary": "Add Cha modifier to damage from spells of your ancestry type; spend 1 sorcery point to resist that type for 1 hour."
+ },
+ "sorcerer|draconic|Dragon Wings": {
+  "name": "Dragon Wings",
+  "summary": "Bonus action to grow or dismiss wings giving a fly speed equal to your speed; not while wearing armor not made for them."
+ },
+ "sorcerer|draconic|Draconic Presence": {
+  "name": "Draconic Presence",
+  "summary": "Action, 5 sorcery points: 60-ft. aura (concentration, up to 1 minute); hostiles starting their turn in it make a Wis save or are charmed (awe) or frightened (fear); success grants 24-hour immunity."
+ },
+ "sorcerer|opt|Dragon Ancestor|Black": {
+  "name": "Black",
+  "summary": "Acid damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Blue": {
+  "name": "Blue",
+  "summary": "Lightning damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Brass": {
+  "name": "Brass",
+  "summary": "Fire damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Bronze": {
+  "name": "Bronze",
+  "summary": "Lightning damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Copper": {
+  "name": "Copper",
+  "summary": "Acid damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Gold": {
+  "name": "Gold",
+  "summary": "Fire damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Green": {
+  "name": "Green",
+  "summary": "Poison damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Red": {
+  "name": "Red",
+  "summary": "Fire damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|Silver": {
+  "name": "Silver",
+  "summary": "Cold damage."
+ },
+ "sorcerer|opt|Dragon Ancestor|White": {
+  "name": "White",
+  "summary": "Cold damage."
+ },
+ "sorcerer|wild-magic|Wild Magic Surge": {
+  "name": "Wild Magic Surge",
+  "summary": "After you cast a 1st-level or higher sorcerer spell, the DM may have you roll a d20; on a 1, roll on the Wild Magic Surge table."
+ },
+ "sorcerer|wild-magic|Tides of Chaos": {
+  "name": "Tides of Chaos",
+  "summary": "Gain advantage on one attack roll, ability check, or saving throw. Recharges on a long rest, or early if the DM triggers a surge roll after you cast a 1st-level+ sorcerer spell."
+ },
+ "sorcerer|res|tides-of-chaos": {
+  "name": "Tides of Chaos"
+ },
+ "sorcerer|wild-magic|Bend Luck": {
+  "name": "Bend Luck",
+  "summary": "Reaction, 2 sorcery points: when a creature you see makes an attack, check, or save, add or subtract 1d4 from its roll (after the roll, before effects)."
+ },
+ "sorcerer|wild-magic|Controlled Chaos": {
+  "name": "Controlled Chaos",
+  "summary": "When rolling on the Wild Magic Surge table, roll twice and pick either result."
+ },
+ "sorcerer|wild-magic|Spell Bombardment": {
+  "name": "Spell Bombardment",
+  "summary": "Once per turn, when a spell damage die rolls its maximum, roll one such die again and add it to the damage."
+ },
+ "sorcerer|opt|Wild Magic Surge|Wild Magic Surge table (d100)": {
+  "name": "Wild Magic Surge table (d100)",
+  "summary": "50 random effects in paired d100 bands (01-02 ... 99-00): self-centered spells (fireball, confusion, fog cloud, polymorph, etc.), teleports, cosmetic changes, short buffs or curses, summoned creatures, and at 99-00 regaining all sorcery points."
+ },
+ "sorcerer|opt|Metamagic|Careful Spell": {
+  "name": "Careful Spell",
+  "summary": "1 point: when a spell forces saves, up to Cha modifier (min 1) chosen creatures automatically succeed."
+ },
+ "sorcerer|opt|Metamagic|Distant Spell": {
+  "name": "Distant Spell",
+  "summary": "1 point: double a range of 5 ft. or more, or make a touch spell's range 30 ft."
+ },
+ "sorcerer|opt|Metamagic|Empowered Spell": {
+  "name": "Empowered Spell",
+  "summary": "1 point: reroll up to Cha modifier (min 1) damage dice and keep the new results; can be combined with another Metamagic option."
+ },
+ "sorcerer|opt|Metamagic|Extended Spell": {
+  "name": "Extended Spell",
+  "summary": "1 point: double a duration of 1 minute or longer, capped at 24 hours."
+ },
+ "sorcerer|opt|Metamagic|Heightened Spell": {
+  "name": "Heightened Spell",
+  "summary": "3 points: one target has disadvantage on its first save against the spell."
+ },
+ "sorcerer|opt|Metamagic|Quickened Spell": {
+  "name": "Quickened Spell",
+  "summary": "2 points: a spell with a 1-action casting time is cast as a bonus action instead."
+ },
+ "sorcerer|opt|Metamagic|Subtle Spell": {
+  "name": "Subtle Spell",
+  "summary": "1 point: cast without verbal or somatic components."
+ },
+ "sorcerer|opt|Metamagic|Twinned Spell": {
+  "name": "Twinned Spell",
+  "summary": "Points equal to spell level (1 for a cantrip): a single-target, non-self spell also targets a second creature in range."
+ },
+ "sorcerer|opt|Font of Magic|Create 1st-level slot": {
+  "name": "Create 1st-level slot",
+  "summary": "Costs 2 sorcery points (bonus action)."
+ },
+ "sorcerer|opt|Font of Magic|Create 2nd-level slot": {
+  "name": "Create 2nd-level slot",
+  "summary": "Costs 3 sorcery points (bonus action)."
+ },
+ "sorcerer|opt|Font of Magic|Create 3rd-level slot": {
+  "name": "Create 3rd-level slot",
+  "summary": "Costs 5 sorcery points (bonus action)."
+ },
+ "sorcerer|opt|Font of Magic|Create 4th-level slot": {
+  "name": "Create 4th-level slot",
+  "summary": "Costs 6 sorcery points (bonus action)."
+ },
+ "sorcerer|opt|Font of Magic|Create 5th-level slot": {
+  "name": "Create 5th-level slot",
+  "summary": "Costs 7 sorcery points (bonus action)."
+ },
+ "sorcerer|opt|Font of Magic|Convert slot to points": {
+  "name": "Convert slot to points",
+  "summary": "Bonus action: expend a spell slot to gain sorcery points equal to its level."
+ },
+ "warlock||Otherworldly Patron": {
+  "name": "Otherworldly Patron",
+  "summary": "Choose a patron (Archfey, Fiend, or Great Old One); it grants features at 1st, 6th, 10th, and 14th level and an expanded spell list."
+ },
+ "warlock||Pact Magic": {
+  "name": "Pact Magic",
+  "summary": "Charisma-based casting from the warlock list. Few slots, all cast at the table's Slot Level; every slot returns on a short or long rest. Spells known can be swapped on level-up; arcane focus allowed."
+ },
+ "warlock|res|pact-slots": {
+  "name": "Pact Magic slots"
+ },
+ "warlock||Eldritch Invocations": {
+  "name": "Eldritch Invocations",
+  "summary": "Learn two invocations at 2nd level, more per the Invocations Known column; on each warlock level-up one known invocation may be replaced with another you qualify for."
+ },
+ "warlock||Pact Boon": {
+  "name": "Pact Boon",
+  "summary": "Your patron grants one boon of your choice: Pact of the Chain, Pact of the Blade, or Pact of the Tome."
+ },
+ "warlock||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th, and 19th level raise one ability by 2 or two abilities by 1 (max 20)."
+ },
+ "warlock||Mystic Arcanum (6th level)": {
+  "name": "Mystic Arcanum (6th level)",
+  "summary": "Pick one 6th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest. Granted first at 11th level."
+ },
+ "warlock|res|mystic-arcanum-6": {
+  "name": "Mystic Arcanum (6th)"
+ },
+ "warlock||Mystic Arcanum (7th level)": {
+  "name": "Mystic Arcanum (7th level)",
+  "summary": "Pick one 7th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest."
+ },
+ "warlock|res|mystic-arcanum-7": {
+  "name": "Mystic Arcanum (7th)"
+ },
+ "warlock||Mystic Arcanum (8th level)": {
+  "name": "Mystic Arcanum (8th level)",
+  "summary": "Pick one 8th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest."
+ },
+ "warlock|res|mystic-arcanum-8": {
+  "name": "Mystic Arcanum (8th)"
+ },
+ "warlock||Mystic Arcanum (9th level)": {
+  "name": "Mystic Arcanum (9th level)",
+  "summary": "Pick one 9th-level warlock spell as an arcanum; cast it once without using a spell slot, regaining the use on a long rest."
+ },
+ "warlock|res|mystic-arcanum-9": {
+  "name": "Mystic Arcanum (9th)"
+ },
+ "warlock||Eldritch Master": {
+  "name": "Eldritch Master",
+  "summary": "Spend 1 minute pleading with your patron to recover every expended Pact Magic slot; usable once per long rest."
+ },
+ "warlock|res|eldritch-master": {
+  "name": "Eldritch Master"
+ },
+ "warlock|fiend|Expanded Spell List": {
+  "name": "Expanded Spell List",
+  "summary": "The Fiend adds its expanded spells (see spells) to the warlock list for you when you learn warlock spells."
+ },
+ "warlock|fiend|Dark One's Blessing": {
+  "name": "Dark One's Blessing",
+  "summary": "When you drop a hostile creature to 0 HP, gain temporary HP equal to Charisma modifier + warlock level (minimum 1)."
+ },
+ "warlock|fiend|Dark One's Own Luck": {
+  "name": "Dark One's Own Luck",
+  "summary": "Add a d10 to an ability check or saving throw after seeing the roll but before its effects apply."
+ },
+ "warlock|res|dark-ones-own-luck": {
+  "name": "Dark One's Own Luck"
+ },
+ "warlock|fiend|Fiendish Resilience": {
+  "name": "Fiendish Resilience",
+  "summary": "After a short or long rest pick a damage type to resist until you pick another; magical and silvered weapon damage bypasses it."
+ },
+ "warlock|fiend|Hurl Through Hell": {
+  "name": "Hurl Through Hell",
+  "summary": "On a hit, banish the target through the lower planes until the end of your next turn; when it returns, a non-fiend takes 10d10 psychic damage."
+ },
+ "warlock|res|hurl-through-hell": {
+  "name": "Hurl Through Hell"
+ },
+ "warlock|archfey|Expanded Spell List": {
+  "name": "Expanded Spell List",
+  "summary": "The Archfey adds its expanded spells (see spells) to the warlock list for you when you learn warlock spells."
+ },
+ "warlock|archfey|Fey Presence": {
+  "name": "Fey Presence",
+  "summary": "Action: every creature in a 10-foot cube from you makes a Wisdom save vs your spell DC or is charmed or frightened (your pick) until the end of your next turn."
+ },
+ "warlock|res|fey-presence": {
+  "name": "Fey Presence"
+ },
+ "warlock|archfey|Misty Escape": {
+  "name": "Misty Escape",
+  "summary": "Reaction when you take damage: become invisible and teleport up to 60 feet to a visible spot; invisibility lasts until your next turn starts or you attack or cast."
+ },
+ "warlock|res|misty-escape": {
+  "name": "Misty Escape"
+ },
+ "warlock|archfey|Beguiling Defenses": {
+  "name": "Beguiling Defenses",
+  "summary": "Immune to being charmed; when someone tries to charm you, your reaction can force a Wisdom save or that creature is charmed by you for 1 minute or until damaged."
+ },
+ "warlock|archfey|Dark Delirium": {
+  "name": "Dark Delirium",
+  "summary": "Action: a creature within 60 feet makes a Wisdom save or is charmed or frightened for up to 1 minute (concentration), lost in an illusory realm; ends if it takes damage."
+ },
+ "warlock|res|dark-delirium": {
+  "name": "Dark Delirium"
+ },
+ "warlock|great-old-one|Expanded Spell List": {
+  "name": "Expanded Spell List",
+  "summary": "The Great Old One adds its expanded spells (see spells) to the warlock list for you when you learn warlock spells."
+ },
+ "warlock|great-old-one|Awakened Mind": {
+  "name": "Awakened Mind",
+  "summary": "Speak telepathically with any creature within 30 feet that knows at least one language, no shared language required."
+ },
+ "warlock|great-old-one|Entropic Ward": {
+  "name": "Entropic Ward",
+  "summary": "Reaction: impose disadvantage on an attack roll against you; if it misses, you have advantage on your next attack against that creature before the end of your next turn."
+ },
+ "warlock|res|entropic-ward": {
+  "name": "Entropic Ward"
+ },
+ "warlock|great-old-one|Thought Shield": {
+  "name": "Thought Shield",
+  "summary": "Your mind can't be read unless you allow it; resistance to psychic damage, and creatures that deal psychic damage to you take the same amount."
+ },
+ "warlock|great-old-one|Create Thrall": {
+  "name": "Create Thrall",
+  "summary": "Action: touch an incapacitated humanoid to charm it until remove curse, the charm ends, or you use this again; you can talk to it telepathically on the same plane."
+ },
+ "warlock|opt|Eldritch Invocations|Agonizing Blast": {
+  "name": "Agonizing Blast",
+  "summary": "Add your Charisma modifier to the damage of each eldritch blast hit."
+ },
+ "warlock|opt|Eldritch Invocations|Armor of Shadows": {
+  "name": "Armor of Shadows",
+  "summary": "Cast mage armor on yourself at will with no slot or material components."
+ },
+ "warlock|opt|Eldritch Invocations|Ascendant Step": {
+  "name": "Ascendant Step",
+  "summary": "Cast levitate on yourself at will with no slot or material components."
+ },
+ "warlock|opt|Eldritch Invocations|Beast Speech": {
+  "name": "Beast Speech",
+  "summary": "Cast speak with animals at will without a spell slot."
+ },
+ "warlock|opt|Eldritch Invocations|Beguiling Influence": {
+  "name": "Beguiling Influence",
+  "summary": "Gain proficiency in Deception and Persuasion."
+ },
+ "warlock|opt|Eldritch Invocations|Bewitching Whispers": {
+  "name": "Bewitching Whispers",
+  "summary": "Cast compulsion once with a warlock slot; regain on a long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Book of Ancient Secrets": {
+  "name": "Book of Ancient Secrets",
+  "summary": "Add two 1st-level ritual spells from any class to your Book of Shadows and cast them as rituals; copy more rituals up to half your warlock level (rounded up) at 2 hours and 50 gp per spell level. Also cast known warlock rituals as rituals."
+ },
+ "warlock|opt|Eldritch Invocations|Chains of Carceri": {
+  "name": "Chains of Carceri",
+  "summary": "Cast hold monster at will on a celestial, fiend, or elemental with no slot or material components; once per creature per long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Devil's Sight": {
+  "name": "Devil's Sight",
+  "summary": "See normally in magical and nonmagical darkness out to 120 feet."
+ },
+ "warlock|opt|Eldritch Invocations|Dreadful Word": {
+  "name": "Dreadful Word",
+  "summary": "Cast confusion once with a warlock slot; regain on a long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Eldritch Sight": {
+  "name": "Eldritch Sight",
+  "summary": "Cast detect magic at will without a spell slot."
+ },
+ "warlock|opt|Eldritch Invocations|Eldritch Spear": {
+  "name": "Eldritch Spear",
+  "summary": "Eldritch blast's range becomes 300 feet."
+ },
+ "warlock|opt|Eldritch Invocations|Eyes of the Rune Keeper": {
+  "name": "Eyes of the Rune Keeper",
+  "summary": "You can read any writing."
+ },
+ "warlock|opt|Eldritch Invocations|Fiendish Vigor": {
+  "name": "Fiendish Vigor",
+  "summary": "Cast false life on yourself at will as a 1st-level spell, with no slot or material components."
+ },
+ "warlock|opt|Eldritch Invocations|Gaze of Two Minds": {
+  "name": "Gaze of Two Minds",
+  "summary": "Action: touch a willing humanoid and use its senses until the end of your next turn (extendable each turn with an action while on the same plane); you are blind and deaf to your own surroundings meanwhile."
+ },
+ "warlock|opt|Eldritch Invocations|Lifedrinker": {
+  "name": "Lifedrinker",
+  "summary": "Pact weapon hits deal extra necrotic damage equal to your Charisma modifier (minimum 1)."
+ },
+ "warlock|opt|Eldritch Invocations|Mask of Many Faces": {
+  "name": "Mask of Many Faces",
+  "summary": "Cast disguise self at will without a spell slot."
+ },
+ "warlock|opt|Eldritch Invocations|Master of Myriad Forms": {
+  "name": "Master of Myriad Forms",
+  "summary": "Cast alter self at will without a spell slot."
+ },
+ "warlock|opt|Eldritch Invocations|Minions of Chaos": {
+  "name": "Minions of Chaos",
+  "summary": "Cast conjure elemental once with a warlock slot; regain on a long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Mire the Mind": {
+  "name": "Mire the Mind",
+  "summary": "Cast slow once with a warlock slot; regain on a long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Misty Visions": {
+  "name": "Misty Visions",
+  "summary": "Cast silent image at will with no slot or material components."
+ },
+ "warlock|opt|Eldritch Invocations|One with Shadows": {
+  "name": "One with Shadows",
+  "summary": "In dim light or darkness, use an action to turn invisible until you move or take an action or reaction."
+ },
+ "warlock|opt|Eldritch Invocations|Otherworldly Leap": {
+  "name": "Otherworldly Leap",
+  "summary": "Cast jump on yourself at will with no slot or material components."
+ },
+ "warlock|opt|Eldritch Invocations|Repelling Blast": {
+  "name": "Repelling Blast",
+  "summary": "Each eldritch blast hit can shove the target up to 10 feet straight away from you."
+ },
+ "warlock|opt|Eldritch Invocations|Sculptor of Flesh": {
+  "name": "Sculptor of Flesh",
+  "summary": "Cast polymorph once with a warlock slot; regain on a long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Sign of Ill Omen": {
+  "name": "Sign of Ill Omen",
+  "summary": "Cast bestow curse once with a warlock slot; regain on a long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Thief of Five Fates": {
+  "name": "Thief of Five Fates",
+  "summary": "Cast bane once with a warlock slot; regain on a long rest."
+ },
+ "warlock|opt|Eldritch Invocations|Thirsting Blade": {
+  "name": "Thirsting Blade",
+  "summary": "Attack twice with your pact weapon when you take the Attack action."
+ },
+ "warlock|opt|Eldritch Invocations|Visions of Distant Realms": {
+  "name": "Visions of Distant Realms",
+  "summary": "Cast arcane eye at will without a spell slot."
+ },
+ "warlock|opt|Eldritch Invocations|Voice of the Chain Master": {
+  "name": "Voice of the Chain Master",
+  "summary": "Communicate telepathically with your familiar, perceive through its senses, and speak through it in your own voice while on the same plane."
+ },
+ "warlock|opt|Eldritch Invocations|Whispers of the Grave": {
+  "name": "Whispers of the Grave",
+  "summary": "Cast speak with dead at will without a spell slot."
+ },
+ "warlock|opt|Eldritch Invocations|Witch Sight": {
+  "name": "Witch Sight",
+  "summary": "See the true form of shapechangers and of creatures hidden by illusion or transmutation magic within 30 feet and in line of sight."
+ },
+ "warlock|opt|Pact Boon|Pact of the Chain": {
+  "name": "Pact of the Chain",
+  "summary": "Learn find familiar, cast as a ritual and not counted against spells known; familiar may also be an imp, pseudodragon, quasit, or sprite, and can make one attack when you forgo one of yours during the Attack action."
+ },
+ "warlock|opt|Pact Boon|Pact of the Blade": {
+  "name": "Pact of the Blade",
+  "summary": "Action: summon a melee pact weapon of any form, proficient and magical for overcoming resistance. Can bind one magic weapon (non-artifact, non-sentient) via a 1-hour ritual to summon instead. Vanishes if more than 5 ft away for 1 minute."
+ },
+ "warlock|opt|Pact Boon|Pact of the Tome": {
+  "name": "Pact of the Tome",
+  "summary": "Receive a Book of Shadows holding three cantrips from any class list, castable at will while you carry it and not counted against cantrips known; a lost book can be replaced with a 1-hour ceremony."
+ },
+ "wizard||Spellcasting": {
+  "name": "Spellcasting",
+  "summary": "Intelligence-based prepared casting from a spellbook (starts with six 1st-level spells, +2 free spells per level). Prepare Int mod + wizard level spells after a long rest; ritual-cast spellbook rituals unprepared; arcane focus allowed."
+ },
+ "wizard||Arcane Recovery": {
+  "name": "Arcane Recovery",
+  "summary": "Once per day after a short rest, recover expended slots whose combined level is at most half your wizard level rounded up; none may be 6th level or higher."
+ },
+ "wizard|res|arcane-recovery": {
+  "name": "Arcane Recovery"
+ },
+ "wizard||Arcane Tradition": {
+  "name": "Arcane Tradition",
+  "summary": "Choose one of eight schools (Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy, Transmutation); it grants features at 2nd, 6th, 10th, and 14th level."
+ },
+ "wizard||Ability Score Improvement": {
+  "name": "Ability Score Improvement",
+  "summary": "At 4th, 8th, 12th, 16th, and 19th level raise one ability by 2 or two abilities by 1 (max 20)."
+ },
+ "wizard||Spell Mastery": {
+  "name": "Spell Mastery",
+  "summary": "Pick one 1st-level and one 2nd-level spellbook spell; while prepared, cast them at their base level without a slot. Swap choices with 8 hours of study."
+ },
+ "wizard||Signature Spell": {
+  "name": "Signature Spell",
+  "summary": "(Section heading prints 'Signature Spells'.) Two chosen 3rd-level spellbook spells are always prepared, don't count against prepared spells, and each can be cast once at 3rd level without a slot per short or long rest."
+ },
+ "wizard|res|signature-spells": {
+  "name": "Signature spell free casts (one per spell)"
+ },
+ "wizard|evocation|Evocation Savant": {
+  "name": "Evocation Savant",
+  "summary": "Copying evocation spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|evocation|Sculpt Spells": {
+  "name": "Sculpt Spells",
+  "summary": "When casting an evocation spell, choose up to 1 + spell level visible creatures; they automatically succeed on its saves and take no damage where a save would halve it."
+ },
+ "wizard|evocation|Potent Cantrip": {
+  "name": "Potent Cantrip",
+  "summary": "Creatures that succeed on a save against your cantrip still take half its damage, without other effects."
+ },
+ "wizard|evocation|Empowered Evocation": {
+  "name": "Empowered Evocation",
+  "summary": "Add your Intelligence modifier to the damage roll of wizard evocation spells you cast."
+ },
+ "wizard|evocation|Overchannel": {
+  "name": "Overchannel",
+  "summary": "Deal maximum damage with a damaging wizard spell of 5th level or lower. Free once per long rest; each further use before resting deals you 2d12 necrotic per spell level, +1d12 per level each time, ignoring resistance and immunity."
+ },
+ "wizard|res|overchannel": {
+  "name": "Overchannel (safe use)"
+ },
+ "wizard|abjuration|Abjuration Savant": {
+  "name": "Abjuration Savant",
+  "summary": "Copying abjuration spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|abjuration|Arcane Ward": {
+  "name": "Arcane Ward",
+  "summary": "Casting a 1st+ level abjuration spell can create a ward on you (once per long rest) with HP 2 x wizard level + Int mod that absorbs damage to you; later abjuration spells restore 2 x spell level HP to it."
+ },
+ "wizard|res|arcane-ward": {
+  "name": "Arcane Ward hit points"
+ },
+ "wizard|abjuration|Projected Ward": {
+  "name": "Projected Ward",
+  "summary": "Reaction: when a creature you can see within 30 feet takes damage, your Arcane Ward absorbs it instead; overflow goes to that creature."
+ },
+ "wizard|abjuration|Improved Abjuration": {
+  "name": "Improved Abjuration",
+  "summary": "Add your proficiency bonus to ability checks made as part of casting abjuration spells (e.g. counterspell, dispel magic)."
+ },
+ "wizard|abjuration|Spell Resistance": {
+  "name": "Spell Resistance",
+  "summary": "Advantage on saving throws against spells and resistance to spell damage."
+ },
+ "wizard|conjuration|Conjuration Savant": {
+  "name": "Conjuration Savant",
+  "summary": "Copying conjuration spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|conjuration|Minor Conjuration": {
+  "name": "Minor Conjuration",
+  "summary": "Action: create a nonmagical-looking, faintly glowing object (max 3 ft per side, 10 lb) within 10 feet for 1 hour; ends early if damaged or reused."
+ },
+ "wizard|conjuration|Benign Transposition": {
+  "name": "Benign Transposition",
+  "summary": "Action: teleport up to 30 feet, or swap places with a willing Small/Medium creature. Recharges on a long rest or when you cast a 1st+ level conjuration spell."
+ },
+ "wizard|res|benign-transposition": {
+  "name": "Benign Transposition"
+ },
+ "wizard|conjuration|Focused Conjuration": {
+  "name": "Focused Conjuration",
+  "summary": "Taking damage can't break your concentration on a conjuration spell."
+ },
+ "wizard|conjuration|Durable Summons": {
+  "name": "Durable Summons",
+  "summary": "Creatures you summon or create with conjuration spells gain 30 temporary hit points."
+ },
+ "wizard|divination|Divination Savant": {
+  "name": "Divination Savant",
+  "summary": "Copying divination spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|divination|Portent": {
+  "name": "Portent",
+  "summary": "After each long rest roll two d20s and keep them; once per turn replace an attack roll, save, or ability check by you or a visible creature with one, decided before rolling. Unused rolls are lost on the next long rest."
+ },
+ "wizard|res|portent": {
+  "name": "Portent dice"
+ },
+ "wizard|divination|Expert Divination": {
+  "name": "Expert Divination",
+  "summary": "Casting a divination spell of 2nd level or higher with a slot regains one expended slot of a lower level (5th level max)."
+ },
+ "wizard|divination|The Third Eye": {
+  "name": "The Third Eye",
+  "summary": "Action: gain one chosen sense benefit until incapacitated or you take a short or long rest; reusable after a rest."
+ },
+ "wizard|res|the-third-eye": {
+  "name": "The Third Eye"
+ },
+ "wizard|divination|Greater Portent": {
+  "name": "Greater Portent",
+  "summary": "Portent gives you three d20s per long rest instead of two."
+ },
+ "wizard|opt|The Third Eye|Darkvision": {
+  "name": "Darkvision",
+  "summary": "Darkvision to 60 feet."
+ },
+ "wizard|opt|The Third Eye|Ethereal Sight": {
+  "name": "Ethereal Sight",
+  "summary": "See into the Ethereal Plane within 60 feet."
+ },
+ "wizard|opt|The Third Eye|Greater Comprehension": {
+  "name": "Greater Comprehension",
+  "summary": "Read any language."
+ },
+ "wizard|opt|The Third Eye|See Invisibility": {
+  "name": "See Invisibility",
+  "summary": "See invisible creatures and objects within 10 feet in line of sight."
+ },
+ "wizard|enchantment|Enchantment Savant": {
+  "name": "Enchantment Savant",
+  "summary": "Copying enchantment spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|enchantment|Hypnotic Gaze": {
+  "name": "Hypnotic Gaze",
+  "summary": "Action: a creature within 5 feet that can see or hear you makes a Wisdom save or is charmed, speed 0 and incapacitated until your next turn ends; sustain with an action each turn. On a save or end, can't target it again until a long rest."
+ },
+ "wizard|enchantment|Instinctive Charm": {
+  "name": "Instinctive Charm",
+  "summary": "Reaction: an attacker within 30 feet makes a Wisdom save or must redirect its attack to the nearest other creature in range; on a success you can't use this on it until a long rest."
+ },
+ "wizard|enchantment|Split Enchantment": {
+  "name": "Split Enchantment",
+  "summary": "A 1st+ level enchantment spell that targets only one creature can target a second creature."
+ },
+ "wizard|enchantment|Alter Memories": {
+  "name": "Alter Memories",
+  "summary": "When you charm creatures with an enchantment spell, one stays unaware it was charmed; before the spell ends, an action can make it lose up to 1 + Cha mod hours of memory on a failed Int save."
+ },
+ "wizard|illusion|Illusion Savant": {
+  "name": "Illusion Savant",
+  "summary": "Copying illusion spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|illusion|Improved Minor Illusion": {
+  "name": "Improved Minor Illusion",
+  "summary": "Learn minor illusion (or another wizard cantrip if known) without it counting against cantrips known; your minor illusion can make both a sound and an image."
+ },
+ "wizard|illusion|Malleable Illusions": {
+  "name": "Malleable Illusions",
+  "summary": "Action: reshape an active illusion spell of yours with duration 1 minute or longer, within that spell's parameters, while you can see it."
+ },
+ "wizard|illusion|Illusory Self": {
+  "name": "Illusory Self",
+  "summary": "Reaction to an attack roll against you: an illusory double makes the attack miss automatically."
+ },
+ "wizard|res|illusory-self": {
+  "name": "Illusory Self"
+ },
+ "wizard|illusion|Illusory Reality": {
+  "name": "Illusory Reality",
+  "summary": "While a 1st+ level illusion spell lasts, bonus action: make one inanimate, nonmagical object in it real for 1 minute; it can't deal damage or directly harm anyone."
+ },
+ "wizard|necromancy|Necromancy Savant": {
+  "name": "Necromancy Savant",
+  "summary": "Copying necromancy spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|necromancy|Grim Harvest": {
+  "name": "Grim Harvest",
+  "summary": "Once per turn, killing creatures with a 1st+ level spell heals you 2 x spell level (3 x for necromancy spells); not for constructs or undead."
+ },
+ "wizard|necromancy|Undead Thralls": {
+  "name": "Undead Thralls",
+  "summary": "Gain animate dead in your spellbook; it raises one extra corpse. Undead you create with necromancy get extra max HP equal to your wizard level and add your proficiency bonus to weapon damage."
+ },
+ "wizard|necromancy|Inured to Undeath": {
+  "name": "Inured to Undeath",
+  "summary": "Resistance to necrotic damage, and your hit point maximum can't be reduced."
+ },
+ "wizard|necromancy|Command Undead": {
+  "name": "Command Undead",
+  "summary": "Action: an undead within 60 feet makes a Charisma save or becomes friendly and obeys you until you use this again; smart undead (Int 8+) get advantage, Int 12+ can re-save each turn. A success makes it permanently immune to this feature."
+ },
+ "wizard|transmutation|Transmutation Savant": {
+  "name": "Transmutation Savant",
+  "summary": "Copying transmutation spells into your spellbook costs half the usual gold and time."
+ },
+ "wizard|transmutation|Minor Alchemy": {
+  "name": "Minor Alchemy",
+  "summary": "Spend 10 minutes per cubic foot (up to 1 cubic foot) to turn wood, stone (not gems), iron, copper, or silver into another of those for 1 hour or until your concentration breaks."
+ },
+ "wizard|transmutation|Transmuter's Stone": {
+  "name": "Transmuter's Stone",
+  "summary": "Spend 8 hours to craft a stone granting its bearer one chosen benefit; casting a 1st+ level transmutation spell lets you change the benefit. Making a new stone ends the old one."
+ },
+ "wizard|transmutation|Shapechanger": {
+  "name": "Shapechanger",
+  "summary": "Add polymorph to your spellbook; once per short or long rest cast it without a slot on yourself only, becoming a beast of CR 1 or lower."
+ },
+ "wizard|res|shapechanger": {
+  "name": "Shapechanger (free polymorph)"
+ },
+ "wizard|transmutation|Master Transmuter": {
+  "name": "Master Transmuter",
+  "summary": "Action: destroy your transmuter's stone to produce one major effect; the stone can't be remade until a long rest."
+ },
+ "wizard|res|master-transmuter": {
+  "name": "Master Transmuter"
+ },
+ "wizard|opt|Transmuter's Stone|Darkvision": {
+  "name": "Darkvision",
+  "summary": "Darkvision to 60 feet."
+ },
+ "wizard|opt|Transmuter's Stone|Speed": {
+  "name": "Speed",
+  "summary": "+10 feet speed while unencumbered."
+ },
+ "wizard|opt|Transmuter's Stone|Constitution saves": {
+  "name": "Constitution saves",
+  "summary": "Proficiency in Constitution saving throws."
+ },
+ "wizard|opt|Transmuter's Stone|Energy resistance": {
+  "name": "Energy resistance",
+  "summary": "Resistance to acid, cold, fire, lightning, or thunder damage (chosen each time this benefit is picked)."
+ },
+ "wizard|opt|Master Transmuter|Major Transformation": {
+  "name": "Major Transformation",
+  "summary": "Over 10 minutes, turn a nonmagical object up to a 5-foot cube into another nonmagical object of similar size and mass and equal or lower value."
+ },
+ "wizard|opt|Master Transmuter|Panacea": {
+  "name": "Panacea",
+  "summary": "Touched creature is cured of all curses, diseases, and poisons and regains all hit points."
+ },
+ "wizard|opt|Master Transmuter|Restore Life": {
+  "name": "Restore Life",
+  "summary": "Cast raise dead by touch with no slot and no need to have it in your spellbook."
+ },
+ "wizard|opt|Master Transmuter|Restore Youth": {
+  "name": "Restore Youth",
+  "summary": "A willing touched creature's apparent age drops by 3d10 years (minimum 13); lifespan is not extended."
+ }
+}
