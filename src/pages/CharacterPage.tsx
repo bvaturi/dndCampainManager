@@ -12,9 +12,8 @@ import Spellbook from '../sheet/Spellbook'
 import CustomTabView from '../sheet/CustomTabView'
 import FeatsTab from '../sheet/FeatsTab'
 import ClassFeaturesTab from '../sheet/ClassFeaturesTab'
-import { levelUpGain } from '../lib/levelUp'
+import { LevelUpButton } from '../sheet/LevelUpDialog'
 import { RestButtons } from '../sheet/RestDialog'
-import { featureNameHe, featureSummaryHe } from '../lib/classFeatures'
 import type { CustomTab } from '../lib/types'
 import { L } from '../sheet/labels'
 import { useHomebrew } from '../components/HomebrewScope'
@@ -24,7 +23,7 @@ export default function CharacterPage() {
   useHomebrew() // re-render when the campaign's homebrew changes (spell lists, abilities)
   const { cid = '', chid = '' } = useParams()
   const { backend, user, isAdmin } = useUser()
-  const { t, g, lang } = useI18n()
+  const { t, lang } = useI18n()
   const nav = useNavigate()
   const [ch, setCh] = useState<Character | null>(null)
   const [isMember, setIsMember] = useState(false)
@@ -100,25 +99,6 @@ export default function CharacterPage() {
     onChange({ hpCurrent: r.hp, hpTemp: r.temp, ...(revived ? { deathSaves: { successes: 0, failures: 0 } } : {}) })
   }
 
-  const levelUp = () => {
-    const gain = levelUpGain(ch)
-    if (!gain) return
-    const { level: next, hp } = gain
-    if (!confirm(t('levelUpConfirm', { name: ch.name, level: next, hp }))) return
-    // Each new ability as "Name: what it does", in the sheet's language.
-    const added = gain.features.map((f) => {
-      const name = (lang === 'he' && featureNameHe(ch.classId, f.subclass, f.name)) || g('features', f.name, f.name)
-      const summary = (lang === 'he' && featureSummaryHe(ch.classId, f.subclass, f.name)) || f.summary
-      return summary ? `${name}: ${summary}` : name
-    })
-    onChange({
-      level: next,
-      hpMax: ch.hpMax + hp,
-      hpCurrent: ch.hpCurrent + hp,
-      features: added.length ? `${ch.features}\n${added.join('\n')}`.trim() : ch.features,
-      ...(gain.feats ? { feats: gain.feats } : {}),
-    })
-  }
 
   return (
     <div className={`page sheet-page-wrap ${hand ? 'handwriting' : ''}`}>
@@ -132,7 +112,7 @@ export default function CharacterPage() {
           try { localStorage.setItem('codex-handwriting', e.target.checked ? 'on' : 'off') } catch { /* storage blocked */ }
         }} /> {L.handwriting[lang]}</label>
         {canEdit && <RestButtons ch={ch} onChange={onChange} />}
-        {canEdit && ch.level < 20 && <button className="btn btn-small" onClick={levelUp}>▲ {t('levelUp')}</button>}
+        {canEdit && <LevelUpButton ch={ch} onChange={onChange} />}
         <button className="btn btn-small" onClick={() => window.print()}>🖨️ {t('print')}</button>
         {canEdit && (
           <button className="btn btn-small btn-danger" onClick={async () => {

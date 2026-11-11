@@ -1,6 +1,6 @@
 /** Feats: PHB feat list, prerequisites, ASI/feat slots, and the sheet changes a feat makes. */
 import featData from '../data/feats.json'
-import { classById } from './rules'
+import { classById, mod } from './rules'
 import { casterInfo } from './spellAccess'
 import { ABILITIES, type Ability, type Character, type CharacterFeat } from './types'
 
@@ -98,6 +98,10 @@ export function addFeat(ch: Character, entry: Omit<CharacterFeat, 'uid' | 'appli
     hpMax += applied.hp
     hpCurrent += applied.hp
   }
+  // PHB p.15: when the Constitution modifier goes up, the hit point maximum rises by 1 per level attained.
+  const conHp = (mod(abilities.con) - mod(ch.abilities.con)) * ch.level
+  hpMax += conHp
+  hpCurrent += conHp
 
   const feat: CharacterFeat = { ...entry, uid: newUid(), applied }
   return { abilities, saveProfs, hpMax, hpCurrent, feats: [...(ch.feats ?? []), feat] }
@@ -110,7 +114,8 @@ export function removeFeat(ch: Character, uid: string): Partial<Character> {
   const abilities = { ...ch.abilities }
   for (const a of ABILITIES) abilities[a] -= feat.applied?.abilities?.[a] ?? 0
   const saveProfs = feat.applied?.save ? ch.saveProfs.filter((s) => s !== feat.applied!.save) : ch.saveProfs
-  const hp = feat.applied?.hp ?? 0
+  // Undo the feat's own HP (Tough) and what a higher Constitution modifier added (1 per level).
+  const hp = (feat.applied?.hp ?? 0) + (mod(ch.abilities.con) - mod(abilities.con)) * ch.level
   return {
     abilities,
     saveProfs,

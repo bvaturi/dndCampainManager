@@ -936,3 +936,12 @@ input.custom-tab-title:hover, input.custom-tab-title:focus { border-bottom-color
 .cf-homebrew { display: flex; flex-direction: column; gap: 8px; }
 .cf-section-title { margin: 8px 0 0; font-size: 18px; }
 .hb-card { border-inline-start: 4px solid var(--gold); }
+
+/* ---------- level up window (shares the rest dialog's blocks) */
+.levelup .mode-toggle { align-self: flex-start; }
+.lu-features { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.lu-features li { border-inline-start: 3px solid var(--gold); padding-inline-start: 10px; }
+.lu-features strong { font-size: 15px; }
+.lu-features .pill { margin-inline-start: 8px; }
+.lu-features p { margin: 2px 0 0; font-size: 14px; }
+.lu-sum { unicode-bidi: isolate; direction: ltr; }
