@@ -2,14 +2,15 @@ import { useMemo, useState } from 'react'
 import { SpellCard, spellLevelLabel } from '../components/SpellCard'
 import { useI18n } from '../lib/i18n'
 import { useHomebrew } from '../components/HomebrewScope'
-import { HOMEBREW_SOURCE, findSpell, grantedSpells } from '../lib/homebrew'
+import { HOMEBREW_SOURCE, allSpells, findSpell, grantedSpells } from '../lib/homebrew'
 import { ABILITY_NAMES, classById, mod, profBonus, signed, type Spell } from '../lib/rules'
-import { cantripCount, castableMax, casterInfo, classSpellList, spellAllowance, spellSlots, unlockLevel } from '../lib/spellAccess'
+import { cantripCount, castableMax, casterInfo, classSpellList, spellAllowance, spellSlots, subclassSpells, unlockLevel } from '../lib/spellAccess'
 import type { Character } from '../lib/types'
 import { useSheetRolls } from './rolls'
 import { useCaster } from './CastDialog'
 
-type Filter = 'all' | 'mine'
+/** Class list, the spells on the sheet, or every spell in the rules (for spells a subclass or the DM adds). */
+type Filter = 'all' | 'mine' | 'book'
 
 /** The character's own spell list: every spell their class can learn, levels 0-9, gated by character level. */
 export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit: boolean; onChange(p: Partial<Character>): void }) {
@@ -28,6 +29,12 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
   // The homebrew library is read through the registry; `homebrew` changes when it does.
   const list = useMemo(() => classSpellList(ch.classId, ch.subclass, allSources), [ch.classId, ch.subclass, allSources, homebrew])
   const granted = grantedSpells(ch).filter((s) => !list.some((x) => x.id === s.id))
+  const always = subclassSpells(ch.classId, ch.subclass, ch.level).always
+  const book = useMemo(() => allSpells().filter((s) => allSources || s.source === 'PHB' || s.source === 'HB'), [allSources, homebrew])
+  const onList = (s: Spell) => list.some((x) => x.id === s.id)
+  const isAlways = (s: Spell) => always.some((x) => x.id === s.id)
+  /** Spell levels the character can't cast yet (cantrips: no cantrips at all). */
+  const levelLocked = (lv: number) => lv === 0 ? cantripCount(ch.classId, ch.subclass, ch.level) === 0 : lv > castableMax(ch.classId, ch.subclass, ch.level)
   const mine = new Map(ch.spells.map((s) => [s.id, s]))
 
 
@@ -50,12 +57,11 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
   const levels = Array.from({ length: 10 }, (_, i) => i).filter((lv) => unlockLevel(ch.classId, ch.subclass, lv) !== null)
 
   const needle = q.trim().toLowerCase()
-  const visible = (s: Spell) =>
-    (filter === 'all' || mine.has(s.id)) &&
-    (!needle || s.name.toLowerCase().includes(needle) || g('spells', s.id, '').includes(q.trim()))
+  const matches = (s: Spell) => !needle || s.name.toLowerCase().includes(needle) || g('spells', s.id, '').includes(q.trim())
+  const visible = (s: Spell) => (filter !== 'mine' || mine.has(s.id)) && matches(s)
 
   // Spells already on the sheet that the class list doesn't include (imported or from older versions).
-  const offList = owned.filter((s) => !list.some((x) => x.id === s.id) && !granted.some((x) => x.id === s.id) && !(allSources === false && s.spell!.source !== 'PHB'))
+  const offList = owned.filter((s) => !onList(s.spell!) && !granted.some((x) => x.id === s.id) && !isAlways(s.spell!) && !(allSources === false && s.spell!.source !== 'PHB'))
 
   const add = (s: Spell) => onChange({ spells: [...ch.spells, { id: s.id, prepared: true }] })
   const remove = (id: string) => onChange({ spells: ch.spells.filter((x) => x.id !== id) })
@@ -64,9 +70,10 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
 
   const row = (s: Spell, locked: boolean, warn?: string) => {
     const have = mine.get(s.id)
+    const fixed = isAlways(s)
     return (
-      <li key={s.id} className={`sb-row ${have ? 'have' : ''} ${locked ? 'locked' : ''}`}>
-        {edit ? (
+      <li key={s.id} className={`sb-row ${have || fixed ? 'have' : ''} ${locked ? 'locked' : ''}`}>
+        {fixed ? <span className="sb-add static on" title={t('sbAlwaysPrepared')}>★</span> : edit ? (
           have
             ? <button className="sb-add on" title={t('sbRemove')} onClick={() => remove(s.id)}>✓</button>
             : <button className="sb-add" disabled={locked} title={t('sbAdd')} onClick={() => add(s)}>+</button>
@@ -84,18 +91,26 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
         </span>
         <span className="sb-cast" dir="ltr">{s.castingTime} · {s.range}</span>
         <span className="sb-actions">
-          {showPrepared && have && s.level > 0 && (
+          {fixed && s.level > 0 && <span className="sb-book on" title={t('sbAlwaysPrepared')}>★ {t('sbAlwaysTag')}</span>}
+          {!fixed && showPrepared && have && s.level > 0 && (
             <button className={`sb-book ${have.prepared ? 'on' : ''}`} disabled={!edit} onClick={() => togglePrepared(s.id)}
               title={t(have.prepared ? 'preparedToggle' : 'unpreparedToggle')} aria-pressed={have.prepared}>
               📖 {have.prepared ? t('sbPreparedTag') : t('sbPrepare')}
             </button>
           )}
-          {edit && have && !locked && <button className="btn btn-small sb-castbtn" onClick={() => caster.cast(s)}>✦ {t('castButton')}</button>}
+          {edit && (have || fixed) && !locked && <button className="btn btn-small sb-castbtn" onClick={() => caster.cast(s)}>✦ {t('castButton')}</button>}
         </span>
       </li>
     )
   }
 
+  const subclassName = g('subclasses', ch.subclass, classById(ch.classId)?.subclasses.find((x) => x.id === ch.subclass)?.name)
+  const alwaysSection = always.filter(matches).length > 0 && (
+    <section className="sb-level card">
+      <header className="sb-level-head"><h3>★ {t('sbSubclassSpells', { name: subclassName })}</h3></header>
+      <ul className="sb-list">{always.filter(matches).sort((a, b) => a.level - b.level).map((s) => row(s, levelLocked(s.level), onList(s) ? undefined : t('sbNotOnList')))}</ul>
+    </section>
+  )
   const grantedSection = granted.filter(visible).length > 0 && (
     <section className="sb-level card">
       <header className="sb-level-head"><h3>🎁 {t('hbGrantedSpells')}</h3></header>
@@ -151,15 +166,19 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
           <div className="mode-toggle sb-filter">
             <button className={filter === 'all' ? 'on' : ''} onClick={() => setFilter('all')}>{t('sbAll', { cls: listClassName })}</button>
             <button className={filter === 'mine' ? 'on' : ''} onClick={() => setFilter('mine')}>{t('sbMine')} ({ch.spells.length})</button>
+            <button className={filter === 'book' ? 'on' : ''} onClick={() => setFilter('book')} title={t('sbBookHint')}>📚 {t('sbBook')}</button>
           </div>
           <label className="check"><input type="checkbox" checked={allSources} onChange={(e) => setAllSources(e.target.checked)} /> {t('showAllSources')}</label>
         </div>
       </div>
 
+      {filter === 'book' && <p className="notice small">📚 {t('sbBookHint')}</p>}
+      {filter !== 'book' && alwaysSection}
+
       {levels.map((lv) => {
         const at = unlockLevel(ch.classId, ch.subclass, lv)!
-        const locked = lv === 0 ? cantripCount(ch.classId, ch.subclass, ch.level) === 0 : lv > castableMax(ch.classId, ch.subclass, ch.level)
-        const spells = list.filter((s) => s.level === lv && visible(s))
+        const locked = levelLocked(lv)
+        const spells = (filter === 'book' ? book : list).filter((s) => s.level === lv && visible(s))
         if (!spells.length && (filter === 'mine' || needle)) return null
         const arcanum = ch.classId === 'warlock' && lv >= 6
         return (
@@ -171,7 +190,7 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
               {locked && <span className="sb-lock">🔒 {t('sbLocked', { n: at })}</span>}
               <span className="muted small sb-count">{spells.length}</span>
             </header>
-            <ul className="sb-list">{spells.map((s) => row(s, locked))}</ul>
+            <ul className="sb-list">{spells.map((s) => row(s, locked, onList(s) || isAlways(s) ? undefined : t('sbNotOnList')))}</ul>
           </section>
         )
       })}
@@ -181,7 +200,7 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
       {offList.length > 0 && (
         <section className="sb-level card">
           <header className="sb-level-head"><h3>{t('sbNotOnList')}</h3></header>
-          <ul className="sb-list">{offList.map((s) => row(s.spell!, true, t('sbNotOnList')))}</ul>
+          <ul className="sb-list">{offList.map((s) => row(s.spell!, levelLocked(s.spell!.level), t('sbNotOnList')))}</ul>
         </section>
       )}
 

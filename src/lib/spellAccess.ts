@@ -79,18 +79,43 @@ function cantripUnlock(classId: string, subclass: string) {
   return null
 }
 
-/** Spells on the character's class list (optionally PHB only), any level. */
+const normName = (s: string) => s.toLowerCase().replace(/[^a-z]/g, '')
+
+/** Spells named in a subclass's table, resolved to spell data (also matches "Tasha's" names without the owner). */
+function resolveNames(names: string[]): Spell[] {
+  const all = allSpells()
+  return names.map((n) => all.find((s) => normName(s.name) === normName(n) || normName(s.name.replace(/^\w+'s /, '')) === normName(n)))
+    .filter((s): s is Spell => !!s)
+}
+
+/**
+ * Subclass spells: domain / oath spells are always prepared from the class level in their table (they don't count
+ * against the prepared limit and may be off the class list, e.g. Tempest's Thunderwave). A warlock patron's
+ * expanded list adds spells the warlock may pick (keyed by spell level).
+ */
+export function subclassSpells(classId: string, subclass: string, level: number): { always: Spell[]; expanded: Spell[] } {
+  const sub = classById(classId)?.subclasses.find((s) => s.id === subclass)
+  if (!sub?.spells) return { always: [], expanded: [] }
+  if (classId === 'warlock') return { always: [], expanded: resolveNames(Object.values(sub.spells).flat()) }
+  const names = Object.entries(sub.spells).filter(([lv]) => level >= +lv).flatMap(([, list]) => list)
+  return { always: resolveNames(names), expanded: [] }
+}
+
+/** Spells on the character's class list (optionally PHB only), any level, plus a warlock patron's expanded spells. */
 export function classSpellList(classId: string, subclass: string, allSources = true): Spell[] {
   const info = casterInfo(classId, subclass)
   if (!info) return []
   // Homebrew spells (the campaign's approved library) always count, like PHB ones.
-  return allSpells().filter((s) => s.classes.includes(info.listClass) && (allSources || s.source === 'PHB' || s.source === 'HB'))
+  const list = allSpells().filter((s) => s.classes.includes(info.listClass) && (allSources || s.source === 'PHB' || s.source === 'HB'))
+  const extra = subclassSpells(classId, subclass, 20).expanded.filter((s) => !list.some((x) => x.id === s.id))
+  return [...list, ...extra]
 }
 
 /** Can this character take this spell at their current level? */
 export function canUseSpell(classId: string, subclass: string, level: number, spell: Spell): boolean {
   const info = casterInfo(classId, subclass)
-  if (!info || !spell.classes.includes(info.listClass)) return false
+  const onList = !!info && (spell.classes.includes(info.listClass) || subclassSpells(classId, subclass, level).expanded.some((s) => s.id === spell.id))
+  if (!info || !onList) return false
   if (spell.level === 0) return cantripCount(classId, subclass, level) > 0
   return spell.level <= castableMax(classId, subclass, level)
 }

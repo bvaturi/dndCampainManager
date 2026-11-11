@@ -6,7 +6,7 @@ import { useSheetRolls } from './rolls'
 import { rollExpr } from '../lib/dice'
 import { useI18n } from '../lib/i18n'
 import type { Spell } from '../lib/rules'
-import { casterInfo, spellAllowance } from '../lib/spellAccess'
+import { casterInfo, spellAllowance, subclassSpells } from '../lib/spellAccess'
 import type { Character } from '../lib/types'
 
 /** `cast(spell)` opens the dialog; render `dialog` once in the page. */
@@ -29,7 +29,9 @@ function CastDialog({ ch, spell, onChange, onClose }: { ch: Character; spell: Sp
   const name = g('spells', spell.id, spell.name)
   const mode = spellAllowance(ch.classId, ch.subclass, ch.level, ch.abilities).mode
   const prepares = mode === 'prepared' || mode === 'spellbook'
-  const prepared = ch.spells.find((s) => s.id === spell.id)?.prepared ?? false
+  // Domain / oath spells are always prepared.
+  const prepared = (ch.spells.find((s) => s.id === spell.id)?.prepared ?? false)
+    || subclassSpells(ch.classId, ch.subclass, ch.level).always.some((s) => s.id === spell.id)
   const dice = spellDice(spell, ch.level)
   const rolls = useSheetRolls(ch, true, onChange)
 

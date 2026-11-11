@@ -137,9 +137,10 @@ export function averageHpPerLevel(hitDie: number) {
   return Math.floor(hitDie / 2) + 1
 }
 
-export function startingHp(cls: ClassDef, level: number, conMod: number, subrace: string) {
-  const toughness = subrace === 'hill-dwarf' ? level : 0
-  return cls.hitDie + conMod + (level - 1) * (averageHpPerLevel(cls.hitDie) + conMod) + toughness
+/** Max HP at a level: full hit die at 1st, the average after; plus Dwarven Toughness / Draconic Resilience per level. */
+export function startingHp(cls: ClassDef, level: number, conMod: number, subrace: string, subclass = '') {
+  const perLevel = (subrace === 'hill-dwarf' ? 1 : 0) + (cls.id === 'sorcerer' && subclass === 'draconic' ? 1 : 0)
+  return cls.hitDie + conMod + (level - 1) * (averageHpPerLevel(cls.hitDie) + conMod) + perLevel * level
 }
 
 const norm = (s: string) => s.toLowerCase().replace(/^\d+\s*×\s*/, '').trim()

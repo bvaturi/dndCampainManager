@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ErrorBox, Loading } from '../components/ui'
 import { useUser } from '../lib/auth'
 import { useI18n } from '../lib/i18n'
-import { averageHpPerLevel, classById, mod } from '../lib/rules'
 import type { Campaign, Character } from '../lib/types'
 import { casterInfo } from '../lib/spellAccess'
 import CharacterSheet from '../sheet/CharacterSheet'
@@ -13,7 +12,7 @@ import Spellbook from '../sheet/Spellbook'
 import CustomTabView from '../sheet/CustomTabView'
 import FeatsTab from '../sheet/FeatsTab'
 import ClassFeaturesTab from '../sheet/ClassFeaturesTab'
-import { levelUpFeats } from '../lib/feats'
+import { levelUpGain } from '../lib/levelUp'
 import { RestButtons } from '../sheet/RestDialog'
 import { featureNameHe } from '../lib/classFeatures'
 import type { CustomTab } from '../lib/types'
@@ -102,25 +101,18 @@ export default function CharacterPage() {
   }
 
   const levelUp = () => {
-    const cls = classById(ch.classId)
-    if (!cls || ch.level >= 20) return
-    const next = ch.level + 1
-    const fromFeats = levelUpFeats(ch)
-    const hp = averageHpPerLevel(cls.hitDie) + mod(ch.abilities.con) + (ch.subrace === 'hill-dwarf' ? 1 : 0) + fromFeats.hp
+    const gain = levelUpGain(ch)
+    if (!gain) return
+    const { level: next, hp } = gain
     if (!confirm(t('levelUpConfirm', { name: ch.name, level: next, hp }))) return
-    // The book's level table names what the new level brings; "… feature" placeholders resolve to the subclass.
-    const sub = cls.subclasses.find((s) => s.id === ch.subclass)
-    const row = cls.progression.find((p) => p.level === next)
     const label = (subId: string, n: string) => (lang === 'he' && featureNameHe(ch.classId, subId, n)) || g('features', n, n)
-    const added = (row?.features ?? []).flatMap((n) => /feature$/i.test(n.trim())
-      ? (sub?.features.filter((f) => f.level === next).map((f) => label(sub.id, f.name)) ?? [label('', n)])
-      : [label('', n)])
+    const added = gain.features.map(([subId, n]) => label(subId, n))
     onChange({
       level: next,
       hpMax: ch.hpMax + hp,
       hpCurrent: ch.hpCurrent + hp,
       features: added.length ? `${ch.features}\n${added.join('\n')}`.trim() : ch.features,
-      ...(fromFeats.feats ? { feats: fromFeats.feats } : {}),
+      ...(gain.feats ? { feats: gain.feats } : {}),
     })
   }
 

@@ -1,0 +1,545 @@
+{
+ "abi-dalzim-s-horrid-wilting": {
+  "duration": "Instantaneous",
+  "material": "A bit of sponge"
+ },
+ "absorb-elements": {
+  "duration": "1 round"
+ },
+ "aganazzar-s-scorcher": {
+  "duration": "Instantaneous",
+  "material": "A red dragon's scale"
+ },
+ "arcane-gate": {
+  "duration": "Up to 10 minutes"
+ },
+ "armor-of-agathys": {
+  "duration": "1 hour",
+  "material": "A cup of water"
+ },
+ "arms-of-hadar": {
+  "duration": "Instantaneous"
+ },
+ "aura-of-life": {
+  "duration": "Up to 10 minutes"
+ },
+ "aura-of-purity": {
+  "duration": "Up to 10 minutes"
+ },
+ "aura-of-vitality": {
+  "duration": "Up to 1 minute"
+ },
+ "banishing-smite": {
+  "duration": "Up to 1 minute"
+ },
+ "beast-bond": {
+  "duration": "Up to 10 minutes",
+  "material": "A bit of fur wrapped in a cloth"
+ },
+ "beast-sense": {
+  "duration": "Up to 1 hour"
+ },
+ "blade-of-disaster": {
+  "duration": "Up to 1 minute"
+ },
+ "blade-ward": {
+  "duration": "1 round"
+ },
+ "blinding-smite": {
+  "duration": "Up to 1 minute"
+ },
+ "bones-of-the-earth": {
+  "duration": "Instantaneous"
+ },
+ "booming-blade": {
+  "duration": "1 round",
+  "material": "A melee weapon worth at least 1 sp"
+ },
+ "catapult": {
+  "duration": "Instantaneous"
+ },
+ "catnap": {
+  "duration": "10 minutes",
+  "material": "A pinch of sand"
+ },
+ "cause-fear": {
+  "duration": "Up to 1 minute"
+ },
+ "ceremony": {
+  "duration": "Instantaneous",
+  "material": "25 gp worth of powdered silver, which the spell consumes"
+ },
+ "chaos-bolt": {
+  "duration": "Instantaneous"
+ },
+ "charm-monster": {
+  "duration": "1 hour"
+ },
+ "chromatic-orb": {
+  "duration": "Instantaneous",
+  "material": "A diamond worth at least 50 gp"
+ },
+ "circle-of-power": {
+  "duration": "Up to 10 minutes"
+ },
+ "cloud-of-daggers": {
+  "duration": "Up to 1 minute",
+  "material": "A sliver of glass"
+ },
+ "compelled-duel": {
+  "duration": "Up to 1 minute"
+ },
+ "conjure-barrage": {
+  "duration": "Instantaneous",
+  "material": "One piece of ammunition or a thrown weapon"
+ },
+ "conjure-volley": {
+  "duration": "Instantaneous",
+  "material": "One piece of ammunition or one thrown weapon"
+ },
+ "control-flames": {
+  "duration": "Instantaneous or 1 hour (see below)"
+ },
+ "control-winds": {
+  "duration": "Up to 1 hour"
+ },
+ "cordon-of-arrows": {
+  "duration": "8 hours",
+  "material": "Four or more arrows or bolts"
+ },
+ "create-bonfire": {
+  "duration": "Up to 1 minute"
+ },
+ "create-homunculus": {
+  "duration": "Instantaneous",
+  "material": "Clay, ash, and mandrake root, all of which the spell consumes, and a jewel-encrusted dagger worth at least 1,000 gp"
+ },
+ "crown-of-madness": {
+  "duration": "Up to 1 minute"
+ },
+ "crown-of-stars": {
+  "duration": "1 hour"
+ },
+ "crusader-s-mantle": {
+  "duration": "Up to 1 minute"
+ },
+ "danse-macabre": {
+  "duration": "Up to 1 hour"
+ },
+ "dawn": {
+  "duration": "Up to 1 minute",
+  "material": "A sunburst pendant worth at least 100 gp"
+ },
+ "destructive-wave": {
+  "duration": "Instantaneous"
+ },
+ "dissonant-whispers": {
+  "duration": "Instantaneous"
+ },
+ "dragon-s-breath": {
+  "duration": "Up to 1 minute",
+  "material": "A hot pepper"
+ },
+ "dream-of-the-blue-veil": {
+  "duration": "6 hours",
+  "material": "A magic item or a willing creature from the destination world"
+ },
+ "druid-grove": {
+  "duration": "24 hours",
+  "material": "Mistletoe, which the spell consumes, that was harvested with a golden sickle under the light of a full moon"
+ },
+ "dust-devil": {
+  "duration": "Up to 1 minute",
+  "material": "A pinch of dust"
+ },
+ "earth-tremor": {
+  "duration": "Instantaneous"
+ },
+ "earthbind": {
+  "duration": "Up to 1 minute"
+ },
+ "elemental-bane": {
+  "duration": "Up to 1 minute"
+ },
+ "elemental-weapon": {
+  "duration": "Up to 1 hour"
+ },
+ "enemies-abound": {
+  "duration": "Up to 1 minute"
+ },
+ "enervation": {
+  "duration": "Up to 1 minute"
+ },
+ "ensnaring-strike": {
+  "duration": "Up to 1 minute"
+ },
+ "erupting-earth": {
+  "duration": "Instantaneous",
+  "material": "A piece of obsidian"
+ },
+ "far-step": {
+  "duration": "Up to 1 minute"
+ },
+ "feign-death": {
+  "duration": "1 hour",
+  "material": "A pinch of graveyard dirt"
+ },
+ "find-greater-steed": {
+  "duration": "Instantaneous"
+ },
+ "flame-arrows": {
+  "duration": "Up to 1 hour"
+ },
+ "friends": {
+  "duration": "Up to 1 minute",
+  "material": "A small amount of makeup applied to the face as this spell is cast"
+ },
+ "frostbite": {
+  "duration": "Instantaneous"
+ },
+ "grasping-vine": {
+  "duration": "Up to 1 minute"
+ },
+ "green-flame-blade": {
+  "duration": "Instantaneous",
+  "material": "A melee weapon worth at least 1 sp"
+ },
+ "guardian-of-nature": {
+  "duration": "Up to 1 minute"
+ },
+ "gust": {
+  "duration": "Instantaneous"
+ },
+ "hail-of-thorns": {
+  "duration": "Up to 1 minute"
+ },
+ "healing-spirit": {
+  "duration": "Up to 1 minute"
+ },
+ "hex": {
+  "duration": "Up to 1 hour",
+  "material": "The petrified eye of a newt"
+ },
+ "holy-weapon": {
+  "duration": "Up to 1 hour"
+ },
+ "hunger-of-hadar": {
+  "duration": "Up to 1 minute",
+  "material": "A pickled octopus tentacle"
+ },
+ "ice-knife": {
+  "duration": "Instantaneous",
+  "material": "A drop of water or a piece of ice"
+ },
+ "illusory-dragon": {
+  "duration": "Up to 1 minute"
+ },
+ "immolation": {
+  "duration": "Up to 1 minute"
+ },
+ "infernal-calling": {
+  "duration": "Up to 1 hour",
+  "material": "A ruby worth at least 999 gp"
+ },
+ "infestation": {
+  "duration": "Instantaneous",
+  "material": "A living flea"
+ },
+ "intellect-fortress": {
+  "duration": "Up to 1 hour"
+ },
+ "investiture-of-flame": {
+  "duration": "Up to 10 minutes"
+ },
+ "investiture-of-ice": {
+  "duration": "Up to 10 minutes"
+ },
+ "investiture-of-stone": {
+  "duration": "Up to 10 minutes"
+ },
+ "investiture-of-wind": {
+  "duration": "Up to 10 minutes"
+ },
+ "invulnerability": {
+  "duration": "Up to 10 minutes",
+  "material": "A small piece of adamantine worth at least 500 gp, which the spell consumes"
+ },
+ "life-transference": {
+  "duration": "Instantaneous"
+ },
+ "lightning-arrow": {
+  "duration": "Up to 1 minute"
+ },
+ "lightning-lure": {
+  "duration": "Instantaneous"
+ },
+ "maddening-darkness": {
+  "duration": "Up to 10 minutes",
+  "material": "A drop of pitch mixed with a drop of mercury"
+ },
+ "maelstrom": {
+  "duration": "Up to 1 minute",
+  "material": "Paper or leaf in the shape of a funnel"
+ },
+ "magic-stone": {
+  "duration": "1 minute"
+ },
+ "mass-polymorph": {
+  "duration": "Up to 1 hour",
+  "material": "A caterpillar cocoon"
+ },
+ "maximilian-s-earthen-grasp": {
+  "duration": "Up to 1 minute",
+  "material": "A miniature hand sculpted from clay"
+ },
+ "melf-s-minute-meteors": {
+  "duration": "Up to 10 minutes",
+  "material": "Niter, sulfur, and pine tar formed into a bead"
+ },
+ "mental-prison": {
+  "duration": "Up to 1 minute"
+ },
+ "mighty-fortress": {
+  "duration": "Instantaneous",
+  "material": "A diamond worth at least 500 gp, which the spell consumes"
+ },
+ "mind-sliver": {
+  "duration": "1 round"
+ },
+ "mind-spike": {
+  "duration": "Up to 1 hour"
+ },
+ "mold-earth": {
+  "duration": "Instantaneous or 1 hour (see below)"
+ },
+ "negative-energy-flood": {
+  "duration": "Instantaneous",
+  "material": "A broken bone and a square of black silk"
+ },
+ "phantasmal-force": {
+  "duration": "Up to 1 minute",
+  "material": "A bit of fleece"
+ },
+ "power-word-heal": {
+  "duration": "Instantaneous"
+ },
+ "power-word-pain": {
+  "duration": "Instantaneous"
+ },
+ "primal-savagery": {
+  "duration": "Instantaneous"
+ },
+ "primordial-ward": {
+  "duration": "Up to 1 minute"
+ },
+ "psychic-scream": {
+  "duration": "Instantaneous"
+ },
+ "pyrotechnics": {
+  "duration": "Instantaneous"
+ },
+ "ray-of-sickness": {
+  "duration": "Instantaneous"
+ },
+ "scatter": {
+  "duration": "Instantaneous"
+ },
+ "searing-smite": {
+  "duration": "Up to 1 minute"
+ },
+ "shadow-blade": {
+  "duration": "Up to 1 minute"
+ },
+ "shadow-of-moil": {
+  "duration": "Up to 1 minute",
+  "material": "An undead eyeball encased in a gem worth at least 150 gp"
+ },
+ "shape-water": {
+  "duration": "Instantaneous or 1 hour (see below)"
+ },
+ "sickening-radiance": {
+  "duration": "Up to 10 minutes"
+ },
+ "skill-empowerment": {
+  "duration": "Up to 1 hour"
+ },
+ "skywrite": {
+  "duration": "Up to 1 hour"
+ },
+ "snare": {
+  "duration": "8 hours",
+  "material": "25 feet of rope, which the spell consumes"
+ },
+ "snilloc-s-snowball-swarm": {
+  "duration": "Instantaneous",
+  "material": "A piece of ice or a small white rock chip"
+ },
+ "soul-cage": {
+  "duration": "8 hours",
+  "material": "A tiny silver cage worth 100 gp"
+ },
+ "spirit-shroud": {
+  "duration": "Up to 1 minute"
+ },
+ "staggering-smite": {
+  "duration": "Up to 1 minute"
+ },
+ "steel-wind-strike": {
+  "duration": "Instantaneous",
+  "material": "A melee weapon worth at least 1 sp"
+ },
+ "storm-sphere": {
+  "duration": "Up to 1 minute"
+ },
+ "summon-aberration": {
+  "duration": "Up to 1 hour",
+  "material": "A pickled tentacle and an eyeball in a platinum-inlaid vial worth at least 400 gp"
+ },
+ "summon-beast": {
+  "duration": "Up to 1 hour",
+  "material": "A feather, tuft of fur, and fish tail inside a gilded acorn worth at least 200 gp"
+ },
+ "summon-celestial": {
+  "duration": "Up to 1 hour",
+  "material": "A golden reliquary worth at least 500 gp"
+ },
+ "summon-construct": {
+  "duration": "Up to 1 hour",
+  "material": "An ornate stone and metal lockbox worth at least 400 gp"
+ },
+ "summon-elemental": {
+  "duration": "Up to 1 hour",
+  "material": "Air, a pebble, ash, and water inside a gold-inlaid vial worth at least 400 gp"
+ },
+ "summon-fey": {
+  "duration": "Up to 1 hour",
+  "material": "A gilded flower worth at least 300 gp"
+ },
+ "summon-fiend": {
+  "duration": "Up to 1 hour",
+  "material": "Humanoid blood inside a ruby vial worth at least 600 gp"
+ },
+ "summon-greater-demon": {
+  "duration": "Up to 1 hour",
+  "material": "A vial of blood from a humanoid killed within the past 24 hours"
+ },
+ "summon-lesser-demons": {
+  "duration": "Up to 1 hour",
+  "material": "A vial of blood from a humanoid killed within the past 24 hours"
+ },
+ "summon-shadowspawn": {
+  "duration": "Up to 1 hour",
+  "material": "Tears inside a gem worth at least 300 gp"
+ },
+ "summon-undead": {
+  "duration": "Up to 1 hour",
+  "material": "A gilded skull worth at least 300 gp"
+ },
+ "swift-quiver": {
+  "duration": "Up to 1 minute",
+  "material": "A quiver containing at least one piece of ammunition"
+ },
+ "sword-burst": {
+  "duration": "Instantaneous"
+ },
+ "synaptic-static": {
+  "duration": "Instantaneous"
+ },
+ "tasha-s-caustic-brew": {
+  "duration": "Up to 1 minute",
+  "material": "A bit of rotten food"
+ },
+ "tasha-s-mind-whip": {
+  "duration": "1 round"
+ },
+ "tasha-s-otherworldly-guise": {
+  "duration": "Up to 1 minute",
+  "material": "An object engraved with a symbol of the Outer Planes, worth at least 500 gp"
+ },
+ "telepathy": {
+  "duration": "24 hours",
+  "material": "A pair of linked silver rings"
+ },
+ "temple-of-the-gods": {
+  "duration": "24 hours",
+  "material": "A holy symbol worth at least 5 gp"
+ },
+ "tenser-s-transformation": {
+  "duration": "Up to 10 minutes",
+  "material": "A few hairs from a bull"
+ },
+ "thorn-whip": {
+  "duration": "Instantaneous",
+  "material": "The stem of a plant with thorns"
+ },
+ "thunder-step": {
+  "duration": "Instantaneous"
+ },
+ "thunderclap": {
+  "duration": "Instantaneous"
+ },
+ "thunderous-smite": {
+  "duration": "Up to 1 minute"
+ },
+ "tidal-wave": {
+  "duration": "Instantaneous",
+  "material": "A drop of water"
+ },
+ "tiny-servant": {
+  "duration": "8 hours"
+ },
+ "toll-the-dead": {
+  "duration": "Instantaneous"
+ },
+ "transmute-rock": {
+  "duration": "Until dispelled",
+  "material": "Clay and water"
+ },
+ "tsunami": {
+  "duration": "Up to 6 rounds"
+ },
+ "vitriolic-sphere": {
+  "duration": "Instantaneous",
+  "material": "A drop of giant slug bile"
+ },
+ "wall-of-light": {
+  "duration": "Up to 10 minutes",
+  "material": "A hand mirror"
+ },
+ "wall-of-sand": {
+  "duration": "Up to 10 minutes",
+  "material": "A handful of sand"
+ },
+ "wall-of-water": {
+  "duration": "Up to 10 minutes",
+  "material": "A drop of water"
+ },
+ "warding-wind": {
+  "duration": "Up to 10 minutes"
+ },
+ "watery-sphere": {
+  "duration": "Up to 1 minute",
+  "material": "A droplet of water"
+ },
+ "whirlwind": {
+  "duration": "Up to 1 minute",
+  "material": "A piece of straw"
+ },
+ "witch-bolt": {
+  "duration": "Up to 1 minute",
+  "material": "A twig from a tree that has been struck by lightning"
+ },
+ "word-of-radiance": {
+  "duration": "Instantaneous",
+  "material": "A holy symbol"
+ },
+ "wrath-of-nature": {
+  "duration": "Up to 1 minute"
+ },
+ "wrathful-smite": {
+  "duration": "Up to 1 minute"
+ },
+ "zephyr-strike": {
+  "duration": "Up to 1 minute"
+ }
+}

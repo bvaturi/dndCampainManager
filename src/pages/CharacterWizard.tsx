@@ -151,8 +151,8 @@ export default function CharacterWizard() {
         inspiration: false,
         armorClass: armorClass(items, cls, subclass, finalScores),
         speed: subraceDef?.speed ?? raceDef.speed,
-        hpMax: startingHp(cls, lvl, mod(finalScores.con), subrace),
-        hpCurrent: startingHp(cls, lvl, mod(finalScores.con), subrace), hpTemp: 0, hitDiceUsed: 0,
+        hpMax: startingHp(cls, lvl, mod(finalScores.con), subrace, subclass),
+        hpCurrent: startingHp(cls, lvl, mod(finalScores.con), subrace, subclass), hpTemp: 0, hitDiceUsed: 0,
         deathSaves: { successes: 0, failures: 0 },
         attacks: weapons.slice(0, 5),
         equipment: items.map((i) => g('equipmentOptions', i, i)).join('\n'),
@@ -491,7 +491,7 @@ export default function CharacterWizard() {
               ))}
             </div>
             <p className="small">
-              HP {startingHp(cls, lvl, mod(finalScores.con), subrace)} · AC {armorClass(items, cls, subclass, finalScores)} · {t('speed')} {subraceDef?.speed ?? raceDef.speed} ·{' '}
+              HP {startingHp(cls, lvl, mod(finalScores.con), subrace, subclass)} · AC {armorClass(items, cls, subclass, finalScores)} · {t('speed')} {subraceDef?.speed ?? raceDef.speed} ·{' '}
               {[...new Set([...raceSkills, ...bg.skills, ...classSkills])].map(skillName).join(', ')}
             </p>
             {casts && <p className="small">{t('cantrips')}: {cantrips.map((id) => g('spells', id, findSpell(id)?.name)).join(', ') || '—'}<br />{t('stepSpells')}: {spells.map((id) => g('spells', id, findSpell(id)?.name)).join(', ') || '—'}</p>}

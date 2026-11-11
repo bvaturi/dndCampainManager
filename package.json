@@ -11,7 +11,7 @@
     "typecheck": "tsc -b --noEmit",
     "test:rules": "firebase emulators:exec --only firestore --project codex-rules-test \"node --test tests/rules.test.mjs\"",
     "test:unit": "tsx --test tests/*.test.mts",
-    "data:merge": "python3 -I scripts/merge_phb_audit.py && python3 -I scripts/merge_races.py"
+    "data:merge": "python3 -I scripts/merge_phb_audit.py && python3 -I scripts/merge_races.py && python3 -I scripts/merge_spell_facts.py"
   },
   "dependencies": {
     "firebase": "^11.1.0",
