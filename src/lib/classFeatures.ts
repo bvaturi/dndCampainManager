@@ -14,6 +14,11 @@ export function featureNameHe(classId: string, subclass: string, name: string): 
   return FEATURE_HE[`${classId}|${subclass}|${name}`]?.name ?? FEATURE_HE[`${classId}||${name}`]?.name
 }
 
+/** Hebrew summary of a class or subclass feature (undefined if not translated). */
+export function featureSummaryHe(classId: string, subclass: string, name: string): string | undefined {
+  return FEATURE_HE[`${classId}|${subclass}|${name}`]?.summary ?? FEATURE_HE[`${classId}||${name}`]?.summary
+}
+
 /** Stand-in for "Unlimited" (e.g. a 20th-level barbarian's rages). */
 export const UNLIMITED = 999
 

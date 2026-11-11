@@ -9,7 +9,7 @@ const ch = (classId: string, subclass: string, level: number, extra: Partial<Cha
   id: 'c', classId, subclass, level, race: 'human', subrace: '', feats: [],
   abilities: { str: 10, dex: 10, con: 14, int: 10, wis: 10, cha: 10 }, ...extra,
 } as unknown as Character)
-const names = (g: ReturnType<typeof levelUpGain>) => g!.features.map(([, n]) => n)
+const names = (g: ReturnType<typeof levelUpGain>) => g!.features.map((f) => f.name)
 
 test('average HP per level: half the hit die + 1, plus Con', () => {
   assert.equal(levelUpGain(ch('barbarian', '', 1))!.hp, 7 + 2)
@@ -35,7 +35,7 @@ test('Hill Dwarf, Draconic Resilience and Tough add HP every level', () => {
 test('the subclass level brings the subclass features, not just its name', () => {
   assert.deepEqual(names(levelUpGain(ch('barbarian', 'berserker', 2))), ['Primal Path', 'Frenzy'])
   const cleric = names(levelUpGain(ch('cleric', 'tempest', 1)))
-  assert.ok(cleric.some((n) => n.startsWith('Channel Divinity (')), cleric.join())
+  assert.deepEqual(cleric, ['Channel Divinity', 'Channel Divinity: Turn Undead', 'Channel Divinity: Destructive Wrath'])
   assert.ok(cleric.some((n) => /Destructive Wrath/.test(n)), cleric.join())
   const wiz = names(levelUpGain(ch('wizard', 'evocation', 1)))
   assert.ok(wiz.includes('Evocation Savant') && wiz.includes('Sculpt Spells'), wiz.join())
@@ -46,9 +46,24 @@ test('every subclass feature is reached by levelling 1 → 20', () => {
   for (const cls of CLASSES) {
     for (const sub of cls.subclasses) {
       const got = new Set<string>()
-      for (let lv = 1; lv < 20; lv++) for (const [, n] of levelUpGain(ch(cls.id, sub.id, lv))!.features) got.add(n)
+      for (let lv = 1; lv < 20; lv++) for (const f of levelUpGain(ch(cls.id, sub.id, lv))!.features) got.add(f.name)
       for (const f of sub.features.filter((f) => f.level > 1)) assert.ok(got.has(f.name), `${cls.id}/${sub.id}: ${f.name} (level ${f.level})`)
     }
+  }
+})
+
+test('each ability comes with its description; table upgrades by name', () => {
+  const g = levelUpGain(ch('cleric', 'tempest', 1))!
+  for (const f of g.features) assert.ok(f.summary && f.summary.length > 20, `${f.name} has a summary`)
+  assert.ok(names(levelUpGain(ch('cleric', 'tempest', 5))).includes('Channel Divinity (2/rest)'))
+  assert.ok(names(levelUpGain(ch('fighter', 'champion', 10))).includes('Extra Attack (2)'))
+})
+
+test('every class feature is reached by levelling 1 → 20', () => {
+  for (const cls of CLASSES) {
+    const got = new Set<string>()
+    for (let lv = 1; lv < 20; lv++) for (const f of levelUpGain(ch(cls.id, cls.subclasses[0].id, lv))!.features) got.add(f.name)
+    for (const f of cls.features.filter((f) => f.level > 1)) assert.ok(got.has(f.name), `${cls.id}: ${f.name} (level ${f.level})`)
   }
 })
 

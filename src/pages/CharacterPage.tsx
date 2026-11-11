@@ -14,7 +14,7 @@ import FeatsTab from '../sheet/FeatsTab'
 import ClassFeaturesTab from '../sheet/ClassFeaturesTab'
 import { levelUpGain } from '../lib/levelUp'
 import { RestButtons } from '../sheet/RestDialog'
-import { featureNameHe } from '../lib/classFeatures'
+import { featureNameHe, featureSummaryHe } from '../lib/classFeatures'
 import type { CustomTab } from '../lib/types'
 import { L } from '../sheet/labels'
 import { useHomebrew } from '../components/HomebrewScope'
@@ -105,8 +105,12 @@ export default function CharacterPage() {
     if (!gain) return
     const { level: next, hp } = gain
     if (!confirm(t('levelUpConfirm', { name: ch.name, level: next, hp }))) return
-    const label = (subId: string, n: string) => (lang === 'he' && featureNameHe(ch.classId, subId, n)) || g('features', n, n)
-    const added = gain.features.map(([subId, n]) => label(subId, n))
+    // Each new ability as "Name: what it does", in the sheet's language.
+    const added = gain.features.map((f) => {
+      const name = (lang === 'he' && featureNameHe(ch.classId, f.subclass, f.name)) || g('features', f.name, f.name)
+      const summary = (lang === 'he' && featureSummaryHe(ch.classId, f.subclass, f.name)) || f.summary
+      return summary ? `${name}: ${summary}` : name
+    })
     onChange({
       level: next,
       hpMax: ch.hpMax + hp,
