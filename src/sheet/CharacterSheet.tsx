@@ -46,8 +46,54 @@ function PageScaler({ children }: { children: ReactNode }) {
   )
 }
 
-/** A box whose text doesn't fit on the printed sheet: printed in full on the continuation pages. */
+/** What a box couldn't hold on the printed sheet: printed on the continuation pages. */
 interface Overflow { label: string; text: string }
+
+/** Print text sizes to try, as a fraction of the box's normal size, before giving up and continuing elsewhere. */
+const PRINT_SCALES = [1, 0.92, 0.85, 0.78, 0.72]
+
+/**
+ * Fills a text box's print stand-in so nothing is cut mid-line: the whole text at the largest size that fits the
+ * box, or, when even the smallest doesn't fit, as many whole words as do. Returns the text left over ('' if none).
+ */
+function fitTextForPrint(area: HTMLTextAreaElement, box: HTMLElement): string {
+  const text = area.value.replace(/\s+$/, '')
+  box.textContent = ''
+  box.removeAttribute('style')
+  delete box.dataset.ready
+  delete area.dataset.printReplaced
+  if (!text.trim()) return ''
+  const cs = getComputedStyle(area)
+  const size = parseFloat(cs.fontSize) || 13
+  const line = parseFloat(cs.lineHeight) || size * 1.5
+  const room = area.clientHeight
+  // Measure in place: same width, padding and font as the box on the sheet.
+  Object.assign(box.style, { display: 'block', position: 'absolute', visibility: 'hidden', height: 'auto', width: `${area.clientWidth}px`, padding: cs.padding })
+  const setScale = (k: number) => { box.style.fontSize = `${size * k}px`; box.style.lineHeight = `${line * k}px` }
+  const fits = (t: string) => { box.textContent = t; return box.scrollHeight <= room + 1 }
+  let scale = PRINT_SCALES.find((k) => { setScale(k); return fits(text) })
+  let shown = text
+  if (!scale) {
+    scale = PRINT_SCALES[PRINT_SCALES.length - 1]
+    setScale(scale)
+    // Longest beginning that fits, then back to the end of a word.
+    let lo = 0
+    let hi = text.length
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2)
+      if (fits(text.slice(0, mid))) lo = mid; else hi = mid - 1
+    }
+    const cut = Math.max(text.lastIndexOf(' ', lo), text.lastIndexOf('\n', lo))
+    shown = text.slice(0, cut > 0 && lo < text.length ? cut : lo).replace(/\s+$/, '')
+  }
+  box.removeAttribute('style')
+  Object.assign(box.style, { fontSize: `${size * scale}px`, lineHeight: `${line * scale}px`, padding: cs.padding })
+  box.style.setProperty('--lh', `${line * scale}px`)
+  box.textContent = shown
+  box.dataset.ready = '1'
+  area.dataset.printReplaced = '1'
+  return text.slice(shown.length).replace(/^\s+/, '')
+}
 
 export default function CharacterSheet(props: SheetProps) {
   const { ch } = props
@@ -55,7 +101,7 @@ export default function CharacterSheet(props: SheetProps) {
   const stack = useRef<HTMLDivElement>(null)
   const [overflow, setOverflow] = useState<Overflow[]>([])
 
-  // Just before printing, find every box that holds more than it shows (the boxes scroll on screen, paper can't).
+  // Just before printing, set every text box to fit its place on paper and collect what is left over.
   useEffect(() => {
     const measure = () => {
       const out: Overflow[] = []
@@ -63,19 +109,23 @@ export default function CharacterSheet(props: SheetProps) {
         const labelEl = frame.querySelector<HTMLElement>('.frame-label')
         const label = labelEl?.textContent ?? ''
         const area = frame.querySelector('textarea')
-        let text = ''
-        if (area) {
-          area.scrollTop = 0 // print the box from its first line, wherever it was scrolled to
-          if (area.value.trim() && area.scrollHeight > area.clientHeight + 2) text = area.value
-        }
+        const box = area?.nextElementSibling
+        // A text box: what doesn't fit even in small print continues from that exact word on the last pages.
+        let text = area && box instanceof HTMLElement && box.classList.contains('print-text') ? fitTextForPrint(area, box) : ''
+        const split = !!text
         if (!text && frame.classList.contains('attacks-frame')) {
-          const rows = [...frame.querySelectorAll('tbody tr')].map((tr) => [...tr.querySelectorAll('input')])
-          if (rows.some((r) => r.some((i) => i.scrollWidth > i.clientWidth + 1))) {
-            text = rows.map((r) => r.map((i) => i.value.trim()).filter(Boolean).join(' · ')).filter(Boolean).join('\n')
+          // On paper long attack cells wrap onto more lines; only when the box then overflows is the list continued.
+          const body = frame.querySelector<HTMLElement>('.frame-body')
+          frame.classList.add('print-sim')
+          const over = !!body && body.scrollHeight > body.clientHeight + 1
+          frame.classList.remove('print-sim')
+          if (over) {
+            text = [...frame.querySelectorAll('tbody tr')]
+              .map((tr) => [...tr.querySelectorAll('input')].map((i) => i.value.trim()).filter(Boolean).join(' · ')).filter(Boolean).join('\n')
           }
         }
         // The label says (in print only) that the rest of the box is on the continuation pages.
-        if (text) { if (labelEl) labelEl.dataset.continued = L.continuedNote[lang]; out.push({ label, text }) } else delete labelEl?.dataset.continued
+        if (text) { if (labelEl) labelEl.dataset.continued = L.continuedNote[lang]; out.push({ label: split ? `${label} · ${L.continued[lang]}` : label, text }) } else delete labelEl?.dataset.continued
       }
       flushSync(() => setOverflow(out))
     }
@@ -127,7 +177,14 @@ function Txt({ value, onChange, edit, className = '', rows, placeholder, type = 
 }) {
   const cls = `ink ${center ? 'center' : ''} ${className}`
   if (rows) {
-    return <textarea dir="auto" className={cls} value={value} readOnly={!edit} placeholder={edit ? placeholder : ''} onChange={(e) => onChange(e.target.value)} />
+    // The box scrolls on screen; paper can't, so print uses the stand-in below, filled just before printing
+    // with the text set to fit (see fitTextForPrint).
+    return (
+      <>
+        <textarea dir="auto" className={cls} value={value} readOnly={!edit} placeholder={edit ? placeholder : ''} onChange={(e) => onChange(e.target.value)} />
+        <div dir="auto" className={`print-text ${cls}`} aria-hidden="true" />
+      </>
+    )
   }
   return <input dir="auto" className={cls} type={type} value={value} readOnly={!edit} placeholder={edit ? placeholder : ''} onChange={(e) => onChange(e.target.value)} />
 }
@@ -426,9 +483,10 @@ function PageOne({ ch, edit, onChange, onHp }: SheetProps) {
                   <tr key={i}>
                     {a || edit ? (
                       <>
-                        <td><Txt value={a?.name ?? ''} onChange={(v) => setAttack(i, 'name', v)} edit={edit} /></td>
-                        <td><Txt value={a?.bonus ?? ''} onChange={(v) => setAttack(i, 'bonus', v)} edit={edit} center /></td>
-                        <td><Txt value={a?.damage ?? ''} onChange={(v) => setAttack(i, 'damage', v)} edit={edit} /></td>
+                        {/* data-print: on paper the cell shows this text, wrapped, in place of the one-line field */}
+                        <td data-print={a?.name ?? ''}><Txt value={a?.name ?? ''} onChange={(v) => setAttack(i, 'name', v)} edit={edit} /></td>
+                        <td data-print={a?.bonus ?? ''} className="atk-bonus"><Txt value={a?.bonus ?? ''} onChange={(v) => setAttack(i, 'bonus', v)} edit={edit} center /></td>
+                        <td data-print={a?.damage ?? ''}><Txt value={a?.damage ?? ''} onChange={(v) => setAttack(i, 'damage', v)} edit={edit} /></td>
                         <td className="roll-col">{a && (a.name || a.bonus || a.damage) && <button type="button" className="mini-die no-print" title={tip} onClick={(e) => roll.attack(i, e)}>🎲</button>}</td>
                         {edit && <td>{a && <button className="x-btn" title={l('remove')} onClick={() => onChange({ attacks: ch.attacks.filter((_, j) => j !== i) })}>×</button>}</td>}
                       </>

@@ -219,6 +219,8 @@ textarea.ink.lined { background: repeating-linear-gradient(transparent 0 19px, #
 .attack-table .ink { font-size: 12px; }
 .handwriting .attack-table .ink { font-size: 15px; }
 .attack-table th:nth-child(4) { width: 16px; }
+/* the remove (×) column stays narrow, so Damage/Type gets the rest of the row */
+.attack-table th:nth-child(5) { width: 16px; }
 .attack-table td { background: #e9e9e9; border-radius: 4px; padding: 2px 5px; height: 22px; }
 .attack-table td:last-child:empty { background: none; }
 .x-btn { border: none; background: none; cursor: pointer; color: #b04030; font-size: 15px; line-height: 1; padding: 0 2px; }
@@ -311,6 +313,21 @@ textarea.ink.lined { background: repeating-linear-gradient(transparent 0 19px, #
 /* the page-3 grid would overflow with many spells; let columns scroll on screen */
 .p3-col { overflow: auto; }
 
+/* Attack cells on paper: the text itself, wrapped onto as many lines as it needs, in place of the one-line field.
+   (.print-sim applies the same on screen for an instant, to measure whether the box would overflow.) */
+.attack-table td[data-print]::after { content: attr(data-print); display: none; color: var(--s-pen); font-size: 12px; line-height: 1.15; overflow-wrap: break-word; unicode-bidi: plaintext; }
+.attack-table td.atk-bonus::after { text-align: center; }
+.handwriting .attack-table td[data-print]::after { font-family: 'Caveat', 'Gveret Levin', cursive; font-size: 15px; font-weight: 600; }
+:lang(he) .handwriting .attack-table td[data-print]::after { font-family: 'Gveret Levin', 'Caveat', cursive; font-size: 14px; font-weight: 400; }
+.print-sim .attack-table td[data-print] > input { display: none; }
+.print-sim .attack-table td[data-print]::after { display: block; }
+.print-sim .add-line { display: none; }
+/* the roll and remove columns mean nothing on paper: Damage/Type takes their room */
+.print-sim .attack-table th:nth-child(n+4), .print-sim .attack-table td:nth-child(n+4) { display: none; }
+
+/* A text box's stand-in for print (filled just before printing): shown only on paper, in place of the textarea. */
+.print-text { display: none; white-space: pre-wrap; overflow-wrap: break-word; }
+
 /* The spell page prints from its own laid-out copies; boxes too long for the paper continue on extra pages. */
 .sheet-slot { width: 100%; max-width: 860px; }
 .print-only { display: none !important; }
@@ -327,6 +344,13 @@ textarea.ink.lined { background: repeating-linear-gradient(transparent 0 19px, #
   .add-spell, .add-line, .x-btn, .url-input { display: none !important; }
   .p3-col { overflow: hidden; }
   textarea.ink { overflow: hidden; }
+  .attack-table td[data-print] > input { display: none; }
+  .attack-table td[data-print]::after { display: block; }
+  .attack-table th:nth-child(n+4), .attack-table td:nth-child(n+4) { display: none; }
+  .attacks-frame .frame-body { overflow: hidden; }
+  textarea.ink[data-print-replaced] { display: none; }
+  .print-text[data-ready] { display: block; flex: 1; min-height: 0; height: 100%; overflow: hidden; }
+  .print-text.lined { background: repeating-linear-gradient(transparent 0 calc(var(--lh, 20px) - 1px), #e2e2e2 calc(var(--lh, 20px) - 1px) var(--lh, 20px)); }
   /* a box that holds more than it shows says where the rest is */
   .frame-label[data-continued]::after { content: ' · ' attr(data-continued) ' ▸'; text-transform: none; letter-spacing: 0; font-weight: 400; }
 
