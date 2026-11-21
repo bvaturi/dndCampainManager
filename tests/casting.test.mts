@@ -7,7 +7,7 @@ import type { Character } from '../src/lib/types'
 
 const sp = (id: string) => SPELLS.find((s) => s.id === id)!
 const ch = (classId: string, level: number, slotsExpended = Array(9).fill(0), resources = {}) =>
-  ({ classId, subclass: '', level, slotsExpended, resources, spells: [], abilities: { str: 10, dex: 10, con: 10, int: 16, wis: 16, cha: 16 } } as unknown as Character)
+  ({ classId, subclass: '', level, slotsExpended, resources, spells: ['cure-wounds', 'magic-missile', 'hex', 'eyebite'].map((id) => ({ id, prepared: true })), abilities: { str: 10, dex: 10, con: 10, int: 16, wis: 16, cha: 16 } } as unknown as Character)
 
 test('a 1st-level spell can use any slot of its level or higher (upcasting)', () => {
   const opts = castOptions(ch('cleric', 5, [3, 0, 0, 0, 0, 0, 0, 0, 0]), sp('cure-wounds'))
@@ -62,4 +62,19 @@ test('a cleric or druid casts a ritual only when the spell is prepared; a wizard
   assert.ok(kinds({ ...base, classId: 'cleric', spells: [{ id: 'detect-magic', prepared: true }] }).includes('ritual'))
   assert.ok(!kinds({ ...base, classId: 'druid', spells: [{ id: 'detect-magic', prepared: false }] }).includes('ritual'))
   assert.ok(kinds({ ...base, classId: 'wizard', spells: [{ id: 'detect-magic', prepared: false }] }).includes('ritual'))
+})
+
+test('a class that prepares spells casts with slots only what is prepared', () => {
+  const base = { level: 3, subclass: 'tempest', slotsExpended: Array(9).fill(0), abilities: { str: 10, dex: 10, con: 10, int: 16, wis: 16, cha: 16 } }
+  const kinds = (c: unknown, id: string) => castOptions(c as Character, sp(id)).map((o) => o.kind)
+  const cleric = { ...base, classId: 'cleric', spells: [{ id: 'bless', prepared: true }, { id: 'detect-evil-and-good', prepared: false }] }
+  assert.deepEqual(kinds(cleric, 'bless'), ['slot', 'slot'])
+  assert.deepEqual(kinds(cleric, 'detect-evil-and-good'), [], 'not prepared: nothing to cast it with')
+  assert.deepEqual(kinds(cleric, 'thunderwave'), ['slot', 'slot'], 'domain spells are always prepared')
+  assert.deepEqual(kinds(cleric, 'guidance'), ['cantrip'])
+  const wizard = { ...base, subclass: '', classId: 'wizard', spells: [{ id: 'detect-magic', prepared: false }, { id: 'magic-missile', prepared: false }] }
+  assert.deepEqual(kinds(wizard, 'detect-magic'), ['ritual'], 'a wizard still casts a ritual from the spellbook')
+  assert.deepEqual(kinds(wizard, 'magic-missile'), [])
+  const bard = { ...base, subclass: '', classId: 'bard', spells: [{ id: 'bane', prepared: false }] }
+  assert.deepEqual(kinds(bard, 'bane'), ['slot', 'slot'], 'a class that knows its spells has nothing to prepare')
 })

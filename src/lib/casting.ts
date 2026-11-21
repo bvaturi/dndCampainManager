@@ -3,7 +3,7 @@
  * and the sheet change that spends them. Pure functions (unit-tested).
  */
 import { grantedSpells } from './homebrew'
-import { casterInfo, spellSlots, subclassSpells } from './spellAccess'
+import { casterInfo, spellAllowance, spellSlots, subclassSpells } from './spellAccess'
 import type { Spell } from './rules'
 import type { Character } from './types'
 
@@ -26,13 +26,24 @@ export function isPrepared(ch: Character, spell: Spell): boolean {
     || subclassSpells(ch.classId, ch.subclass, ch.level).always.some((s) => s.id === spell.id)
 }
 
+/**
+ * A cleric, druid, paladin or wizard casts with spell slots only the spells prepared today (PHB); this spell is
+ * one of theirs and isn't prepared.
+ */
+export function needsPreparing(ch: Character, spell: Spell): boolean {
+  if (spell.level === 0) return false
+  const mode = spellAllowance(ch.classId, ch.subclass, ch.level, ch.abilities).mode
+  return (mode === 'prepared' || mode === 'spellbook') && !isPrepared(ch, spell)
+}
+
 export function castOptions(ch: Character, spell: Spell): CastOption[] {
   if (spell.level === 0) return [{ kind: 'cantrip' }]
   const out: CastOption[] = []
   const slots = spellSlots(ch.classId, ch.subclass, ch.level)
+  const unprepared = needsPreparing(ch, spell)
   slots.forEach((total, i) => {
     const level = i + 1
-    if (total > 0 && level >= spell.level) {
+    if (!unprepared && total > 0 && level >= spell.level) {
       out.push({ kind: 'slot', level, total, left: Math.max(0, total - (ch.slotsExpended[i] ?? 0)) })
     }
   })

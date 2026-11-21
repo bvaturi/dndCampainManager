@@ -176,9 +176,14 @@ export function spellCounts(ch: Pick<Character, 'id' | 'classId' | 'subclass' | 
   }
 }
 
-/** Why this spell can't be added to the sheet right now ('cantrips' or 'known' limit reached), or null if it can. */
-export function addBlocked(counts: ReturnType<typeof spellCounts>, spell: Spell): 'cantrips' | 'known' | null {
+/**
+ * Why this spell can't be added to the sheet right now, or null if it can: the cantrip limit, the spells-known
+ * limit, or (cleric, druid, paladin, who add a spell by preparing it) the prepared limit is reached. A wizard may
+ * still write a spell in the spellbook when nothing more can be prepared.
+ */
+export function addBlocked(counts: ReturnType<typeof spellCounts>, spell: Spell): 'cantrips' | 'known' | 'prepared' | null {
   if (counts.isFree(spell.id)) return null
   if (spell.level === 0) return counts.cantripsFull ? 'cantrips' : null
-  return counts.knownFull ? 'known' : null
+  if (counts.knownFull) return 'known'
+  return counts.allowance.mode === 'prepared' && counts.preparedFull ? 'prepared' : null
 }

@@ -9,6 +9,7 @@ import { ABILITIES, type Ability, type Character } from '../lib/types'
 import { L, type LabelKey } from './labels'
 import { useSheetRolls } from './rolls'
 import { useCaster } from './CastDialog'
+import { castOptions, needsPreparing } from '../lib/casting'
 import { createPortal } from 'react-dom'
 import { featBonuses } from '../lib/feats'
 import { characterResources, rechargeAt, resourceLabel } from '../lib/classFeatures'
@@ -581,7 +582,9 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
                   onClick={edit && (s.prepared || !counts.preparedFull) ? () => onChange({ spells: ch.spells.map((x) => (x.id === s.id ? { ...x, prepared: !x.prepared } : x)) }) : undefined} />
               )}
               <button className="spell-link ink" onClick={() => setOpen(s.spell!)}>{g('spells', s.id, s.spell!.name)}</button>
-              {edit && <button className="cast-btn no-print" title={t('castTitle', { name: g('spells', s.id, s.spell!.name) })} onClick={() => caster.cast(s.spell!)}>✦ {t('castButton')}</button>}
+              {edit && (needsPreparing(ch, s.spell!) && castOptions(ch, s.spell!).length === 0
+                ? <button className="cast-btn no-print" disabled title={t('castPrepareFirst')}>✦ {t('castButton')}</button>
+                : <button className="cast-btn no-print" title={t('castTitle', { name: g('spells', s.id, s.spell!.name) })} onClick={() => caster.cast(s.spell!)}>✦ {t('castButton')}</button>)}
               {edit && <button className="x-btn" title={l('remove')} onClick={() => onChange({ spells: ch.spells.filter((x) => x.id !== s.id) })}>×</button>}
             </li>
           ))}

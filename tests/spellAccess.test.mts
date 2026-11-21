@@ -82,6 +82,7 @@ test('spell limits: cantrips, spells known and spells prepared are capped by the
   c = spellCounts({ ...cleric, spells: cleric.spells.map((s) => ({ ...s, prepared: true })) })
   assert.deepEqual([c.prepared, c.preparedFull], [7, true])
   assert.equal(addBlocked(c, sp('fog-cloud')), null, 'domain spells never count')
+  assert.equal(addBlocked(c, sp('aid')), 'prepared', 'with 7 of 7 prepared a cleric cannot add another')
 
   // Bard 3: 2 cantrips, 6 spells known.
   const bard = { id: 'b', classId: 'bard', subclass: 'valor', level: 3, abilities: scores,

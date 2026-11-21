@@ -8,6 +8,7 @@ import { addBlocked, cantripCount, castableMax, casterInfo, classSpellList, spel
 import type { Character } from '../lib/types'
 import { useSheetRolls } from './rolls'
 import { useCaster } from './CastDialog'
+import { castOptions, needsPreparing } from '../lib/casting'
 
 /** Class list, the spells on the sheet, or every spell in the rules (for spells a subclass or the DM adds). */
 type Filter = 'all' | 'mine' | 'book'
@@ -54,7 +55,9 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
   /** Why a spell can't be added: the cantrip or spells-known limit is reached. */
   const limitNote = (s: Spell) => {
     const why = addBlocked(counts, s)
-    return why === 'cantrips' ? t('sbLimitCantrips', { max: allowance.cantrips }) : why === 'known' ? t('sbLimitKnown', { max: allowance.spells }) : ''
+    return why === 'cantrips' ? t('sbLimitCantrips', { max: allowance.cantrips })
+      : why === 'known' ? t('sbLimitKnown', { max: allowance.spells })
+      : why === 'prepared' ? t('sbLimitPrepared', { max: allowance.preparedLimit }) : ''
   }
 
   // Spell levels this class ever reaches
@@ -110,7 +113,11 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
               📖 {have.prepared ? t('sbPreparedTag') : t('sbPrepare')}
             </button>
           )}
-          {edit && (have || fixed) && !locked && <button className="btn btn-small sb-castbtn" onClick={() => caster.cast(s)}>✦ {t('castButton')}</button>}
+          {edit && (have || fixed) && !locked && (
+            // Not prepared: nothing to cast it with (a wizard can still cast a ritual from the spellbook).
+            <button className="btn btn-small sb-castbtn" disabled={needsPreparing(ch, s) && castOptions(ch, s).length === 0}
+              title={needsPreparing(ch, s) && castOptions(ch, s).length === 0 ? t('castPrepareFirst') : undefined} onClick={() => caster.cast(s)}>✦ {t('castButton')}</button>
+          )}
         </span>
       </li>
     )

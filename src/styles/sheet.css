@@ -387,7 +387,8 @@ textarea.ink.lined { background: repeating-linear-gradient(transparent 0 19px, #
   border: 1px solid #c9b88f; background: #fff8e8; color: #7a1c14; border-radius: 99px; font-size: 10px; font-weight: 700;
   padding: 0 7px; line-height: 15px; cursor: pointer; white-space: nowrap; flex: none;
 }
-.cast-btn:hover { background: #7a1c14; color: #fff; border-color: #7a1c14; }
+.cast-btn:hover:not(:disabled) { background: #7a1c14; color: #fff; border-color: #7a1c14; }
+.cast-btn:disabled { opacity: .4; cursor: not-allowed; }
 .slot-left { margin-inline-start: auto; font-size: 9px; font-weight: 700; color: #8a8a8a; white-space: nowrap; text-transform: uppercase; }
 
 /* rest marker next to each limited-use feature: ☾ short rest, ☀ long rest */
