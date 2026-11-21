@@ -876,6 +876,14 @@ input.custom-tab-title:hover, input.custom-tab-title:focus { border-bottom-color
 .cast-options { display: flex; flex-direction: column; gap: 8px; }
 .cast-options .btn { justify-content: flex-start; }
 .cast-options .cast-empty { opacity: 0.5; text-decoration: line-through; }
+/* a slot button: the slot on the first line, what casting at that level does on the second */
+.cast-options .cast-opt { flex-direction: column; align-items: flex-start; gap: 1px; text-align: start; white-space: normal; height: auto; padding-top: 7px; padding-bottom: 7px; }
+.cast-opt-sub { font-size: 13px; font-weight: 500; opacity: 0.8; }
+.cast-opt-sub.up { opacity: 1; font-weight: 700; }
+.cast-opt:not(.btn-primary) .cast-opt-sub.up { color: var(--red); }
+.cast-rule { background: #fffaf0; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.cast-rule strong { display: block; margin-bottom: 2px; }
+.cast-rule p { margin: 0; color: var(--ink-soft); }
 .cast-result { font-size: 17px; margin: 4px 0; }
 
 .sb-actions { display: flex; gap: 6px; align-items: center; justify-content: flex-end; }

@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { useDice } from '../components/Dice'
-import { castOptions, castPatch, defaultOption, isPrepared, needsAttackRoll, spellDice, uncastPatch, type CastOption } from '../lib/casting'
+import { castDice, castOptions, castPatch, defaultOption, isPrepared, needsAttackRoll, spellDice, uncastPatch, upcastEffect, type CastOption, type UpcastEffect } from '../lib/casting'
 import { useSheetRolls } from './rolls'
 import { rollExpr } from '../lib/dice'
 import { useI18n } from '../lib/i18n'
@@ -31,8 +31,31 @@ function CastDialog({ ch, spell, onChange, onClose }: { ch: Character; spell: Sp
   const prepares = mode === 'prepared' || mode === 'spellbook'
   // Domain / oath spells are always prepared.
   const prepared = isPrepared(ch, spell)
-  const dice = spellDice(spell, ch.level)
+  // Dice to roll: with a higher slot, the stronger total replaces the spell's base roll.
+  const dice = done?.kind === 'slot' ? castDice(spell, ch.level, done.level) : spellDice(spell, ch.level)
   const rolls = useSheetRolls(ch, true, onChange)
+
+  /** What a higher slot adds, in words: "3d8 instead of 1d8 (+2d8)", "+2 targets"… */
+  const effectText = (e: UpcastEffect) =>
+    e.kind === 'dice' ? (e.total ? t('upDice', { total: e.total, base: e.base ?? '', extra: e.extra }) : t('upDiceExtra', { extra: e.extra }))
+      : e.kind === 'targets' ? t(e.n === 1 ? 'upTarget1' : 'upTargets', { n: e.n })
+      : e.kind === 'count' ? t('upCount', { n: e.n, noun: e.noun })
+      : e.kind === 'flat' ? t('upFlat', { n: e.n, unit: e.unit })
+      : e.kind === 'rule' ? t('upSeeRule')
+      : e.kind === 'none' ? t('upNoGain') : t('upUnknown')
+  /** The line under a slot button: normal strength, or what this higher slot gives. */
+  const slotNote = (o: CastOption) => {
+    if (o.kind !== 'slot') return null
+    const up = upcastEffect(spell, o.level)
+    if (!up) return <span className="cast-opt-sub">{t('castAsWritten')}{spellDice(spell, ch.level).length > 0 && <> · <bdi dir="ltr">{spellDice(spell, ch.level).join(' / ')}</bdi></>}</span>
+    const gains = up.kind !== 'none' && up.kind !== 'unknown'
+    return (
+      <span className={`cast-opt-sub ${gains ? 'up' : ''}`}>
+        {gains ? '▲ ' : ''}{t(o.level - spell.level === 1 ? 'castHigher1' : 'castHigherN', { n: o.level - spell.level })}: <bdi>{effectText(up)}</bdi>
+      </span>
+    )
+  }
+  const higherSlots = opts.some((o) => o.kind === 'slot' && o.level > spell.level)
 
   const doCast = (o: CastOption) => {
     if ((o.kind === 'slot' || o.kind === 'arcanum') && o.left <= 0) {
@@ -84,12 +107,20 @@ function CastDialog({ ch, spell, onChange, onClose }: { ch: Character; spell: Sp
               <div className="cast-options">
                 {opts.map((o, i) => (
                   <button key={i}
-                    className={`btn ${o === preferred ? 'btn-primary' : ''} ${(o.kind === 'slot' || o.kind === 'arcanum') && o.left <= 0 ? 'cast-empty' : ''}`}
+                    className={`btn cast-opt ${o === preferred ? 'btn-primary' : ''} ${(o.kind === 'slot' || o.kind === 'arcanum') && o.left <= 0 ? 'cast-empty' : ''}`}
                     onClick={() => doCast(o)}>
-                    {label(o)}
+                    <span>{label(o)}</span>
+                    {slotNote(o)}
                   </button>
                 ))}
               </div>
+              {/* What a higher slot does: the spell's own rule, or a plain statement that there is none. */}
+              {higherSlots && (spell.higherLevel ? (
+                <div className="cast-rule">
+                  <strong>{t('upRuleTitle')}</strong>
+                  <p dir="ltr" lang="en">{spell.higherLevel}</p>
+                </div>
+              ) : <p className="muted small">{t(spell.desc ? 'upNoGainHint' : 'upUnknownHint')}</p>)}
               {message && <p className="error-box small">{message}</p>}
             </>
           ) : (
@@ -104,8 +135,11 @@ function CastDialog({ ch, spell, onChange, onClose }: { ch: Character; spell: Sp
                 {(done.kind === 'slot' || done.kind === 'arcanum') && <button className="btn btn-small btn-ghost" onClick={undo}>↶ {t('castUndo')}</button>}
                 <button className="btn btn-small" onClick={onClose}>{t('close')}</button>
               </div>
-              {dice.length > 0 && done.kind === 'slot' && done.level > spell.level && spell.higherLevel && (
-                <p className="muted small" dir="ltr" lang="en">{spell.higherLevel}</p>
+              {done.kind === 'slot' && upcastEffect(spell, done.level) && spell.higherLevel && (
+                <div className="cast-rule">
+                  <strong>▲ {t(done.level - spell.level === 1 ? 'castHigher1' : 'castHigherN', { n: done.level - spell.level })}: <bdi>{effectText(upcastEffect(spell, done.level)!)}</bdi></strong>
+                  <p dir="ltr" lang="en">{spell.higherLevel}</p>
+                </div>
               )}
             </>
           )}

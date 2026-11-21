@@ -78,3 +78,30 @@ test('a class that prepares spells casts with slots only what is prepared', () =
   const bard = { ...base, subclass: '', classId: 'bard', spells: [{ id: 'bane', prepared: false }] }
   assert.deepEqual(kinds(bard, 'bane'), ['slot', 'slot'], 'a class that knows its spells has nothing to prepare')
 })
+
+test('a higher slot: what it adds is worked out from the spell\'s rule', async () => {
+  const { upcastEffect, castDice } = await import('../src/lib/casting')
+  assert.equal(upcastEffect(sp('cure-wounds'), 1), null, 'the spell\'s own level is not an upcast')
+  assert.deepEqual(upcastEffect(sp('cure-wounds'), 3), { kind: 'dice', extra: '2d8', base: '1d8', total: '3d8' })
+  assert.deepEqual(upcastEffect(sp('guiding-bolt'), 2), { kind: 'dice', extra: '1d6', base: '4d6', total: '5d6' })
+  assert.deepEqual(upcastEffect(sp('fireball'), 5), { kind: 'dice', extra: '2d6', base: '8d6', total: '10d6' })
+  // every two slot levels above 2nd
+  assert.deepEqual(upcastEffect(sp('spiritual-weapon'), 3), { kind: 'none' })
+  assert.deepEqual(upcastEffect(sp('spiritual-weapon'), 4), { kind: 'dice', extra: '1d8', base: '1d8', total: '2d8' })
+  assert.deepEqual(upcastEffect(sp('spiritual-weapon'), 6), { kind: 'dice', extra: '2d8', base: '1d8', total: '3d8' })
+  assert.deepEqual(upcastEffect(sp('hold-person'), 4), { kind: 'targets', n: 2 })
+  assert.deepEqual(upcastEffect(sp('bless'), 2), { kind: 'targets', n: 1 })
+  assert.deepEqual(upcastEffect(sp('magic-missile'), 3), { kind: 'count', n: 2, noun: 'dart' })
+  assert.deepEqual(upcastEffect(sp('aid'), 4), { kind: 'flat', n: 10, unit: ' hit points' })
+  assert.deepEqual(upcastEffect(sp('heal'), 7), { kind: 'flat', n: 10, unit: ' healing' })
+  assert.deepEqual(upcastEffect(sp('fog-cloud'), 2), { kind: 'flat', n: 20, unit: ' feet' })
+  assert.deepEqual(upcastEffect(sp('counterspell'), 5), { kind: 'rule' }, 'a rule that is not a number: read the text')
+  assert.deepEqual(upcastEffect(sp('detect-magic'), 3), { kind: 'none' }, 'no higher-level rule')
+  assert.deepEqual(upcastEffect(sp('chromatic-orb'), 2), { kind: 'unknown' }, 'no rules text in the app')
+  assert.deepEqual(upcastEffect(sp('shatter'), 3), { kind: 'dice', extra: '1d8', base: '3d8', total: '4d8' })
+  assert.deepEqual(upcastEffect(sp('moonbeam'), 3), { kind: 'dice', extra: '1d10', base: '2d10', total: '3d10' })
+  // the dice offered after casting use the stronger total
+  assert.deepEqual(castDice(sp('guiding-bolt'), 3, 1), ['4d6'])
+  assert.deepEqual(castDice(sp('guiding-bolt'), 3, 2), ['5d6'])
+  assert.deepEqual(castDice(sp('cure-wounds'), 3, 2), ['2d8'])
+})

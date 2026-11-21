@@ -97,6 +97,72 @@ export function spellDice(spell: Spell, characterLevel: number): string[] {
   return all.slice(0, 3)
 }
 
+/**
+ * What a slot above the spell's own level adds, worked out from the spell's "At Higher Levels" rule:
+ * - dice: more dice (`total` instead of `base` when the base roll is known)
+ * - targets / count: more creatures, darts, rays…
+ * - flat: a fixed amount (hit points, feet)
+ * - rule: the spell has a higher-level rule that can't be reduced to a number (read the text)
+ * - none: nothing extra at this slot level
+ * - unknown: the app has no rules text for this spell (non-SRD), so it can't tell
+ */
+export type UpcastEffect =
+  | { kind: 'dice'; extra: string; total?: string; base?: string }
+  | { kind: 'targets'; n: number }
+  | { kind: 'count'; n: number; noun: string }
+  | { kind: 'flat'; n: number; unit: string }
+  | { kind: 'rule' }
+  | { kind: 'none' }
+  | { kind: 'unknown' }
+
+const NUMBER_WORDS: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5 }
+const TARGET_NOUN = /^(creatures?|humanoids?|targets?|beasts?|persons?|people)$/
+
+/** The effect of casting `spell` with a slot of `slotLevel`; null when that is the spell's own level (or lower). */
+export function upcastEffect(spell: Spell, slotLevel: number): UpcastEffect | null {
+  const steps = slotLevel - spell.level
+  if (spell.level === 0 || steps <= 0) return null
+  const text = (spell.higherLevel || '').toLowerCase()
+  if (!text) return spell.desc ? { kind: 'none' } : { kind: 'unknown' }
+  // "for each slot level above 1st" or "for every two slot levels above 2nd"
+  const perStep = /for (each|every) /.test(text)
+  if (!perStep) return { kind: 'rule' }
+  const units = /every two/.test(text) ? Math.floor(steps / 2) : steps
+  if (units === 0) return { kind: 'none' }
+
+  const dice = /(\d+)d(\d+)/.exec(text)
+  if (dice) {
+    const [per, sides] = [+dice[1], +dice[2]]
+    const extra = `${per * units}d${sides}`
+    const base = (spell.desc || '').match(new RegExp(`\\b(\\d+)d${sides}\\b`))
+    return base ? { kind: 'dice', extra, base: base[0], total: `${+base[1] + per * units}d${sides}` } : { kind: 'dice', extra }
+  }
+  const more = /\b(one|two|three|four|five|\d+) (?:additional|more) ([a-z ]+?)(?= for (?:each|every)|,|\.| of | or )/.exec(text)
+  if (more) {
+    const n = (NUMBER_WORDS[more[1]] ?? +more[1]) * units
+    // "one additional bolt leaps from the first target…": keep just the thing that is added
+    const words = more[2].trim().split(' ')
+    const noun = words.length > 3 ? words[0] : words.join(' ')
+    return TARGET_NOUN.test(noun) ? { kind: 'targets', n } : { kind: 'count', n, noun }
+  }
+  const flat = /increases? by (?:an additional )?(\d+)(?: (feet|foot|hours?|minutes?|days?))?\b/.exec(text)
+  if (flat) {
+    // "+5" alone says little: name what grows when the rule does ("hit points", "healing", "challenge rating")
+    const subject = /(temporary hit points|hit points|healing|challenge rating)[^.]*?increases? by/.exec(text)?.[1]
+    const unit = flat[2] ? flat[2].replace(/^foot$/, 'feet').replace(/^(hour|minute|day)$/, '$1s') : subject ?? ''
+    return { kind: 'flat', n: +flat[1] * units, unit: unit && ` ${unit}` }
+  }
+  return { kind: 'rule' }
+}
+
+/** Dice to offer after casting with a slot of `slotLevel`: the spell's dice, with the upcast total in place of the base roll. */
+export function castDice(spell: Spell, characterLevel: number, slotLevel: number): string[] {
+  const dice = spellDice(spell, characterLevel)
+  const up = upcastEffect(spell, slotLevel)
+  if (up?.kind !== 'dice' || !up.total || !up.base) return dice
+  return dice.includes(up.base) ? dice.map((d) => (d === up.base ? up.total! : d)) : [up.total, ...dice].slice(0, 3)
+}
+
 /** Whether the spell asks for a spell attack roll. */
 export const needsAttackRoll = (spell: Spell) => /\b(ranged|melee) spell attack\b/i.test(spell.desc || '')
 
