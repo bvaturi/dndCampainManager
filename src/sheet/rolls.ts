@@ -4,15 +4,24 @@ import { useI18n } from '../lib/i18n'
 import { casterInfo } from '../lib/spellAccess'
 import { featBonuses } from '../lib/feats'
 import featsHe from '../data/feats.he.json'
-import { ABILITY_NAMES, SKILLS, classById, findWeapon, mod, profBonus } from '../lib/rules'
+import { featureNameHe } from '../lib/classFeatures'
+import { ABILITY_NAMES, SKILLS, classById, findWeapon, halfProficiency, mod, profBonus } from '../lib/rules'
 import type { Ability, Character } from '../lib/types'
 
 type Click = { shiftKey?: boolean; altKey?: boolean }
 
-/** Initiative parts for a character: Dexterity plus feat bonuses such as Alert. */
+/** Jack of All Trades / Remarkable Athlete as a roll part, for checks that don't include proficiency. */
+export function halfProfParts(ch: Character, ability: Ability, lang: 'en' | 'he'): RollPart[] {
+  const half = halfProficiency(ch, ability)
+  if (!half?.value) return []
+  return [{ label: (lang === 'he' && featureNameHe(ch.classId, ch.subclass, half.feature)) || half.feature, value: half.value }]
+}
+
+/** Initiative parts for a character: Dexterity, Jack of All Trades / Remarkable Athlete, and feats such as Alert. */
 export function initiativeParts(ch: Character, lang: 'en' | 'he'): RollPart[] {
   return [
     { label: ABILITY_NAMES.dex[lang], value: mod(ch.abilities.dex) },
+    ...halfProfParts(ch, 'dex', lang),
     ...featBonuses(ch).initiativeSources.map((f) => ({
       label: (lang === 'he' && (featsHe as Record<string, { name: string }>)[f.id]?.name) || f.name, value: f.value,
     })),
@@ -29,7 +38,7 @@ export function useSheetRolls(ch: Character, edit: boolean, onChange: (p: Partia
   const who = ch.name
 
   const check = (a: Ability, e?: Click) =>
-    show(d20Test({ title: t('diceCheck', { name: ABILITY_NAMES[a][lang] }), subtitle: who, kind: 'check', mode: modeFor(e), parts: [abilityPart(a)] }))
+    show(d20Test({ title: t('diceCheck', { name: ABILITY_NAMES[a][lang] }), subtitle: who, kind: 'check', mode: modeFor(e), parts: [abilityPart(a), ...halfProfParts(ch, a, lang)] }))
 
   const save = (a: Ability, e?: Click) =>
     show(d20Test({
@@ -41,6 +50,7 @@ export function useSheetRolls(ch: Character, edit: boolean, onChange: (p: Partia
     const s = SKILLS.find((x) => x.id === id)!
     const parts = [abilityPart(s.ability)]
     if (ch.skillProfs.includes(id) || ch.expertise.includes(id)) parts.push(profPart)
+    else parts.push(...halfProfParts(ch, s.ability, lang))
     if (ch.expertise.includes(id)) parts.push({ label: t('diceExpertise'), value: pb })
     show(d20Test({ title: s[lang], subtitle: who, kind: 'check', mode: modeFor(e), parts }))
   }

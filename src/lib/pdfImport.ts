@@ -7,6 +7,7 @@ import featsHe from '../data/feats.he.json'
 import heNames from '../data/he.json'
 import { FEATS } from './feats'
 import { splitList } from './importSpec'
+import { spellAllowance } from './spellAccess'
 import { allSpells } from './homebrew'
 import { BACKGROUNDS, CLASSES, RACES, SKILLS, mod, profBonus } from './rules'
 import { ABILITIES, type Ability, type AbilityScores, type Attack, type CharacterFeat, type KnownSpell, type NewCharacter } from './types'
@@ -260,8 +261,10 @@ export function mapFields(fields: PdfField[]): ImportResult {
     const spell = SPELLS.find((s) => s.id === id)!
     spells.push({ id, prepared: spell.level === 0 || preparedNames.has(id) })
   }
-  // If the sheet never marked "prepared", treat every listed spell as prepared.
-  if (spells.length && !spells.some((s) => s.prepared && SPELLS.find((x) => x.id === s.id)!.level > 0)) {
+  // If the sheet never marked "prepared", or the class knows its spells rather than preparing them (bard,
+  // ranger, sorcerer, warlock, Eldritch Knight, Arcane Trickster), every listed spell is ready to cast.
+  const knows = !!cls && spellAllowance(cls.id, subclass?.id ?? '', level, abilities).mode === 'known'
+  if (spells.length && (knows || !spells.some((s) => s.prepared && SPELLS.find((x) => x.id === s.id)!.level > 0))) {
     spells.forEach((s) => { s.prepared = true })
   }
 

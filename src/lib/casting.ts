@@ -3,7 +3,7 @@
  * and the sheet change that spends them. Pure functions (unit-tested).
  */
 import { grantedSpells } from './homebrew'
-import { casterInfo, spellSlots } from './spellAccess'
+import { casterInfo, spellSlots, subclassSpells } from './spellAccess'
 import type { Spell } from './rules'
 import type { Character } from './types'
 
@@ -17,6 +17,14 @@ export type CastOption =
 
 /** Classes that can cast ritual spells as rituals (2014 PHB: bard, cleric, druid, wizard; warlocks need an invocation). */
 const RITUAL_CASTERS = new Set(['bard', 'cleric', 'druid', 'wizard'])
+/** Clerics and druids must have the spell prepared to cast it as a ritual; a wizard only needs it in the spellbook. */
+const RITUAL_NEEDS_PREPARED = new Set(['cleric', 'druid'])
+
+/** Prepared on the sheet, or always prepared through the subclass (domain / oath spells). */
+export function isPrepared(ch: Character, spell: Spell): boolean {
+  return (ch.spells.find((s) => s.id === spell.id)?.prepared ?? false)
+    || subclassSpells(ch.classId, ch.subclass, ch.level).always.some((s) => s.id === spell.id)
+}
 
 export function castOptions(ch: Character, spell: Spell): CastOption[] {
   if (spell.level === 0) return [{ kind: 'cantrip' }]
@@ -34,7 +42,9 @@ export function castOptions(ch: Character, spell: Spell): CastOption[] {
     out.push({ kind: 'arcanum', level: spell.level, key, left: Math.max(0, 1 - (ch.resources?.[key] ?? 0)) })
   }
   const info = casterInfo(ch.classId, ch.subclass)
-  if (spell.ritual && info && !info.third && RITUAL_CASTERS.has(ch.classId)) out.push({ kind: 'ritual' })
+  if (spell.ritual && info && !info.third && RITUAL_CASTERS.has(ch.classId) && (!RITUAL_NEEDS_PREPARED.has(ch.classId) || isPrepared(ch, spell))) {
+    out.push({ kind: 'ritual' })
+  }
   if (grantedSpells(ch).some((s) => s.id === spell.id)) out.push({ kind: 'granted' })
   return out
 }

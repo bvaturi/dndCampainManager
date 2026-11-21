@@ -62,3 +62,27 @@ test("a warlock patron's expanded spells join the warlock's list", () => {
   assert.ok(canUseSpell('warlock', 'fiend', 5, fireball))
   assert.ok(!canUseSpell('warlock', 'archfey', 5, fireball))
 })
+
+test('Jack of All Trades and Remarkable Athlete add half proficiency to checks without proficiency', async () => {
+  const { halfProficiency, skillBonus } = await import('../src/lib/rules')
+  const abilities = { str: 8, dex: 19, con: 8, int: 10, wis: 12, cha: 20 }
+  const bard = { classId: 'bard', subclass: '', level: 2, abilities, skillProfs: ['perception'], expertise: [] as string[] }
+  assert.equal(skillBonus(bard, 'stealth'), 4 + 1) // Dex +4, half of +2
+  assert.equal(skillBonus(bard, 'perception'), 1 + 2) // proficient: no half bonus on top
+  assert.equal(skillBonus({ ...bard, level: 1 }, 'stealth'), 4) // the feature arrives at 2nd level
+  assert.equal(halfProficiency({ ...bard, level: 9 }, 'dex')?.value, 2) // +4 proficiency, rounded down
+  assert.equal(halfProficiency({ ...bard, level: 5 }, 'dex')?.value, 1) // +3 proficiency, rounded down
+  const champion = { classId: 'fighter', subclass: 'champion', level: 7 }
+  assert.equal(halfProficiency(champion, 'str')?.value, 2) // +3 proficiency, rounded up
+  assert.equal(halfProficiency(champion, 'wis'), null)
+  assert.equal(halfProficiency({ ...champion, level: 6 }, 'str'), null)
+  assert.equal(halfProficiency({ classId: 'fighter', subclass: 'battle-master', level: 7 }, 'str'), null)
+})
+
+test('spell durations follow the Player\'s Handbook wording', () => {
+  const dur = (id: string) => SPELLS.find((s) => s.id === id)!.duration
+  assert.equal(dur('prestidigitation'), 'Up to 1 hour')
+  assert.equal(dur('thaumaturgy'), 'Up to 1 minute')
+  assert.equal(dur('find-the-path'), 'Up to 1 day')
+  assert.equal(dur('forbiddance'), '1 day')
+})

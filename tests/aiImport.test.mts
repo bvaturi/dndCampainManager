@@ -53,13 +53,23 @@ test('explicit list fields import proficiencies, expertise, feats, spells and co
   assert.equal(c.hitDiceUsed, 2)
   assert.equal(c.deathSaves.failures, 1)
   assert.equal(c.hpCurrent, 45)
+  // An Arcane Trickster knows spells rather than preparing them, so every known spell is ready.
   assert.deepEqual(c.spells, [
     { id: 'mage-hand', prepared: true },
-    { id: 'disguise-self', prepared: false },
+    { id: 'disguise-self', prepared: true },
     { id: 'charm-person', prepared: true },
   ])
   assert.deepEqual(r.unmatchedSpells, ['Not Real'])
   assert.equal(c.slotsExpended[0], 2)
+})
+
+test('a class that prepares spells keeps the sheet\'s prepared marks; one that knows them has all ready', async () => {
+  const spells = { SpellsCantrips: 'Light', SpellsLevel1: 'Bane\nFaerie Fire\nCure Wounds', SpellsPrepared: 'Bane' }
+  const scores = { STR: '10', DEX: '10', CON: '10', INT: '10', WIS: '16', CHA: '16', HPMax: '10' }
+  const cleric = (await importCharacterPdf(await aiPdf({ CharacterName: 'C', ClassLevel: 'Cleric 2', Race: 'Human', ...scores, ...spells }))).character
+  assert.deepEqual(cleric.spells.filter((s) => s.prepared).map((s) => s.id), ['light', 'bane'])
+  const bard = (await importCharacterPdf(await aiPdf({ CharacterName: 'B', ClassLevel: 'Bard 2', Race: 'Human', ...scores, ...spells }))).character
+  assert.deepEqual(bard.spells.filter((s) => s.prepared).map((s) => s.id), ['light', 'bane', 'faerie-fire', 'cure-wounds'])
 })
 
 test('the prompt lists the extra races with their books, and full subclass names', () => {

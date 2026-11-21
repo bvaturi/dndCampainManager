@@ -45,7 +45,8 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
   // Counters
   const owned = ch.spells.map((s) => ({ ...s, spell: findSpell(s.id) })).filter((s) => s.spell)
   const cantripsOwned = owned.filter((s) => s.spell!.level === 0).length
-  const leveledOwned = owned.filter((s) => s.spell!.level > 0)
+  // Domain / oath spells are always prepared and don't count against the number the character prepares (PHB).
+  const leveledOwned = owned.filter((s) => s.spell!.level > 0 && !isAlways(s.spell!))
   const preparedOwned = leveledOwned.filter((s) => s.prepared).length
   const counters: { label: string; n: number; max: number }[] = []
   if (allowance.cantrips) counters.push({ label: t('cantrips'), n: cantripsOwned, max: allowance.cantrips })

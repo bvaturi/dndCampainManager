@@ -53,3 +53,13 @@ test('cantrip damage scales with character level; attack-roll spells are detecte
   assert.equal(needsAttackRoll(sp('fire-bolt')), true)
   assert.equal(needsAttackRoll(sp('fireball')), false)
 })
+
+test('a cleric or druid casts a ritual only when the spell is prepared; a wizard needs it only in the book', () => {
+  const base = { level: 3, subclass: '', slotsExpended: [0, 0, 0, 0, 0, 0, 0, 0, 0], abilities: { str: 10, dex: 10, con: 10, int: 16, wis: 16, cha: 10 } }
+  const detect = SPELLS.find((s) => s.id === 'detect-magic')!
+  const kinds = (ch: unknown) => castOptions(ch as Character, detect).map((o) => o.kind)
+  assert.ok(!kinds({ ...base, classId: 'cleric', spells: [{ id: 'detect-magic', prepared: false }] }).includes('ritual'))
+  assert.ok(kinds({ ...base, classId: 'cleric', spells: [{ id: 'detect-magic', prepared: true }] }).includes('ritual'))
+  assert.ok(!kinds({ ...base, classId: 'druid', spells: [{ id: 'detect-magic', prepared: false }] }).includes('ritual'))
+  assert.ok(kinds({ ...base, classId: 'wizard', spells: [{ id: 'detect-magic', prepared: false }] }).includes('ritual'))
+})

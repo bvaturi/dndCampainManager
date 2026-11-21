@@ -72,6 +72,8 @@ export interface LevelUpPlan {
   features: GainedFeature[]
   /** This level grants an Ability Score Improvement (+2 to one score or +1 to two, max 20; or a feat). */
   asi: boolean
+  /** Skills to choose for Expertise at this level (bard 3 and 10, rogue 6): proficiency bonus doubled. */
+  expertise: number
   /** The class picks its subclass at or before this level and none is chosen yet. */
   needsSubclass: boolean
   feats?: CharacterFeat[]
@@ -134,6 +136,7 @@ export function levelUpPlan(ch: Character, subclass = ch.subclass): LevelUpPlan 
     resources,
     features: featuresAtLevel(ch.classId, subclass, next),
     asi: (cls.progression.find((p) => p.level === next)?.features ?? []).some((n) => /ability score improvement/i.test(n)),
+    expertise: (cls.progression.find((p) => p.level === next)?.features ?? []).some((n) => /^expertise$/i.test(n.trim())) ? 2 : 0,
     needsSubclass: !subclass && next >= cls.subclassLevel && cls.subclasses.length > 0,
     feats: fromFeats.feats,
   }
@@ -151,6 +154,8 @@ export interface LevelUpChoices {
   die: number
   /** Ability Score Improvement taken now (same ability twice = +2); omit to choose a feat later. */
   asi?: { choice: Ability; choice2: Ability }
+  /** Skills chosen for Expertise (must be skill proficiencies; at most plan.expertise). */
+  expertise?: string[]
   /** Lines to add to Features & Traits ("Name: what it does"), already in the sheet's language. */
   featureLines: string[]
 }
@@ -166,6 +171,8 @@ export function applyLevelUp(ch: Character, plan: LevelUpPlan, c: LevelUpChoices
     features: c.featureLines.length ? `${ch.features}\n${c.featureLines.join('\n')}`.trim() : ch.features,
     ...(plan.feats ? { feats: plan.feats } : {}),
   }
+  const expertise = (c.expertise ?? []).filter((id) => ch.skillProfs.includes(id) && !ch.expertise.includes(id)).slice(0, plan.expertise)
+  if (expertise.length) patch.expertise = [...ch.expertise, ...expertise]
   if (!c.asi) return patch
   // The improvement applies at the new level, so a higher Constitution modifier adds 1 HP for every level.
   return { ...patch, ...addFeat({ ...ch, ...patch } as Character, { featId: 'asi', level: plan.level, choice: c.asi.choice, choice2: c.asi.choice2, notes: '' }) }

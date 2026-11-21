@@ -182,9 +182,24 @@ export function weaponAttack(w: Weapon, a: AbilityScores, prof: number) {
   return { name: w.name, bonus: signed(abil + prof), damage: dmg.trim() }
 }
 
-export function skillBonus(c: Pick<Character, 'abilities' | 'skillProfs' | 'expertise' | 'level'>, skillId: string) {
+/**
+ * What a class adds to ability checks that don't already include the proficiency bonus (PHB): Jack of All Trades
+ * (bard 2+: half proficiency, rounded down, any ability) and Remarkable Athlete (Champion 7+: half proficiency,
+ * rounded up, Strength / Dexterity / Constitution). Initiative is a Dexterity check, so both apply to it.
+ */
+export function halfProficiency(c: Pick<Character, 'classId' | 'subclass' | 'level'>, ability: Ability): { feature: string; value: number } | null {
+  const pb = profBonus(c.level)
+  if (c.classId === 'bard' && c.level >= 2) return { feature: 'Jack of All Trades', value: Math.floor(pb / 2) }
+  if (c.classId === 'fighter' && c.subclass === 'champion' && c.level >= 7 && (ability === 'str' || ability === 'dex' || ability === 'con')) {
+    return { feature: 'Remarkable Athlete', value: Math.ceil(pb / 2) }
+  }
+  return null
+}
+
+export function skillBonus(c: Pick<Character, 'abilities' | 'skillProfs' | 'expertise' | 'level' | 'classId' | 'subclass'>, skillId: string) {
   const skill = SKILLS.find((s) => s.id === skillId)!
   const pb = profBonus(c.level)
-  const p = c.expertise.includes(skillId) ? 2 * pb : c.skillProfs.includes(skillId) ? pb : 0
+  const proficient = c.expertise.includes(skillId) || c.skillProfs.includes(skillId)
+  const p = c.expertise.includes(skillId) ? 2 * pb : proficient ? pb : halfProficiency(c, skill.ability)?.value ?? 0
   return mod(c.abilities[skill.ability]) + p
 }

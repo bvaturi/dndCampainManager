@@ -174,3 +174,17 @@ test('levelling writes the new abilities into Features & Traits', () => {
   assert.ok(/Channel Divinity: Turn Undead: Action/.test(patch.features!))
   assert.ok(/Destructive Wrath/.test(patch.features!))
 })
+
+test('Expertise: bard 3 and 10 and rogue 6 choose two skill proficiencies to double', async () => {
+  const { levelUpPlan, applyLevelUp } = await import('../src/lib/levelUp')
+  const base = { classId: 'bard', subclass: '', level: 2, hpMax: 12, hpCurrent: 12, features: '', spells: [], slotsExpended: Array(9).fill(0),
+    abilities: { str: 8, dex: 19, con: 8, int: 10, wis: 12, cha: 20 }, skillProfs: ['insight', 'performance', 'persuasion'], expertise: [] as string[] } as unknown as Character
+  const plan = levelUpPlan(base, 'valor')!
+  assert.equal(plan.expertise, 2)
+  const patch = applyLevelUp(base, plan, { subclass: 'valor', die: plan.hpFixed, featureLines: [], expertise: ['performance', 'stealth', 'persuasion', 'insight'] })
+  assert.deepEqual(patch.expertise, ['performance', 'persuasion'], 'only proficient skills, at most two')
+  assert.equal(levelUpPlan({ ...base, level: 3, subclass: 'valor' } as Character)!.expertise, 0)
+  assert.equal(levelUpPlan({ ...base, level: 9, subclass: 'valor' } as Character)!.expertise, 2)
+  assert.equal(levelUpPlan({ ...base, classId: 'rogue', level: 5 } as Character)!.expertise, 2)
+  assert.equal(applyLevelUp(base, plan, { subclass: 'valor', die: plan.hpFixed, featureLines: [] }).expertise, undefined)
+})

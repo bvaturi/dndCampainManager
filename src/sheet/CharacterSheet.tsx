@@ -3,7 +3,7 @@ import { SpellCard } from '../components/SpellCard'
 import { useI18n } from '../lib/i18n'
 import {
   ABILITY_NAMES, ALIGNMENTS, BACKGROUNDS, RACES, SKILLS, backgroundById, classById, levelRow, mod,
-  profBonus, raceById, signed, skillBonus, type Spell,
+  halfProficiency, profBonus, raceById, signed, skillBonus, type Spell,
 } from '../lib/rules'
 import { ABILITIES, type Ability, type Character } from '../lib/types'
 import { L, type LabelKey } from './labels'
@@ -15,7 +15,7 @@ import { characterResources, rechargeAt, resourceLabel } from '../lib/classFeatu
 import { allSpells, findSpell, grantedSpells } from '../lib/homebrew'
 import ResourceTracker from './ResourceTracker'
 import HpAdjust, { type HpChange } from './HpAdjust'
-import { canUseSpell, casterInfo, spellSlots } from '../lib/spellAccess'
+import { canUseSpell, casterInfo, spellSlots, subclassSpells } from '../lib/spellAccess'
 
 interface SheetProps {
   ch: Character
@@ -297,7 +297,7 @@ function PageOne({ ch, edit, onChange, onHp }: SheetProps) {
                 </div>
               </div>
               <div className="stat-box">
-                <Rollable className="ink big" title={tip} onRoll={(e) => roll.initiative(e)}>{signed(mod(ch.abilities.dex) + bonuses.initiative)}</Rollable>
+                <Rollable className="ink big" title={tip} onRoll={(e) => roll.initiative(e)}>{signed(mod(ch.abilities.dex) + bonuses.initiative + (halfProficiency(ch, 'dex')?.value ?? 0))}</Rollable>
                 <span className="tiny-label">{l('initiative')}</span>
               </div>
               <div className="stat-box">
@@ -505,7 +505,9 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
   const ability = casterInfo(ch.classId, ch.subclass)?.ability
   const pb = profBonus(ch.level)
   const slots = spellSlots(ch.classId, ch.subclass, ch.level)
-  const known = ch.spells.map((s) => ({ ...s, spell: findSpell(s.id) })).filter((s) => s.spell)
+  // Domain / oath spells are always prepared: they get their own fixed lines, whether or not they were also added by hand.
+  const always = subclassSpells(ch.classId, ch.subclass, ch.level).always
+  const known = ch.spells.map((s) => ({ ...s, spell: findSpell(s.id) })).filter((s) => s.spell && !always.some((a) => a.id === s.id))
   const granted = grantedSpells(ch)
   const rolls = useSheetRolls(ch, edit, onChange)
   const { t } = useI18n()
@@ -527,11 +529,12 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
 
   const block = (lv: number) => {
     const list = known.filter((s) => s.spell!.level === lv)
+    const fixed = always.filter((s) => s.level === lv)
     const minLines = lv === 0 ? 6 : lv <= 2 ? 10 : lv <= 5 ? 8 : 5
-    const pad = Math.max(0, minLines - list.length)
+    const pad = Math.max(0, minLines - list.length - fixed.length)
     const total = lv > 0 ? slots[lv - 1] ?? 0 : 0
     const addable = [...allSpells().filter((s) => canUseSpell(ch.classId, ch.subclass, ch.level, s)), ...granted]
-      .filter((s, i, all) => s.level === lv && !ch.spells.some((x) => x.id === s.id) && all.findIndex((x) => x.id === s.id) === i)
+      .filter((s, i, all) => s.level === lv && !ch.spells.some((x) => x.id === s.id) && !always.some((x) => x.id === s.id) && all.findIndex((x) => x.id === s.id) === i)
     const used = ch.slotsExpended[lv - 1] ?? 0
     return (
       <section key={lv} className={`spell-block ${lv === 0 ? 'cantrip-block' : ''}`}>
@@ -557,6 +560,13 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
         </div>
         {lv === 1 && <div className="slot-legend"><span>{l('slotsTotal')}</span><span>{l('slotsExpended')}</span></div>}
         <ul className="spell-lines">
+          {fixed.map((s) => (
+            <li key={s.id}>
+              <PrepMark on title={t('sbAlwaysPrepared')} />
+              <button className="spell-link ink" onClick={() => setOpen(s)}>{g('spells', s.id, s.name)} ★</button>
+              {edit && <button className="cast-btn no-print" title={t('castTitle', { name: g('spells', s.id, s.name) })} onClick={() => caster.cast(s)}>✦ {t('castButton')}</button>}
+            </li>
+          ))}
           {list.map((s) => (
             <li key={s.id}>
               {lv > 0 && (

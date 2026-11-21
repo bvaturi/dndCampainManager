@@ -13,8 +13,19 @@ import re
 SPELLS = "src/data/spells.json"
 facts = json.load(open("scripts/spell_facts.json", encoding="utf-8"))
 spells = json.load(open(SPELLS, encoding="utf-8"))
+# Durations the source data words differently from the Player's Handbook.
+DURATION_FIX = {
+    "prestidigitation": "Up to 1 hour",
+    "thaumaturgy": "Up to 1 minute",
+    "etherealness": "Up to 8 hours",
+    "find-the-path": "Up to 1 day",
+    "project-image": "Up to 1 day",
+    "forbiddance": "1 day",
+}
 filled = 0
 for s in spells:
+    if s["id"] in DURATION_FIX:
+        s["duration"] = DURATION_FIX[s["id"]]
     s["range"] = re.sub(r"(\d+)-ft\b", r"\1-foot", re.sub(r"(\d+) ft\b", r"\1 feet", s["range"]))
     f = facts.get(s["id"])
     if not f:

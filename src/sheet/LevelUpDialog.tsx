@@ -4,7 +4,7 @@ import { featureNameHe, featureSummaryHe } from '../lib/classFeatures'
 import { rollDie } from '../lib/dice'
 import { useI18n } from '../lib/i18n'
 import { applyLevelUp, hpGain, levelUpPlan, type GainedFeature } from '../lib/levelUp'
-import { ABILITY_NAMES, classById, mod, signed } from '../lib/rules'
+import { ABILITY_NAMES, SKILLS, classById, mod, signed } from '../lib/rules'
 import { ABILITIES, type Ability, type Character } from '../lib/types'
 
 /** The Level up button and its window: shows everything the new level gives before applying it. */
@@ -38,8 +38,13 @@ function LevelUpDialog({ ch, onChange, onClose }: { ch: Character; onChange(p: P
     const open = ABILITIES.filter((a) => ch.abilities[a] < 20)
     return { choice: open[0] ?? 'str', choice2: open[0] ?? 'str' }
   })
+  const [expertise, setExpertise] = useState<string[]>([])
   const plan = levelUpPlan(ch, subclass)
   if (!plan) return null
+  // Expertise doubles the proficiency bonus for skills the character is already proficient in.
+  const expertiseOptions = SKILLS.filter((s) => ch.skillProfs.includes(s.id) && !ch.expertise.includes(s.id))
+  const toggleExpertise = (id: string) =>
+    setExpertise((cur) => (cur.includes(id) ? cur.filter((x) => x !== id) : cur.length < plan.expertise ? [...cur, id] : cur))
 
   const die = rolled ?? plan.hpFixed
   const hp = hpGain(plan, die)
@@ -59,6 +64,7 @@ function LevelUpDialog({ ch, onChange, onClose }: { ch: Character; onChange(p: P
       subclass,
       die,
       asi: plan.asi && asiMode === 'scores' ? asi : undefined,
+      expertise,
       featureLines: plan.features.map((f) => (featureSummary(f) ? `${featureName(f)}: ${featureSummary(f)}` : featureName(f))),
     }))
     onClose()
@@ -147,6 +153,19 @@ function LevelUpDialog({ ch, onChange, onClose }: { ch: Character; onChange(p: P
                   <p className="muted small">{t('featAsiSame')}</p>
                 </>
               ) : <p className="muted small">{t('luAsiFeatHint')}</p>}
+            </div>
+          )}
+
+          {plan.expertise > 0 && (
+            <div className="rest-block">
+              <h4>{t('diceExpertise')} <span className="muted small" dir="ltr">{expertise.length}/{plan.expertise}</span></h4>
+              <p className="muted small">{t('luExpertiseHint', { n: plan.expertise })}{ch.classId === 'rogue' ? ` ${t('luExpertiseTools')}` : ''}</p>
+              <div className="chip-row">
+                {expertiseOptions.map((s) => (
+                  <button key={s.id} type="button" className={`chip ${expertise.includes(s.id) ? 'on' : ''}`} aria-pressed={expertise.includes(s.id)}
+                    disabled={!expertise.includes(s.id) && expertise.length >= plan.expertise} onClick={() => toggleExpertise(s.id)}>{s[lang]}</button>
+                ))}
+              </div>
             </div>
           )}
 
