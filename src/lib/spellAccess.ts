@@ -5,9 +5,9 @@
  * Covers full/half/pact casters from the class tables, the warlock's Mystic Arcanum (6th–9th),
  * and the PHB one-third casters (Eldritch Knight, Arcane Trickster) who use the wizard list.
  */
-import { allSpells } from './homebrew'
+import { allSpells, findSpell, grantedSpells } from './homebrew'
 import { classById, levelRow, mod, type Spell } from './rules'
-import type { Ability, AbilityScores } from './types'
+import type { Ability, AbilityScores, Character } from './types'
 
 // One-third caster table (PHB Eldritch Knight / Arcane Trickster): slots for spell levels 1-4 by character level.
 const THIRD_SLOTS: number[][] = [
@@ -147,4 +147,38 @@ export function spellAllowance(classId: string, subclass: string, level: number,
     return { cantrips, spells: n, maxLevel, mode: 'prepared' as SpellMode, preparedLimit: n }
   }
   return { cantrips, spells: levelRow(cls, lv)?.known ?? 0, maxLevel, mode: 'known' as SpellMode, preparedLimit: 0 }
+}
+
+/**
+ * Where the character stands against each limit of their class (PHB): cantrips known, spells known (bard, ranger,
+ * sorcerer, warlock, one-third casters) and spells prepared (cleric, druid, paladin, wizard). Domain / oath spells
+ * are always prepared and never count; neither do homebrew spells the DM granted. A wizard's spellbook has no cap
+ * (spells can be copied into it), only the number prepared.
+ */
+export function spellCounts(ch: Pick<Character, 'id' | 'classId' | 'subclass' | 'level' | 'abilities' | 'spells'>) {
+  const allowance = spellAllowance(ch.classId, ch.subclass, ch.level, ch.abilities)
+  const free = new Set([...subclassSpells(ch.classId, ch.subclass, ch.level).always, ...grantedSpells(ch)].map((s) => s.id))
+  let cantrips = 0, leveled = 0, prepared = 0
+  for (const k of ch.spells) {
+    const spell = findSpell(k.id)
+    if (!spell || free.has(spell.id)) continue
+    if (spell.level === 0) cantrips++
+    else { leveled++; if (k.prepared) prepared++ }
+  }
+  const prepares = allowance.mode === 'prepared' || allowance.mode === 'spellbook'
+  return {
+    allowance, cantrips, leveled, prepared, prepares,
+    /** Spells that never count against a limit (always prepared, or granted by the DM). */
+    isFree: (id: string) => free.has(id),
+    cantripsFull: allowance.mode !== 'none' && cantrips >= allowance.cantrips,
+    knownFull: allowance.mode === 'known' && leveled >= allowance.spells,
+    preparedFull: prepares && prepared >= allowance.preparedLimit,
+  }
+}
+
+/** Why this spell can't be added to the sheet right now ('cantrips' or 'known' limit reached), or null if it can. */
+export function addBlocked(counts: ReturnType<typeof spellCounts>, spell: Spell): 'cantrips' | 'known' | null {
+  if (counts.isFree(spell.id)) return null
+  if (spell.level === 0) return counts.cantripsFull ? 'cantrips' : null
+  return counts.knownFull ? 'known' : null
 }

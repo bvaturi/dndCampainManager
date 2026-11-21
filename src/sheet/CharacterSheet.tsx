@@ -15,7 +15,7 @@ import { characterResources, rechargeAt, resourceLabel } from '../lib/classFeatu
 import { allSpells, findSpell, grantedSpells } from '../lib/homebrew'
 import ResourceTracker from './ResourceTracker'
 import HpAdjust, { type HpChange } from './HpAdjust'
-import { canUseSpell, casterInfo, spellSlots, subclassSpells } from '../lib/spellAccess'
+import { addBlocked, canUseSpell, casterInfo, spellCounts, spellSlots, subclassSpells } from '../lib/spellAccess'
 
 interface SheetProps {
   ch: Character
@@ -177,11 +177,14 @@ function PageOne({ ch, edit, onChange, onHp }: SheetProps) {
   }
   const bonuses = featBonuses(ch)
   const passive = 10 + skillBonus(ch, 'perception') + bonuses.passive
+  // Typing in one of the blank rows starts that attack (rows above it are kept as blank lines so it stays in place).
   const setAttack = (i: number, k: 'name' | 'bonus' | 'damage', v: string) => {
-    const next = ch.attacks.map((a, j) => (j === i ? { ...a, [k]: v } : a))
+    const next = [...ch.attacks]
+    while (next.length <= i) next.push({ name: '', bonus: '', damage: '' })
+    next[i] = { ...next[i], [k]: v }
     onChange({ attacks: next })
   }
-  const attackRows = [...ch.attacks, ...Array(Math.max(0, 3 - ch.attacks.length)).fill(null)]
+  const attackRows: (Character['attacks'][number] | null)[] = [...ch.attacks, ...Array(Math.max(0, 3 - ch.attacks.length)).fill(null)]
   const roll = useSheetRolls(ch, edit, onChange)
   const { t } = useI18n()
   const tip = t('diceClickToRoll')
@@ -360,16 +363,16 @@ function PageOne({ ch, edit, onChange, onHp }: SheetProps) {
               <tbody>
                 {attackRows.map((a, i) => (
                   <tr key={i}>
-                    {a ? (
+                    {a || edit ? (
                       <>
-                        <td><Txt value={a.name} onChange={(v) => setAttack(i, 'name', v)} edit={edit} /></td>
-                        <td><Txt value={a.bonus} onChange={(v) => setAttack(i, 'bonus', v)} edit={edit} center /></td>
-                        <td><Txt value={a.damage} onChange={(v) => setAttack(i, 'damage', v)} edit={edit} /></td>
-                        <td className="roll-col"><button type="button" className="mini-die no-print" title={tip} onClick={(e) => roll.attack(i, e)}>🎲</button></td>
-                        {edit && <td><button className="x-btn" title={l('remove')} onClick={() => onChange({ attacks: ch.attacks.filter((_, j) => j !== i) })}>×</button></td>}
+                        <td><Txt value={a?.name ?? ''} onChange={(v) => setAttack(i, 'name', v)} edit={edit} /></td>
+                        <td><Txt value={a?.bonus ?? ''} onChange={(v) => setAttack(i, 'bonus', v)} edit={edit} center /></td>
+                        <td><Txt value={a?.damage ?? ''} onChange={(v) => setAttack(i, 'damage', v)} edit={edit} /></td>
+                        <td className="roll-col">{a && (a.name || a.bonus || a.damage) && <button type="button" className="mini-die no-print" title={tip} onClick={(e) => roll.attack(i, e)}>🎲</button>}</td>
+                        {edit && <td>{a && <button className="x-btn" title={l('remove')} onClick={() => onChange({ attacks: ch.attacks.filter((_, j) => j !== i) })}>×</button>}</td>}
                       </>
                     ) : (
-                      <><td><span className="ink">&nbsp;</span></td><td /><td /><td className="roll-col" />{edit && <td />}</>
+                      <><td><span className="ink">&nbsp;</span></td><td /><td /><td className="roll-col" /></>
                     )}
                   </tr>
                 ))}
@@ -522,9 +525,12 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
     </svg>
   )
 
+  // The class limits (cantrips, spells known, spells prepared) hold here as on the Spellbook tab.
+  const counts = spellCounts(ch)
   const addSpell = (id: string) => {
-    if (!id || ch.spells.some((s) => s.id === id)) return
-    onChange({ spells: [...ch.spells, { id, prepared: true }] })
+    const spell = findSpell(id)
+    if (!spell || ch.spells.some((s) => s.id === id) || addBlocked(counts, spell)) return
+    onChange({ spells: [...ch.spells, { id, prepared: spell.level === 0 || !counts.prepares || !counts.preparedFull }] })
   }
 
   const block = (lv: number) => {
@@ -570,8 +576,9 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
           {list.map((s) => (
             <li key={s.id}>
               {lv > 0 && (
-                <PrepMark on={s.prepared} title={t(s.prepared ? 'preparedToggle' : 'unpreparedToggle')}
-                  onClick={edit ? () => onChange({ spells: ch.spells.map((x) => (x.id === s.id ? { ...x, prepared: !x.prepared } : x)) }) : undefined} />
+                <PrepMark on={s.prepared}
+                  title={s.prepared ? t('preparedToggle') : counts.preparedFull ? t('sbLimitPrepared', { max: counts.allowance.preparedLimit }) : t('unpreparedToggle')}
+                  onClick={edit && (s.prepared || !counts.preparedFull) ? () => onChange({ spells: ch.spells.map((x) => (x.id === s.id ? { ...x, prepared: !x.prepared } : x)) }) : undefined} />
               )}
               <button className="spell-link ink" onClick={() => setOpen(s.spell!)}>{g('spells', s.id, s.spell!.name)}</button>
               {edit && <button className="cast-btn no-print" title={t('castTitle', { name: g('spells', s.id, s.spell!.name) })} onClick={() => caster.cast(s.spell!)}>✦ {t('castButton')}</button>}
@@ -580,10 +587,11 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
           ))}
           {Array.from({ length: pad }, (_, i) => <li key={`pad${i}`}>{lv > 0 && <PrepMark on={false} />}<span className="ink">&nbsp;</span></li>)}
         </ul>
-        {edit && addable.length > 0 && (
+        {edit && addable.length > 0 && !addable.every((s) => addBlocked(counts, s)) && (
           <select className="add-spell" value="" onChange={(e) => addSpell(e.target.value)}>
             <option value="">{l('addSpell')}</option>
             {addable
+              .filter((s) => !addBlocked(counts, s))
               .map((s) => <option key={s.id} value={s.id}>{g('spells', s.id, s.name)}{s.source !== 'PHB' ? ` (${s.source})` : ''}</option>)}
           </select>
         )}

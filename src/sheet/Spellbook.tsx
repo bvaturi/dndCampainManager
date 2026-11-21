@@ -4,7 +4,7 @@ import { useI18n } from '../lib/i18n'
 import { useHomebrew } from '../components/HomebrewScope'
 import { HOMEBREW_SOURCE, allSpells, findSpell, grantedSpells } from '../lib/homebrew'
 import { ABILITY_NAMES, classById, mod, profBonus, signed, type Spell } from '../lib/rules'
-import { cantripCount, castableMax, casterInfo, classSpellList, spellAllowance, spellSlots, subclassSpells, unlockLevel } from '../lib/spellAccess'
+import { addBlocked, cantripCount, castableMax, casterInfo, classSpellList, spellAllowance, spellCounts, spellSlots, subclassSpells, unlockLevel } from '../lib/spellAccess'
 import type { Character } from '../lib/types'
 import { useSheetRolls } from './rolls'
 import { useCaster } from './CastDialog'
@@ -42,17 +42,20 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
   const abilityMod = info ? mod(ch.abilities[info.ability]) : 0
   const listClassName = info ? g('classes', info.listClass, classById(info.listClass)?.name) : ''
 
-  // Counters
+  // Counters, and the limits they enforce: domain / oath spells and DM-granted spells never count (PHB).
   const owned = ch.spells.map((s) => ({ ...s, spell: findSpell(s.id) })).filter((s) => s.spell)
-  const cantripsOwned = owned.filter((s) => s.spell!.level === 0).length
-  // Domain / oath spells are always prepared and don't count against the number the character prepares (PHB).
-  const leveledOwned = owned.filter((s) => s.spell!.level > 0 && !isAlways(s.spell!))
-  const preparedOwned = leveledOwned.filter((s) => s.prepared).length
-  const counters: { label: string; n: number; max: number }[] = []
-  if (allowance.cantrips) counters.push({ label: t('cantrips'), n: cantripsOwned, max: allowance.cantrips })
-  if (allowance.mode === 'known') counters.push({ label: t('spellsKnown'), n: leveledOwned.length, max: allowance.spells })
-  if (allowance.mode === 'spellbook') counters.push({ label: t('sbInBook'), n: leveledOwned.length, max: allowance.spells })
-  if (allowance.mode === 'prepared' || allowance.mode === 'spellbook') counters.push({ label: t('spellsPrepared'), n: preparedOwned, max: allowance.preparedLimit })
+  const counts = spellCounts(ch)
+  const counters: { label: string; n: number; max: number; soft?: boolean }[] = []
+  if (allowance.cantrips) counters.push({ label: t('cantrips'), n: counts.cantrips, max: allowance.cantrips })
+  if (allowance.mode === 'known') counters.push({ label: t('spellsKnown'), n: counts.leveled, max: allowance.spells })
+  // A wizard's spellbook can hold more than levelling gives (copied spells), so this one is only a guide.
+  if (allowance.mode === 'spellbook') counters.push({ label: t('sbInBook'), n: counts.leveled, max: allowance.spells, soft: true })
+  if (counts.prepares) counters.push({ label: t('spellsPrepared'), n: counts.prepared, max: allowance.preparedLimit })
+  /** Why a spell can't be added: the cantrip or spells-known limit is reached. */
+  const limitNote = (s: Spell) => {
+    const why = addBlocked(counts, s)
+    return why === 'cantrips' ? t('sbLimitCantrips', { max: allowance.cantrips }) : why === 'known' ? t('sbLimitKnown', { max: allowance.spells }) : ''
+  }
 
   // Spell levels this class ever reaches
   const levels = Array.from({ length: 10 }, (_, i) => i).filter((lv) => unlockLevel(ch.classId, ch.subclass, lv) !== null)
@@ -64,9 +67,17 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
   // Spells already on the sheet that the class list doesn't include (imported or from older versions).
   const offList = owned.filter((s) => !onList(s.spell!) && !granted.some((x) => x.id === s.id) && !isAlways(s.spell!) && !(allSources === false && s.spell!.source !== 'PHB'))
 
-  const add = (s: Spell) => onChange({ spells: [...ch.spells, { id: s.id, prepared: true }] })
+  // A class that prepares spells adds a new one prepared only while there is room under its limit.
+  const add = (s: Spell) => {
+    if (addBlocked(counts, s)) return
+    onChange({ spells: [...ch.spells, { id: s.id, prepared: s.level === 0 || !counts.prepares || !counts.preparedFull }] })
+  }
   const remove = (id: string) => onChange({ spells: ch.spells.filter((x) => x.id !== id) })
-  const togglePrepared = (id: string) => onChange({ spells: ch.spells.map((x) => (x.id === id ? { ...x, prepared: !x.prepared } : x)) })
+  const togglePrepared = (id: string) => {
+    const cur = ch.spells.find((x) => x.id === id)
+    if (!cur || (!cur.prepared && counts.preparedFull)) return
+    onChange({ spells: ch.spells.map((x) => (x.id === id ? { ...x, prepared: !x.prepared } : x)) })
+  }
   const showPrepared = allowance.mode === 'prepared' || allowance.mode === 'spellbook'
 
   const row = (s: Spell, locked: boolean, warn?: string) => {
@@ -77,7 +88,7 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
         {fixed ? <span className="sb-add static on" title={t('sbAlwaysPrepared')}>★</span> : edit ? (
           have
             ? <button className="sb-add on" title={t('sbRemove')} onClick={() => remove(s.id)}>✓</button>
-            : <button className="sb-add" disabled={locked} title={t('sbAdd')} onClick={() => add(s)}>+</button>
+            : <button className="sb-add" disabled={locked || !!limitNote(s)} title={limitNote(s) || t('sbAdd')} onClick={() => add(s)}>+</button>
         ) : <span className={`sb-add static ${have ? 'on' : ''}`}>{have ? '✓' : ''}</span>}
         <button className="sb-name" onClick={() => setOpen(s)}>
           <span className="sb-title">{s.source === HOMEBREW_SOURCE && <span title={t('hbHomebrew')}>🏠 </span>}{g('spells', s.id, s.name)}</span>
@@ -94,8 +105,8 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
         <span className="sb-actions">
           {fixed && s.level > 0 && <span className="sb-book on" title={t('sbAlwaysPrepared')}>★ {t('sbAlwaysTag')}</span>}
           {!fixed && showPrepared && have && s.level > 0 && (
-            <button className={`sb-book ${have.prepared ? 'on' : ''}`} disabled={!edit} onClick={() => togglePrepared(s.id)}
-              title={t(have.prepared ? 'preparedToggle' : 'unpreparedToggle')} aria-pressed={have.prepared}>
+            <button className={`sb-book ${have.prepared ? 'on' : ''}`} disabled={!edit || (!have.prepared && counts.preparedFull)} onClick={() => togglePrepared(s.id)}
+              title={have.prepared ? t('preparedToggle') : counts.preparedFull ? t('sbLimitPrepared', { max: allowance.preparedLimit }) : t('unpreparedToggle')} aria-pressed={have.prepared}>
               📖 {have.prepared ? t('sbPreparedTag') : t('sbPrepare')}
             </button>
           )}
@@ -156,7 +167,7 @@ export default function Spellbook({ ch, edit, onChange }: { ch: Character; edit:
         </div>
         <div className="sb-counters">
           {counters.map((c) => (
-            <span key={c.label} className={`sb-counter ${c.n > c.max ? 'over' : ''}`} title={c.n > c.max ? t('sbOverLimit') : ''}>
+            <span key={c.label} className={`sb-counter ${c.n > c.max ? 'over' : !c.soft && c.n === c.max ? 'full' : ''}`} title={c.n > c.max ? t(c.soft ? 'sbOverLimit' : 'sbOverFix') : ''}>
               {c.label}: <strong dir="ltr">{c.n}/{c.max}</strong>
             </span>
           ))}

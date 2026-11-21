@@ -510,6 +510,8 @@ tr.clickable:hover td { background: #fff8e8; }
 .sb-counters { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 6px; }
 .sb-counter { background: #fffaf0; border: 1px solid var(--line); border-radius: 99px; padding: 3px 12px; font-size: 14px; }
 .sb-counter.over { border-color: var(--danger); color: var(--danger); background: #f8e1dc; }
+.sb-counter.full { border-color: var(--gold); }
+.sb-book:disabled:not(.on) { opacity: .45; cursor: not-allowed; }
 .sb-controls { margin-top: 10px; }
 .sb-controls input.grow { min-width: 200px; }
 .sb-filter { margin: 0; grid-template-columns: auto auto; }

@@ -63,3 +63,39 @@ test('how many spells each caster type picks', () => {
   assert.equal(spellAllowance('fighter', '', 3, scores()).mode, 'none')
   assert.equal(spellAllowance('warlock', '', 11, scores()).maxLevel, 5, 'arcanum is picked separately from known spells')
 })
+
+test('spell limits: cantrips, spells known and spells prepared are capped by the class table', async () => {
+  const { spellCounts, addBlocked } = await import('../src/lib/spellAccess')
+  const { SPELLS } = await import('../src/lib/rules')
+  const sp = (id: string) => SPELLS.find((s) => s.id === id)!
+  const scores = { str: 18, dex: 10, con: 17, int: 8, wis: 18, cha: 20 }
+  const k = (ids: string[], prepared = true) => ids.map((id) => ({ id, prepared }))
+
+  // Tempest cleric 3, Wis 18: prepares 4 + 3 = 7; domain spells are free.
+  const cleric = { id: 'c', classId: 'cleric', subclass: 'tempest', level: 3, abilities: scores,
+    spells: [...k(['guidance', 'resistance', 'sacred-flame', 'thunderwave', 'shatter']), ...k(['command', 'cure-wounds', 'guiding-bolt', 'healing-word', 'inflict-wounds', 'hold-person']), ...k(['bless'], false)] }
+  let c = spellCounts(cleric)
+  assert.deepEqual([c.cantrips, c.leveled, c.prepared, c.allowance.preparedLimit], [3, 7, 6, 7])
+  assert.equal(c.preparedFull, false)
+  assert.equal(addBlocked(c, sp('light')), 'cantrips', 'a 4th cantrip is refused')
+  assert.equal(addBlocked(c, sp('aid')), null, 'a cleric may list any cleric spell; only preparing is capped')
+  c = spellCounts({ ...cleric, spells: cleric.spells.map((s) => ({ ...s, prepared: true })) })
+  assert.deepEqual([c.prepared, c.preparedFull], [7, true])
+  assert.equal(addBlocked(c, sp('fog-cloud')), null, 'domain spells never count')
+
+  // Bard 3: 2 cantrips, 6 spells known.
+  const bard = { id: 'b', classId: 'bard', subclass: 'valor', level: 3, abilities: scores,
+    spells: k(['friends', 'prestidigitation', 'bane', 'charm-person', 'dissonant-whispers', 'faerie-fire', 'crown-of-madness']) }
+  let b = spellCounts(bard)
+  assert.deepEqual([b.cantrips, b.leveled, b.knownFull, b.cantripsFull, b.preparedFull], [2, 5, false, true, false])
+  assert.equal(addBlocked(b, sp('sleep')), null)
+  b = spellCounts({ ...bard, spells: [...bard.spells, ...k(['sleep'])] })
+  assert.equal(addBlocked(b, sp('healing-word')), 'known', 'a 7th known spell is refused')
+
+  // Wizard 1: the spellbook has no cap (spells can be copied in); preparing does.
+  const wizard = { id: 'w', classId: 'wizard', subclass: '', level: 1, abilities: { ...scores, int: 16 },
+    spells: k(['magic-missile', 'shield', 'sleep', 'mage-armor', 'detect-magic', 'identify', 'burning-hands']) }
+  const w = spellCounts(wizard)
+  assert.equal(addBlocked(w, sp('find-familiar')), null)
+  assert.deepEqual([w.allowance.preparedLimit, w.preparedFull], [4, true])
+})
