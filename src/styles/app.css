@@ -377,7 +377,8 @@ tr.clickable:hover td { background: #fff8e8; }
 }
 
 @media print {
-  @page { size: letter; margin: 0; }
+  /* no fixed paper size: the sheet is scaled (sheet.css) to fit both A4 and US Letter */
+  @page { margin: 0; }
   body { background: #fff; }
   .no-print, .topbar { display: none !important; }
   .page { padding: 0; max-width: none; }

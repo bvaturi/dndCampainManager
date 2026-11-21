@@ -311,13 +311,42 @@ textarea.ink.lined { background: repeating-linear-gradient(transparent 0 19px, #
 /* the page-3 grid would overflow with many spells; let columns scroll on screen */
 .p3-col { overflow: auto; }
 
+/* The spell page prints from its own laid-out copies; boxes too long for the paper continue on extra pages. */
+.sheet-slot { width: 100%; max-width: 860px; }
+.print-only { display: none !important; }
+
 @media print {
   .sheet-stack { gap: 0; display: block; }
+  .sheet-slot { max-width: none; }
+  .sheet-slot.print-only { display: block !important; }
   .page-scaler { height: auto !important; max-width: none; overflow: visible; }
-  .page-scaled { transform: none !important; }
-  .sheet-page { box-shadow: none; break-after: page; margin: 0 auto; }
+  .page-scaled { transform: none !important; width: auto; }
+  /* 860 x 1112 scaled to 791 x 1023: one sheet page per sheet of paper on A4 (794 x 1123) and Letter (816 x 1056),
+     in both text directions (relying on the browser to shrink the page cut it off in Hebrew). */
+  .sheet-page { box-shadow: none; break-after: page; break-inside: avoid; margin: 0 auto; zoom: 0.92; }
   .add-spell, .add-line, .x-btn, .url-input { display: none !important; }
-  .p3-col { overflow: visible; }
+  .p3-col { overflow: hidden; }
+  textarea.ink { overflow: hidden; }
+  /* a box that holds more than it shows says where the rest is */
+  .frame-label[data-continued]::after { content: ' · ' attr(data-continued) ' ▸'; text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+  table.print-extra.print-only { display: table !important; }
+  .print-extra {
+    width: 791px; margin: 0 auto; border-collapse: collapse; break-before: page;
+    color: var(--s-ink); font-family: 'Alegreya Sans', 'Heebo', sans-serif;
+  }
+  .print-extra th, .print-extra td { padding: 0 40px; text-align: start; vertical-align: top; }
+  .print-extra thead th {
+    padding-top: 34px; padding-bottom: 8px; font-family: 'Cinzel', 'Heebo', serif; font-size: 17px; font-weight: 700;
+  }
+  .print-extra thead th::after { content: ''; display: block; border-bottom: 2px solid var(--s-ink); margin-top: 6px; }
+  .print-extra tfoot td { padding-top: 14px; padding-bottom: 22px; text-align: center; font-size: 9px; color: #a8a8a8; }
+  .print-extra h3 {
+    font-family: 'Alegreya Sans SC', 'Heebo', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; margin: 14px 0 4px; break-after: avoid;
+  }
+  :lang(he) .print-extra h3 { font-family: 'Heebo', sans-serif; letter-spacing: 0; }
+  .print-extra p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13.5px; line-height: 1.5; orphans: 3; widows: 3; }
 }
 
 /* ---------- rolling from the sheet */

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { flushSync } from 'react-dom'
 import { SpellCard } from '../components/SpellCard'
 import { useI18n } from '../lib/i18n'
 import {
@@ -9,6 +10,7 @@ import { ABILITIES, type Ability, type Character } from '../lib/types'
 import { L, type LabelKey } from './labels'
 import { useSheetRolls } from './rolls'
 import { useCaster } from './CastDialog'
+import { layoutSpellPages, type SpellPage, type SpellSegment } from '../lib/spellPages'
 import { castOptions, needsPreparing } from '../lib/casting'
 import { createPortal } from 'react-dom'
 import { featBonuses } from '../lib/feats'
@@ -44,12 +46,70 @@ function PageScaler({ children }: { children: ReactNode }) {
   )
 }
 
+/** A box whose text doesn't fit on the printed sheet: printed in full on the continuation pages. */
+interface Overflow { label: string; text: string }
+
 export default function CharacterSheet(props: SheetProps) {
+  const { ch } = props
+  const { lang } = useI18n()
+  const stack = useRef<HTMLDivElement>(null)
+  const [overflow, setOverflow] = useState<Overflow[]>([])
+
+  // Just before printing, find every box that holds more than it shows (the boxes scroll on screen, paper can't).
+  useEffect(() => {
+    const measure = () => {
+      const out: Overflow[] = []
+      for (const frame of stack.current?.querySelectorAll<HTMLElement>('.frame') ?? []) {
+        const labelEl = frame.querySelector<HTMLElement>('.frame-label')
+        const label = labelEl?.textContent ?? ''
+        const area = frame.querySelector('textarea')
+        let text = ''
+        if (area) {
+          area.scrollTop = 0 // print the box from its first line, wherever it was scrolled to
+          if (area.value.trim() && area.scrollHeight > area.clientHeight + 2) text = area.value
+        }
+        if (!text && frame.classList.contains('attacks-frame')) {
+          const rows = [...frame.querySelectorAll('tbody tr')].map((tr) => [...tr.querySelectorAll('input')])
+          if (rows.some((r) => r.some((i) => i.scrollWidth > i.clientWidth + 1))) {
+            text = rows.map((r) => r.map((i) => i.value.trim()).filter(Boolean).join(' · ')).filter(Boolean).join('\n')
+          }
+        }
+        // The label says (in print only) that the rest of the box is on the continuation pages.
+        if (text) { if (labelEl) labelEl.dataset.continued = L.continuedNote[lang]; out.push({ label, text }) } else delete labelEl?.dataset.continued
+      }
+      flushSync(() => setOverflow(out))
+    }
+    window.addEventListener('beforeprint', measure)
+    return () => window.removeEventListener('beforeprint', measure)
+  }, [lang])
+
+  // The spell page as it prints: the classic page when it fits, flowing onto more pages when it doesn't.
+  const slots = spellSlots(ch.classId, ch.subclass, ch.level)
+  const spellPages = layoutSpellPages(spellLineCounts(ch), [false, ...slots.map((n) => n > 0)])
+
   return (
-    <div className="sheet-stack">
+    <div className="sheet-stack" ref={stack}>
       <PageScaler><PageOne {...props} /></PageScaler>
       <PageScaler><PageTwo {...props} /></PageScaler>
-      <PageScaler><PageThree {...props} /></PageScaler>
+      <div className="sheet-slot no-print"><PageScaler><PageThree {...props} /></PageScaler></div>
+      {spellPages.map((layout, i) => (
+        <div key={i} className="sheet-slot print-only"><PageScaler><PageThree {...props} edit={false} layout={layout} /></PageScaler></div>
+      ))}
+      {overflow.length > 0 && (
+        // A table so the heading and the top / bottom margins repeat on every continuation page.
+        <table className="print-extra print-only">
+          <thead><tr><th><bdi>{ch.name}</bdi> · {L.continuedTitle[lang]}</th></tr></thead>
+          <tbody>
+            {overflow.map((o) => (
+              <tr key={o.label}><td>
+                <h3>{o.label}</h3>
+                <p dir="auto">{o.text}</p>
+              </td></tr>
+            ))}
+          </tbody>
+          <tfoot><tr><td>Campaign Codex · 5e</td></tr></tfoot>
+        </table>
+      )}
     </div>
   )
 }
@@ -501,7 +561,20 @@ function PageTwo({ ch, edit, onChange }: SheetProps) {
 
 // ------------------------------------------------------------------ page 3
 
-function PageThree({ ch, edit, onChange }: SheetProps) {
+/** Spell lines per spell level on the sheet's spell page (always-prepared subclass spells first, each spell once). */
+function spellLineCounts(ch: Character): number[] {
+  const always = subclassSpells(ch.classId, ch.subclass, ch.level).always
+  const counts = Array(10).fill(0) as number[]
+  for (const s of always) counts[s.level]++
+  for (const k of ch.spells) {
+    const spell = findSpell(k.id)
+    if (spell && !always.some((a) => a.id === spell.id)) counts[spell.level]++
+  }
+  return counts
+}
+
+/** `layout` renders one printed page from laid-out segments; without it, the interactive page shown on screen. */
+function PageThree({ ch, edit, onChange, layout }: SheetProps & { layout?: SpellPage }) {
   const l = useLabel()
   const { lang, g } = useI18n()
   const [open, setOpen] = useState<Spell | null>(null)
@@ -534,20 +607,26 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
     onChange({ spells: [...ch.spells, { id, prepared: spell.level === 0 || !counts.prepares || !counts.preparedFull }] })
   }
 
-  const block = (lv: number) => {
-    const list = known.filter((s) => s.spell!.level === lv)
-    const fixed = always.filter((s) => s.level === lv)
+  const block = (lv: number, seg?: SpellSegment) => {
+    const allFixed = always.filter((s) => s.level === lv)
+    const allKnown = known.filter((s) => s.spell!.level === lv)
+    // A printed segment shows lines [from, to) of this level: the always-prepared spells come first.
+    const fixed = seg ? allFixed.slice(seg.from, seg.to) : allFixed
+    const list = seg ? allKnown.slice(Math.max(0, seg.from - allFixed.length), Math.max(0, seg.to - allFixed.length)) : allKnown
     const minLines = lv === 0 ? 6 : lv <= 2 ? 10 : lv <= 5 ? 8 : 5
-    const pad = Math.max(0, minLines - list.length - fixed.length)
+    const pad = seg ? seg.pad : Math.max(0, minLines - list.length - fixed.length)
+    const continued = !!seg?.continued
     const total = lv > 0 ? slots[lv - 1] ?? 0 : 0
     const addable = [...allSpells().filter((s) => canUseSpell(ch.classId, ch.subclass, ch.level, s)), ...granted]
       .filter((s, i, all) => s.level === lv && !ch.spells.some((x) => x.id === s.id) && !always.some((x) => x.id === s.id) && all.findIndex((x) => x.id === s.id) === i)
     const used = ch.slotsExpended[lv - 1] ?? 0
     return (
-      <section key={lv} className={`spell-block ${lv === 0 ? 'cantrip-block' : ''}`}>
+      <section key={seg ? `${lv}-${seg.from}` : lv} className={`spell-block ${lv === 0 ? 'cantrip-block' : ''}`}>
         <div className="spell-block-head">
           <span className="spell-lv-hex">{lv}</span>
-          {lv === 0 ? (
+          {continued ? (
+            <span className="spell-head-banner single">{lv === 0 ? `${l('cantrips')} · ` : ''}{l('continued')}</span>
+          ) : lv === 0 ? (
             <span className="spell-head-banner single">{l('cantrips')}</span>
           ) : (
             <>
@@ -565,7 +644,7 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
             </>
           )}
         </div>
-        {lv === 1 && <div className="slot-legend"><span>{l('slotsTotal')}</span><span>{l('slotsExpended')}</span></div>}
+        {lv === 1 && !continued && <div className="slot-legend"><span>{l('slotsTotal')}</span><span>{l('slotsExpended')}</span></div>}
         <ul className="spell-lines">
           {fixed.map((s) => (
             <li key={s.id}>
@@ -590,7 +669,7 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
           ))}
           {Array.from({ length: pad }, (_, i) => <li key={`pad${i}`}>{lv > 0 && <PrepMark on={false} />}<span className="ink">&nbsp;</span></li>)}
         </ul>
-        {edit && addable.length > 0 && !addable.every((s) => addBlocked(counts, s)) && (
+        {edit && !seg && addable.length > 0 && !addable.every((s) => addBlocked(counts, s)) && (
           <select className="add-spell" value="" onChange={(e) => addSpell(e.target.value)}>
             <option value="">{l('addSpell')}</option>
             {addable
@@ -622,18 +701,22 @@ function PageThree({ ch, edit, onChange }: SheetProps) {
         </div>
       </header>
       <div className="p3-grid">
-        <div className="p3-col">{block(0)}{block(1)}{block(2)}</div>
-        <div className="p3-col">{block(3)}{block(4)}{block(5)}</div>
-        <div className="p3-col">{block(6)}{block(7)}{block(8)}{block(9)}</div>
+        {layout ? layout.map((col, i) => <div key={i} className="p3-col">{col.map((seg) => block(seg.level, seg))}</div>) : (
+          <>
+            <div className="p3-col">{block(0)}{block(1)}{block(2)}</div>
+            <div className="p3-col">{block(3)}{block(4)}{block(5)}</div>
+            <div className="p3-col">{block(6)}{block(7)}{block(8)}{block(9)}</div>
+          </>
+        )}
       </div>
       <footer className="sheet-foot">Campaign Codex · 5e</footer>
-      {open && createPortal(
+      {!layout && open && createPortal(
         <div className="modal-backdrop no-print" onClick={() => setOpen(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}><SpellCard spell={open} onClose={() => setOpen(null)} /></div>
         </div>,
         document.body,
       )}
-      {caster.dialog}
+      {!layout && caster.dialog}
     </div>
   )
 }
